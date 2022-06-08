@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Button from '../components/common/Button';
 import LogoImg from '../assets/logo.png';
+import { Link } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
   return (

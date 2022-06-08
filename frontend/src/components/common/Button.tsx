@@ -6,7 +6,7 @@ interface ButtonProps {
   text: string;
   width: number;
   height: number;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({ color, text, width, height, onClick }) => {
@@ -35,8 +35,8 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
     gradient ? `background: ${theme.colors[color]}` : `background-color: ${theme.colors[color]}`}
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  color: ${({ color, theme }) => (color === 'white' ? theme.colors[color] : 'white')};
-  border: none;
+  color: ${({ color }) => (color === 'white' ? 'black' : 'white')};
+  border: ${({ color, theme }) => (color === 'white' ? `${theme.colors.main}` : 'none')};
   border-radius: 10px;
   cursor: pointer;
   margin: 0 auto;

@@ -4,7 +4,7 @@ const MainPage: React.FC = () => {
   return (
     <div>
       main page
-      {/* oauth ? mainpage : loginpage */}
+      {/* oauth ? 3mainpage : 0loginpage : 1nickname : 2secondauth */}
     </div>
   );
 };
