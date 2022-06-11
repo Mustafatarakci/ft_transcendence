@@ -1,7 +1,6 @@
-import { Body, Controller, Get, Query, Redirect } from '@nestjs/common';
+import { Controller, Get, Query, Redirect } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import axios from 'axios';
-import { query } from 'express';
 
 @Controller('auth')
 export class AuthController {
