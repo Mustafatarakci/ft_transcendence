@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useContext } from 'react';
 import { AllContext } from '../store';
 import { LOGIN, LOGOUT, SET_NICKNAME, SECOND_AUTH } from '../utils/interface';
-import MainPage from './MainPage';
 import { useNavigate } from 'react-router-dom';
 
 const OauthPage: React.FC = () => {

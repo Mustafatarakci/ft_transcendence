@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { AllContext } from '../store';
-import { LOGIN, LOGOUT, SET_NICKNAME, SECOND_AUTH } from '../utils/interface';
 import GamePage from './GamePage';
 import LoginPage from './LoginPage';
 import NicknamPage from './NicknamPage';
