@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AllContext } from '../store';
+import { LOGIN, LOGOUT, SET_NICKNAME, SECOND_AUTH } from '../utils/interface';
+import GamePage from './GamePage';
+import LoginPage from './LoginPage';
+import NicknamPage from './NicknamPage';
 
 const MainPage: React.FC = () => {
+  const { userStatus } = useContext(AllContext).userStatus;
+
   return (
-    <div>
-      main page
-      {/* oauth ? 3mainpage : 0loginpage : 1nickname : 2secondauth */}
-    </div>
+    <>
+      {
+        {
+          LOGOUT: <LoginPage />,
+          SET_NICKNAME: <NicknamPage />,
+          SECOND_AUTH: <GamePage />,
+          LOGIN: <GamePage />,
+        }[userStatus]
+      }
+    </>
   );
 };
 

@@ -1,20 +1,33 @@
 import React, { createContext, useState } from 'react';
 import { LOGIN, LOGOUT, SECOND_AUTH, SET_NICKNAME, User, UserStateType } from '../utils/interface';
 
-export const AllContext = createContext<stateType | null>(null);
+export const AllContext = createContext<stateType>({
+  modalData: {
+    isModal: false,
+    setIsModal: () => null,
+  },
+  userData: {
+    user: null,
+    setUser: () => null,
+  },
+  userStatus: {
+    userStatus: LOGOUT,
+    setUserStatus: () => null,
+  },
+});
 
 type stateType = {
   modalData: {
-    state: boolean;
-    setState: () => void;
+    isModal: boolean;
+    setIsModal: () => void;
   };
   userData: {
-    state: User | null;
-    setState: (type: string, user?: User) => void;
+    user: User | null;
+    setUser: (type: string, user?: User) => void;
   };
-  userState: {
-    state: UserStateType;
-    setState: (type: UserStateType) => void;
+  userStatus: {
+    userStatus: UserStateType;
+    setUserStatus: (type: UserStateType) => void;
   };
 };
 
@@ -25,7 +38,7 @@ interface AllContextApiProps {
 const AllContextApi = ({ children }: AllContextApiProps) => {
   const [isModal, setIsModal] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
-  const [userState, setUserState] = useState<UserStateType>(LOGOUT);
+  const [userStatus, setUserState] = useState<UserStateType>(LOGOUT);
 
   const handleModal = () => {
     setIsModal(!isModal);
@@ -53,22 +66,22 @@ const AllContextApi = ({ children }: AllContextApiProps) => {
     }
   };
 
-  const handleUserState = (type: UserStateType) => {
+  const handleUserStatus = (type: UserStateType) => {
     setUserState(type);
   };
 
   const data = {
     modalData: {
-      state: isModal,
-      setState: handleModal,
+      isModal,
+      setIsModal: handleModal,
     },
     userData: {
-      state: user,
-      setState: handleUser,
+      user,
+      setUser: handleUser,
     },
-    userState: {
-      state: userState,
-      setState: handleUserState,
+    userStatus: {
+      userStatus,
+      setUserStatus: handleUserStatus,
     },
   };
   return <AllContext.Provider value={data}>{children}</AllContext.Provider>;

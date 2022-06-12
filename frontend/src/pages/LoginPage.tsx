@@ -13,18 +13,13 @@ const LoginPage: React.FC = () => {
         <Button
           width={200}
           height={50}
-          color="gradient"
-          text="42 Login"
-          onClick={() => {
-            console.log('click');
-          }}
-        />
-        <Button
-          width={200}
-          height={50}
           color="white"
           text="42 Login"
           onClick={() => {
+            console.log(process.env.REACT_APP_OAUTH_URL);
+            if (process.env.REACT_APP_OAUTH_URL) {
+              location.href = process.env.REACT_APP_OAUTH_URL;
+            }
             console.log('click');
           }}
         />
@@ -44,10 +39,14 @@ const LoginBox = styled.div`
   width: 500px;
   height: 500px;
   background-color: white;
-  margin: 150px auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 20px;
   box-shadow: 6px 6px 10px 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  box-sizing: border-box;
 `;
 const LogoWrap = styled.div`
   width: 90%;
