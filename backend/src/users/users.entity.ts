@@ -6,10 +6,13 @@ export class User extends BaseEntity {
   id: number;
 
   @Column()
-  name: string;
+  username: string;
 
   @Column()
   avatar: string;
+
+  @Column()
+  email: string;
 
   @Column()
   secondAuth: boolean;
