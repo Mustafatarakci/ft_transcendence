@@ -19,6 +19,15 @@ const LoginPage: React.FC = () => {
             console.log('click');
           }}
         />
+        <Button
+          width={200}
+          height={50}
+          color="white"
+          text="42 Login"
+          onClick={() => {
+            console.log('click');
+          }}
+        />
       </LoginBox>
     </LoginContainer>
   );
