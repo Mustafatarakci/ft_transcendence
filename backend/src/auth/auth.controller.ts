@@ -18,14 +18,19 @@ export class AuthController {
     const loggedInUserData = await this.authService.logIn(code);
 
     return {
-      data: {
-        accessToken: loggedInUserData.accessToken,
-        isSigned: false, // todo: 어떤 의미인가?
-        secondAuth: loggedInUserData.secondAuth,
-      },
-      success: true, // todo: 어떤 의미인가?
-      message: 'message',
+      accessToken: loggedInUserData.accessToken,
+      isSigned: false, // todo: 어떤 의미인가?
+      secondAuth: loggedInUserData.secondAuth,
     };
+    // return {
+    //   data: {
+    //     accessToken: loggedInUserData.accessToken,
+    //     isSigned: false, // todo: 어떤 의미인가?
+    //     secondAuth: loggedInUserData.secondAuth,
+    //   },
+    //   success: true, // todo: 어떤 의미인가?
+    //   message: 'message',
+    // };
   }
 
   // Test for get access token

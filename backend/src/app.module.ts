@@ -6,8 +6,9 @@ import { TypeORMConfig } from './configs/typeorm.config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './logger.middleware';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { AllExceptionsFilter } from './all-exceptions.filter';
+import { TransformInterceptor } from './response.interceptor';
 
 @Module({
   imports: [TypeOrmModule.forRoot(TypeORMConfig), UsersModule, AuthModule],
@@ -17,6 +18,10 @@ import { AllExceptionsFilter } from './all-exceptions.filter';
     {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
     },
   ],
 })
