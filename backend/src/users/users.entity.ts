@@ -6,5 +6,16 @@ export class User extends BaseEntity {
   id: number;
 
   @Column()
-  name: string;
+  username: string;
+
+  @Column()
+  avatar: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  secondAuth: boolean;
+
+  // 친구, 승패, 레더레벨, 업적, 모든 경기 기록
 }
