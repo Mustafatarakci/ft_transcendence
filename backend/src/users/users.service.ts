@@ -30,4 +30,12 @@ export class UsersService {
 
     return await this.userRepo.save(user);
   }
+
+  async isDuplicateNickname(nickname: string): Promise<boolean> {
+    const found = this.userRepo.findOne({ where: { nickname } });
+    if (found) {
+      return true;
+    }
+    return false;
+  }
 }

@@ -72,4 +72,8 @@ export class AuthService {
   async signUp(createUserDto: CreateUserDto): Promise<User> {
     return await this.usersService.createUser(createUserDto);
   }
+
+  async isDuplicateNickname(nickname: string): Promise<boolean> {
+    return await this.usersService.isDuplicateNickname(nickname);
+  }
 }
