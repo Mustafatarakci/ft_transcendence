@@ -8,6 +8,8 @@ export class UserDataDto {
   secondAuth: boolean;
 }
 
-export class LoggdInUserDataDto extends UserDataDto {
+export class SignInResultDto extends UserDataDto {
   accessToken: string;
+
+  isSigned: boolean;
 }

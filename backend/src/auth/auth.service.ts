@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { LoggdInUserDataDto, UserDataDto } from 'src/users/dto/users.dto';
+import { SignInResultDto, UserDataDto } from 'src/users/dto/users.dto';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class AuthService {
           'c44164aba01e6b4652fb6a4107e5188020a7e0c823b5013b2879b85ef7ea9abb',
         client_secret:
           'b3ee694a82c2014be143f7a31575cd6b15c3e7bf3fbf0ba7ca6de057e9f8673d',
-        redirect_uri: 'http://localhost:3000/auth/logIn',
+        redirect_uri: 'http://localhost:3000/auth/signIn',
         code,
       },
     });
@@ -44,21 +44,23 @@ export class AuthService {
     return userData;
   }
 
-  async logIn(code: string): Promise<LoggdInUserDataDto> {
+  async signIn(code: string): Promise<SignInResultDto> {
     const accessToken = await this.getAccessToken(code);
     const userData = await this.getUserData(accessToken);
 
-    let user = await this.usersService.getUserByEmail(userData.email);
+    const user = await this.usersService.getUserByEmail(userData.email);
     if (!user) {
-      user = await this.usersService.createUser(userData);
+      return {
+        ...userData,
+        accessToken,
+        isSigned: false,
+      };
     }
 
-    const loggedInUser: UserDataDto = {
-      username: user.username,
-      avatar: user.avatar,
-      email: user.email,
-      secondAuth: user.secondAuth,
+    return {
+      ...userData,
+      accessToken,
+      isSigned: true,
     };
-    return { ...loggedInUser, accessToken };
   }
 }
