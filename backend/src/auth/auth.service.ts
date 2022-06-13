@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { SignInResultDto, UserDataDto } from 'src/users/dto/users.dto';
+import {
+  CreateUserDto,
+  SignInResultDto,
+  UserDataDto,
+} from 'src/users/dto/users.dto';
+import { User } from 'src/users/users.entity';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -62,5 +67,9 @@ export class AuthService {
       accessToken,
       isSigned: true,
     };
+  }
+
+  async signUp(createUserDto: CreateUserDto): Promise<User> {
+    return await this.usersService.createUser(createUserDto);
   }
 }

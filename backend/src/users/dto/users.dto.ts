@@ -13,3 +13,7 @@ export class SignInResultDto extends UserDataDto {
 
   isSigned: boolean;
 }
+
+export class CreateUserDto extends UserDataDto {
+  nickname: string;
+}

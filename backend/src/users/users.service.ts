@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserDataDto } from './dto/users.dto';
+import { CreateUserDto } from './dto/users.dto';
 import { User } from './users.entity';
 
 @Injectable()
@@ -20,12 +20,13 @@ export class UsersService {
     return ret;
   }
 
-  async createUser(userData: UserDataDto): Promise<User> {
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
     const user = new User();
-    user.username = userData.username;
-    user.avatar = userData.avatar;
-    user.email = userData.email;
-    user.secondAuth = userData.secondAuth; // todo: 어떻게 설정할 것인가?
+    user.username = createUserDto.username;
+    user.nickname = createUserDto.nickname;
+    user.avatar = createUserDto.avatar;
+    user.email = createUserDto.email;
+    user.secondAuth = createUserDto.secondAuth; // todo: 어떻게 설정할 것인가?
 
     return await this.userRepo.save(user);
   }

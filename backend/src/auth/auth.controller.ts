@@ -1,5 +1,6 @@
-import { Controller, Get, Query, Redirect } from '@nestjs/common';
-import { SignInResultDto } from 'src/users/dto/users.dto';
+import { Body, Controller, Get, Post, Query, Redirect } from '@nestjs/common';
+import { CreateUserDto, SignInResultDto } from 'src/users/dto/users.dto';
+import { User } from 'src/users/users.entity';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -19,6 +20,11 @@ export class AuthController {
     const signInResult = await this.authService.signIn(code);
 
     return signInResult;
+  }
+
+  @Post('signUp')
+  async signUp(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return await this.authService.signUp(createUserDto);
   }
 
   // Test for get access token
