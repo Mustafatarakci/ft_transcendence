@@ -8,7 +8,7 @@ import './utils/styles/common.css';
 import OauthPage from './pages/OauthPage';
 import NicknamPage from './pages/NicknamPage';
 import SecondAuthPage from './pages/SecondAuthPage';
-import GamePage from './pages/GamePage';
+import HomePage from './pages/HomePage';
 import ChatPage from './pages/ChatPage';
 import { AllContextApi } from './store';
 
@@ -23,7 +23,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/nickname" element={<NicknamPage />} />
             <Route path="/secondAuth" element={<SecondAuthPage />} />
-            <Route path="/game" element={<GamePage />} />
+            <Route path="/game" element={<HomePage />} />
             <Route path="/chat" element={<ChatPage />} />
           </Routes>
         </BrowserRouter>

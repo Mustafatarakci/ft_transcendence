@@ -19,11 +19,13 @@ const OauthPage: React.FC = () => {
       setUser('login', {
         id: data.id,
         nickname: data.nickname,
+        username: data.username,
         email: data.email,
-        profileImg: data.profileImg,
+        avatar: data.avatar,
         secondAuth: data.secondAuth,
+        isSigned: data.isSigned,
       });
-      if (!data.nickname) {
+      if (!data.isSigned) {
         setUserStatus(SET_NICKNAME);
       } else if (data.secondAuth) {
         setUserStatus(SECOND_AUTH);

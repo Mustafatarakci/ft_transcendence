@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { AllContext } from '../store';
-import GamePage from './GamePage';
+import GamePage from './HomePage';
 import LoginPage from './LoginPage';
 import NicknamPage from './NicknamPage';
+import SecondAuthPage from './SecondAuthPage';
 
 const MainPage: React.FC = () => {
   const { userStatus } = useContext(AllContext).userStatus;
@@ -13,7 +14,7 @@ const MainPage: React.FC = () => {
         {
           LOGOUT: <LoginPage />,
           SET_NICKNAME: <NicknamPage />,
-          SECOND_AUTH: <GamePage />,
+          SECOND_AUTH: <SecondAuthPage />,
           LOGIN: <GamePage />,
         }[userStatus]
       }
