@@ -20,6 +20,8 @@ import { TransformInterceptor } from './response.interceptor';
   controllers: [AppController],
   providers: [
     AppService,
+    // class-validator 사용 시 예외 필터에서 에러 메세지가 모두 HttpException에 해당하는 것으로 출력되어 주석 처리함.
+    // todo: class-validator 사용 시 예외 필터 사용방법 서치
     // {
     //   provide: APP_FILTER,
     //   useClass: AllExceptionsFilter,
