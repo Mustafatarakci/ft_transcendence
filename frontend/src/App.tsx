@@ -10,6 +10,7 @@ import NicknamPage from './pages/NicknamPage';
 import SecondAuthPage from './pages/SecondAuthPage';
 import GamePage from './pages/GamePage';
 import ChatPage from './pages/ChatPage';
+import ProfilePage from './components/UserProfile';
 import { AllContextApi } from './store';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/nickname" element={<NicknamPage />} />
             <Route path="/secondAuth" element={<SecondAuthPage />} />
+            <Route path="/profilePage" element={<ProfilePage />} />
             <Route path="/game" element={<GamePage />} />
             <Route path="/chat" element={<ChatPage />} />
           </Routes>
