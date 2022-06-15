@@ -1,31 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import ProfileImg from '../../assets/rupi.jpg';
 import Button from '../common/Button';
+import axios from 'axios';
+
 
 const ProfilePage: React.FC = () => {
+  const [user, setUser] = useState({
+    id: '',
+    user: '',
+    user_nick: '',
+    user_lv: '',
+    gen_win: '',
+    gen_lose: '',
+    lad_win: '',
+    lad_lose: '',
+    picture: ''
+  });
+
+  // 리프레쉬할때 값이 조금 늦게 튀어나오는건 전역으로 데이터를 관리하면서
+  // 다시 한번 확인하기로 결정
+  useEffect(() => {
+    axios.get(`http://localhost:4000/user_info`).then(res => setUser({
+      id: res.data.id,
+      user: res.data.user,
+      user_nick: res.data.user_nick,
+      user_lv: res.data.user_lv,
+      gen_win: res.data.gen_win,
+      gen_lose: res.data.gen_lose,
+      lad_win: res.data.lad_win,
+      lad_lose: res.data.lad_lose,
+      picture: res.data.picture
+    }))
+  }, [])
+
   return (
     <MainBlock>
       <MainText>내 프로필</MainText>
       <ProfileBlock>
         <PictureBlock>
-          <ProfilePicture src={ProfileImg} alt="img" />
+          <ProfilePicture src={user.picture} alt="img" />
         </PictureBlock>
-        <Info>
+        <UserInfo>
           <UserName>
-            Sgang
+            {user.user_nick}
           </UserName>
           <UserLevel>
-            lv.123
+            lv.{user.user_lv}
           </UserLevel>
-        </Info>
+        </UserInfo>
       </ProfileBlock>
 
       <RecordText>전적/래더전적</RecordText>
 
       <RecordBlock>
         <Record>
-          0승 0패/0승 0패
+          {user.gen_win}승 {user.gen_lose}패/{user.lad_win}승 {user.lad_lose}패
         </Record>
         <RecordBtn>
           <Button
@@ -56,7 +85,7 @@ const ProfilePage: React.FC = () => {
 };
 
 
-// Main div
+// Main Block
 const MainBlock = styled.div`
   border: 2px solid ${props => props.theme.colors.main};
   border-radius: 20px;
@@ -68,7 +97,7 @@ const MainBlock = styled.div`
   font-weight: 400;
 `;
 
-// div Lv1====================================
+// MainText Section
 const MainText = styled.h3`
   font-size: 20px;
   line-height: 29px;
@@ -79,12 +108,13 @@ const MainText = styled.h3`
 //============================================
 
 
-// div Lv2====================================
+// Profile Section
 const ProfileBlock = styled.div`
   height: 120px;
   display: flex;
 `;
-const Info = styled.div``;
+const UserInfo = styled.div`
+`;
 
 const PictureBlock = styled.div``;
 
@@ -93,8 +123,8 @@ const ProfilePicture = styled.img`
   height: 101px;
   border-radius: 50px;
   background: #C4C4C4;
-  margin-top:20px;
-  margin-left:15px;
+  margin-top: 20px;
+  margin-left: 15px;
 `;
 
 const UserName = styled.span`
@@ -112,12 +142,12 @@ const UserLevel = styled.span`
   line-height: 16px;
 
   margin-top: 5px;
-  margin-left:10px;
+  margin-left: 10px;
 `;
 //============================================
 
 
-//div lv-3====================================
+//RecordText Section
 const RecordText = styled.span`
   display: inline-block;
   font-size: 14px;
@@ -128,7 +158,7 @@ const RecordText = styled.span`
 //============================================
 
 
-//div lv-4====================================
+//Record Section
 const RecordBlock = styled.div`
   display: flex;
   justify-content: space-between;
@@ -150,7 +180,7 @@ const RecordBtn = styled.div`
 //============================================
 
 
-//div lv-5====================================
+//OtherBtnSection
 const OtherBtnBlock = styled.div`
   display: flex;
   margin-top: 10px;
