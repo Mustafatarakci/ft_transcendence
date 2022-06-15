@@ -12,6 +12,9 @@ export class UserDataDto {
 
   @IsBoolean()
   secondAuth: boolean;
+
+  @IsString()
+  secondAuthCode: number;
 }
 
 export class SignInResultDto extends UserDataDto {

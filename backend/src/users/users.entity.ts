@@ -20,5 +20,8 @@ export class User extends BaseEntity {
   @Column()
   secondAuth: boolean;
 
+  @Column()
+  secondAuthCode: number;
+
   // 친구, 승패, 레더레벨, 업적, 모든 경기 기록
 }

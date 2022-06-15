@@ -1,3 +1,8 @@
+import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MailerModule } from '@nestjs-modules/mailer';
+import configEmail from './configs/email';
+import * as path from 'path';
 import {
   MiddlewareConsumer,
   Module,
@@ -16,10 +21,36 @@ import { AllExceptionsFilter } from './all-exceptions.filter';
 import { TransformInterceptor } from './response.interceptor';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(TypeORMConfig), UsersModule, AuthModule],
+  imports: [TypeOrmModule.forRoot(TypeORMConfig), UsersModule, AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configEmail],
+    }),
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        console.log('===== write [.env] by config: network====');
+        console.log(config.get('email'));
+        return {
+          ...config.get('email'),
+          template: {
+            dir: path.join(__dirname, '/templates/'),
+            adapter: new EjsAdapter(),
+            options: {
+              strict: true,
+            },
+          },
+        };
+      },
+    }),
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
+    // class-validator 사용 시 예외 필터에서 에러 메세지가 모두 HttpException에 해당하는 것으로 출력되어 주석 처리함.
+    // todo: class-validator 사용 시 예외 필터 사용방법 서치
     // {
     //   provide: APP_FILTER,
     //   useClass: AllExceptionsFilter,

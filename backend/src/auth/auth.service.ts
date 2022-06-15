@@ -1,16 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import axios from 'axios';
 import {
   CreateUserDto,
   SignInResultDto,
   UserDataDto,
 } from 'src/users/dto/users.dto';
-import { User } from 'src/users/users.entity';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async getAccessToken(code: string): Promise<string> {
     const axiosResult = await axios({
@@ -30,6 +33,12 @@ export class AuthService {
     return axiosResult.data.access_token;
   }
 
+
+  makeRand6Num = (): number => {
+    const randNum = Math.floor(Math.random() * 1000000);
+    return randNum;
+  };
+
   async getUserData(accessToken: string): Promise<UserDataDto> {
     const axiosResult = await axios({
       method: 'GET',
@@ -45,32 +54,48 @@ export class AuthService {
       avatar: image_url,
       email,
       secondAuth: false,
+      secondAuthCode: this.makeRand6Num(),
     };
     return userData;
   }
 
-  async signIn(code: string): Promise<SignInResultDto> {
+  async signIn(code: string): Promise<SignInResultDto | string> {
     const accessToken = await this.getAccessToken(code);
     const userData = await this.getUserData(accessToken);
 
     const user = await this.usersService.getUserByEmail(userData.email);
+
     if (!user) {
       return {
         ...userData,
         accessToken,
         isSigned: false,
       };
+      // return {
+      //   ...userData,
+      //   accessToken,
+      //   isSigned: false,
+      // };
     }
 
-    return {
+    return this.jwtService.sign({
       ...userData,
       accessToken,
       isSigned: true,
-    };
+    });
+    // return {
+    //   ...userData,
+    //   accessToken,
+    //   isSigned: true,
+    // };
   }
 
-  async signUp(createUserDto: CreateUserDto): Promise<User> {
-    return await this.usersService.createUser(createUserDto);
+  async signUp(createUserDto: CreateUserDto): Promise<string> {
+    const { nickname, avatar } = await this.usersService.createUser(
+      createUserDto,
+    );
+
+    return this.jwtService.sign({ nickname, avatar });
   }
 
   async isDuplicateNickname(nickname: string): Promise<boolean> {

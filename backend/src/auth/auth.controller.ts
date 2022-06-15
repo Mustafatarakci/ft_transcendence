@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Post, Query, Redirect } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto, SignInResultDto } from 'src/users/dto/users.dto';
-import { User } from 'src/users/users.entity';
 import { AuthService } from './auth.service';
 
 @ApiTags('auth')
@@ -20,7 +19,7 @@ export class AuthController {
 
   @ApiOperation({ summary: '로그인' })
   @Get('signIn')
-  async signIn(@Query('code') code: string): Promise<SignInResultDto> {
+  async signIn(@Query('code') code: string): Promise<SignInResultDto | string> {
     const signInResult = await this.authService.signIn(code);
 
     return signInResult;
@@ -28,7 +27,7 @@ export class AuthController {
 
   @ApiOperation({ summary: '회원가입' })
   @Post('signUp')
-  async signUp(@Body() createUserDto: CreateUserDto): Promise<User> {
+  async signUp(@Body() createUserDto: CreateUserDto): Promise<string> {
     return await this.authService.signUp(createUserDto);
   }
 
@@ -43,50 +42,4 @@ export class AuthController {
   async uploadImage() {
     return 'todo: 이미지 업로드';
   }
-  // Test for get access token
-
-  // @Get('getAccessToken')
-  // async getAccessToken(@Query('code') code) {
-  //   console.log('code: ', code);
-
-  //   const axiosResult = await axios({
-  //     method: 'post',
-  //     url: `https://api.intra.42.fr/oauth/token`,
-  //     data: {
-  //       grant_type: 'authorization_code',
-  //       client_id:
-  //         'c44164aba01e6b4652fb6a4107e5188020a7e0c823b5013b2879b85ef7ea9abb',
-  //       client_secret:
-  //         'b3ee694a82c2014be143f7a31575cd6b15c3e7bf3fbf0ba7ca6de057e9f8673d',
-  //       redirect_uri: 'http://localhost:3000/auth/getAccessToken',
-  //       code,
-  //     },
-  //   });
-
-  //   const access_token = axiosResult.data.access_token;
-  //   console.log('access_token: ', access_token);
-
-  //   const tokenInfo = await axios({
-  //     method: 'get',
-  //     url: `https://api.intra.42.fr/oauth/token/info`,
-  //     headers: { Authorization: `Bearer ${access_token}` },
-  //   });
-
-  //   const tokenData = tokenInfo.data;
-  //   console.log('tokenData: ', tokenData);
-
-  //   const me = await axios({
-  //     method: 'get',
-  //     url: `https://api.intra.42.fr/v2/me`,
-  //     headers: { Authorization: `Bearer ${access_token}` },
-  //   });
-
-  //   const { email, login, first_name, last_name } = me.data;
-  //   console.log('email: ', email);
-  //   console.log('login: ', login);
-  //   console.log('first_name: ', first_name);
-  //   console.log('last_name: ', last_name);
-
-  //   return 'check the output in the console';
-  // }
 }
