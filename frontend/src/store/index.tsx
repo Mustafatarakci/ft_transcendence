@@ -1,10 +1,18 @@
 import React, { createContext, useState } from 'react';
-import { LOGIN, LOGOUT, SECOND_AUTH, SET_NICKNAME, User, UserStateType } from '../utils/interface';
+import {
+  LOGIN,
+  LOGOUT,
+  ModalType,
+  SECOND_AUTH,
+  SET_NICKNAME,
+  User,
+  UserStateType,
+} from '../utils/interface';
 
 export const AllContext = createContext<stateType>({
   modalData: {
-    isModal: false,
-    setIsModal: () => null,
+    modal: null,
+    setModal: () => null,
   },
   userData: {
     user: null,
@@ -18,8 +26,8 @@ export const AllContext = createContext<stateType>({
 
 type stateType = {
   modalData: {
-    isModal: boolean;
-    setIsModal: () => void;
+    modal: ModalType | null;
+    setModal: (type: ModalType | null) => void;
   };
   userData: {
     user: User | null;
@@ -36,12 +44,12 @@ interface AllContextApiProps {
 }
 
 const AllContextApi = ({ children }: AllContextApiProps) => {
-  const [isModal, setIsModal] = useState<boolean>(false);
+  const [modal, setModal] = useState<ModalType | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [userStatus, setUserState] = useState<UserStateType>(LOGOUT);
 
-  const handleModal = () => {
-    setIsModal(!isModal);
+  const handleModal = (type: ModalType | null) => {
+    setModal(type);
   };
 
   const handleUser = (type: string, user?: User) => {
@@ -72,8 +80,8 @@ const AllContextApi = ({ children }: AllContextApiProps) => {
 
   const data = {
     modalData: {
-      isModal,
-      setIsModal: handleModal,
+      modal,
+      setModal: handleModal,
     },
     userData: {
       user,
