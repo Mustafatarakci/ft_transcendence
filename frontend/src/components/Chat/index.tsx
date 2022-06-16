@@ -29,7 +29,7 @@ const EnteredRoomBtn = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   button {
     margin: 0;
     font-size: 14px;

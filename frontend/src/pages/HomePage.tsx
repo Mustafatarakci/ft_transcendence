@@ -58,7 +58,7 @@ const MainArea = styled.div`
   background-color: white;
   border-radius: 20px;
   margin-right: 20px;
-  padding: 20px 30px;
+  padding: 20px 20px;
   overflow: hidden;
 `;
 
