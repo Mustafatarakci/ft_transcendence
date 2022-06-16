@@ -36,7 +36,7 @@ const ListItem = styled.li`
   background: #ffffff;
   border: 1px solid ${({ theme }) => theme.colors.grey};
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
   padding: 15px 20px;
   font-size: 14px;
 
@@ -68,7 +68,6 @@ const CountStat = styled.span`
   user-select: none;
 `;
 const EnterBtnWrap = styled.div`
-  // margin-right: 20px;
   button {
     border-radius: 5px;
   }
@@ -83,4 +82,4 @@ const GameStat = styled.span<{ isGameStart: boolean }>`
   user-select: none;
 `;
 
-export default RoomListItem;
+export default React.memo(RoomListItem);

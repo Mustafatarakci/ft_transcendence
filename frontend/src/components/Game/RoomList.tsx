@@ -11,7 +11,7 @@ const RoomList: React.FC<RoomListProps> = ({ list }) => {
   return (
     <RoomListContainer>
       {list.length > 0 &&
-        list.map((li, index) => {
+        [...list, ...list, ...list, ...list, ...list].map((li, index) => {
           return <GameListItem key={index} item={li} />;
         })}
     </RoomListContainer>
@@ -21,7 +21,7 @@ const RoomList: React.FC<RoomListProps> = ({ list }) => {
 const RoomListContainer = styled.ul`
   display: block;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 60px);
   overflow: auto;
 `;
 
