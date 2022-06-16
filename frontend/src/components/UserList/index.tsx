@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import Button from '../common/Button';
 
 const UserList: React.FC = () => {
   const [click, setClick] = useState(1);
@@ -10,17 +11,29 @@ const UserList: React.FC = () => {
     <div>
       <ListBox>
         <ButtonBox>
-          <TabMenu
-            type="button"
-            value="전체유저"
+          <Button
             color={tuserColor}
+            text="전체유저"
+            width={120}
+            height={40}
             onClick={() => {
               setClick(0);
-              setTuserColor('');
+              setTuserColor('gradient');
               setFuserColor('white');
             }}
-          ></TabMenu>
-          <TabMenu
+          />
+          <Button
+            color={fuserColor}
+            text="친구"
+            width={120}
+            height={40}
+            onClick={() => {
+              setClick(1);
+              setTuserColor('white');
+              setFuserColor('gradient');
+            }}
+          />
+          {/* <TabMenu
             type="button"
             value="친구"
             color={fuserColor}
@@ -29,7 +42,7 @@ const UserList: React.FC = () => {
               setFuserColor('');
               setTuserColor('white');
             }}
-          ></TabMenu>
+          ></TabMenu> */}
         </ButtonBox>
         {click === 1 && (
           <div>
@@ -67,20 +80,25 @@ const UserBox = styled.li`
   //text-align: left; 빼도됨
   background-color: transparent;
   font-style: normal;
-  font-size: 18px;
+  font-size: 14px;
 `;
 
 const ButtonBox = styled.div`
   /* 아마도 3항연산으로 컬러값을 다르게 넣어봅시다 클릭이  */
-  & :first-of-type {
-    /* margin-right: 19px; */
+  /* & :first-of-type {
+    margin-right: 19px;
+    font-size: 18px;
+  } */
+  & button {
+    font-size: 18px !important;
   }
+  /*
   & :hover {
     background-color: ${props => props.theme.colors.main};
     color: ${props => props.theme.colors.white};
-    /* 항상이 아니고 눌럿을때 반영되어야댐 */
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
   }
+  */
   //margin: 0, auto;
   //flex-wrap: wrap;
   margin-bottom: 24px;
