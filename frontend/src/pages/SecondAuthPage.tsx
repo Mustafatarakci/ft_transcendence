@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import Button from '../components/common/Button';
+/*
+ ** 피드백 주신내용들.
+ ** dhyeon : line20 useStete이름 변경 ok
+ ** mosong :  일반함수와 화살표 함수차이, onCheck 이벤트 속성
+
+ ** sgang :
+ */
 
 /*
  ** import Button from '../components/common/Button';
@@ -17,23 +25,27 @@ import axios from 'axios';
  */
 const SecondAuthPage: React.FC = () => {
   /* 인증코드 저장용 useState*/
-  const [title, setTitle] = useState('');
-  const [result, setResult] = useState('');
+  const [authCode, setAuthcode] = useState('');
+  const [errMsg, setErrmsg] = useState('');
 
   /*
    ** 지금여기서 subtext에 표시할 내용을 갱신해주고 있는데.. 그러면 중복상황에서 혼란이 생길수있다.
    ** 인풋값에 대한 이벤트가 발생할때마다. subtext에 대한 내용이 갱신되도록 수정해야한다.
    ** 성공 또는 실패에 맞게 then, catch로. 이후 항상실행
+   ** 찾았다 이노마
    */
-  const onCheck = (event: any) => {
+
+  /*ERROR : Type 'MouseEvent<HTMLInputElement, MouseEvent>' is not assignable to type 'MouseEventHandler<HTMLInputElement>'.*/
+  const onCheck = (event: React.MouseEvent<HTMLInputElement>) => {
+    console.log('이친구의 이벤트속성은' + event.type);
     event.preventDefault();
     axios
       .get(`http://localhost:4000/posts/${2}`)
       .then(function (response) {
-        if (title === response.data.authCode) {
-          setResult('');
+        if (authCode === response.data.authCode) {
+          setErrmsg('');
           alert(`안녕하세요 ${response.data.user}!`);
-        } else setResult('코드가 일치하지 않습니다');
+        } else setErrmsg('코드가 일치하지 않습니다');
       })
       .catch(function (error) {
         console.log(error);
@@ -118,24 +130,28 @@ const SecondAuthPage: React.FC = () => {
     <Wrap>
       <LoginBox>
         <MainText>등록된 이메일로 받은 코드를 입력해 주세요</MainText>
-        <form onSubmit={onCheck}>
+        {/* <form onSubmit={onCheck}> */}
+        <div>
           <Input
             className="input"
             placeholder="인증코드를 입력하세요"
             type="text"
             onChange={event => {
-              setTitle(event.target.value);
-              setResult('');
-              console.log({ title });
+              setAuthcode(event.target.value);
+              setErrmsg('');
+              // console.log({ authCode });
             }}
             required
           />
-          <SubText>{result}</SubText>
+          <SubText>{errMsg}</SubText>
           <ButtonBox>
-            <Button type="button" value="코드 재전송" onClick={onGetQuery}></Button>
-            <Button type="submit" value="확인"></Button>
+            <Button color="white" text="코드 재전송" width={130} height={30} onClick={onGetQuery} />
+            {/* <Button color="white" text="확인" width={130} height={30} onClick={onCheck} /> */}
+            {/* <Button type="button" value="코드 재전송" onClick={onGetQuery}></Button>*/}
+            <CustomButton type="button" value="확인" onClick={onCheck}></CustomButton>
           </ButtonBox>
-        </form>
+        </div>
+        {/* </form> */}
       </LoginBox>
     </Wrap>
   );
@@ -179,7 +195,7 @@ const LoginBox = styled.div`
  ** 양쪽 마진을 같게 남기겠다. 근데 div는 기본이 100%라서 자식위드가 있어야 한다......
  ** 만약 마진값이 있으면,, 순서대로 0위아래, 오토는 좌우.를 의미한다.. 니까..
  */
-const MainText = styled.div`
+const MainText = styled.p`
   font-size: 24px;
   margin-top: 30px;
   margin-bottom: 60px;
@@ -209,11 +225,11 @@ const Input = styled.input`
  ** (다현님 피드백에 따라 p태그로 바꿨습니다)
  ** SubText의 패딩값으로 정렬하지말고, 마진값으로 정렬했습니다.
  ** padding: 40px 0; -> margin: 10px 0;
+ ** font-family: 'Noto Sans KR', sans-serif;가 전역에 설정되어있으니까 빼자
  */
 const SubText = styled.p`
   margin: 10px 0;
   color: ${props => props.theme.colors.red};
-  font-family: 'Roboto';
   font-style: normal;
   font-size: 14px;
   height: 14px;
@@ -229,12 +245,19 @@ const SubText = styled.p`
  */
 const ButtonBox = styled.div`
   & :first-of-type {
-    margin-right: 19px;
+    /* margin-right: 19px; */
+  }
+  & button {
+    /* margin-right: 19px !important; */
+    border-radius: 5px;
+    font-size: 18px;
   }
   & :hover {
     background-color: ${props => props.theme.colors.main};
     color: ${props => props.theme.colors.white};
   }
+  /* 좀너무하긴하네 이것도  154패딩..*/
+  padding: 0px 154px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -246,11 +269,12 @@ const ButtonBox = styled.div`
  */
 //<Button>버튼1</Button>
 //<Button>버튼2</Button>
-const Button = styled.input`
+const CustomButton = styled.input`
   border: 1px solid ${props => props.theme.colors.main};
   width: 130px;
   height: 30px;
   border-radius: 5px;
+  margin: 0 auto;
   text-align: center;
   background-color: transparent;
   font-family: 'Roboto';
