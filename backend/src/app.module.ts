@@ -14,9 +14,15 @@ import { LoggerMiddleware } from './logger.middleware';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { AllExceptionsFilter } from './all-exceptions.filter';
 import { TransformInterceptor } from './response.interceptor';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(TypeORMConfig), UsersModule, AuthModule],
+  imports: [
+    TypeOrmModule.forRoot(TypeORMConfig),
+    UsersModule,
+    AuthModule,
+    ChatModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
