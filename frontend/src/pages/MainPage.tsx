@@ -4,6 +4,7 @@ import GamePage from './HomePage';
 import LoginPage from './LoginPage';
 import NicknamPage from './NicknamPage';
 import SecondAuthPage from './SecondAuthPage';
+import ModalSet from '../components/common/Modal/ModalSet';
 
 const MainPage: React.FC = () => {
   const { userStatus } = useContext(AllContext).userStatus;
@@ -18,6 +19,7 @@ const MainPage: React.FC = () => {
           LOGIN: <GamePage />,
         }[userStatus]
       }
+      <ModalSet />
     </>
   );
 };
