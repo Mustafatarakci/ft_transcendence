@@ -7,7 +7,7 @@ export class User extends BaseEntity {
   id: number;
 
   @ApiProperty({ description: '닉네임' })
-  @Column()
+  @Column({ unique: true })
   nickname: string;
 
   @ApiProperty({ description: '아바타' })

@@ -1,5 +1,5 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from './users.entity';
 import { UsersService as UsersService } from './users.service';
 
@@ -8,9 +8,10 @@ import { UsersService as UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @Get(':id')
-  async getUser(@Param('id') id: string): Promise<User> {
-    const ret = await this.userService.getUserById(id);
+  @ApiOperation({ summary: '유저 목록 가져오기' })
+  @Get('')
+  async getUsers(): Promise<User[]> {
+    const ret = await this.userService.getUsers();
     return ret;
   }
 }
