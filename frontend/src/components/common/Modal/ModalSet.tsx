@@ -16,56 +16,16 @@ const ModalSet: React.FC = () => {
               test
             </Modal>
           ), // 프로필 정보 보기
-          HANDLE_SECOND_AUTH: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 이메일 인증
-          EDIT_NICKNAME: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 닉네임 수정
-          MAKE_GAME_ROOM: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 게임방 만들기
-          MAKE_CHAT_ROOM: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 채팅방 만들기
-          ENTER_GAME_ROOM: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 비밀 게임방 입장
-          ENTER_CHAT_ROOM: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 비밀 채팅방 입장
-          CHECK_SCORE: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 전적 확인
-          EDIT_CHAT_ROOM: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 채팅방 수정
-          SHOW_OWNER_PROFILE: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 채팅방 소유자 프로필
-          SHOW_MANAGER_PROFILE: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 채팅방 관리자 프로필
+          HANDLE_SECOND_AUTH: <></>, // 이메일 인증
+          EDIT_NICKNAME: <></>, // 닉네임 수정
+          MAKE_GAME_ROOM: <></>, // 게임방 만들기
+          MAKE_CHAT_ROOM: <></>, // 채팅방 만들기
+          ENTER_GAME_ROOM: <></>, // 비밀 게임방 입장
+          ENTER_CHAT_ROOM: <></>, // 비밀 채팅방 입장
+          CHECK_SCORE: <></>, // 전적 확인
+          EDIT_CHAT_ROOM: <></>, // 채팅방 수정
+          SHOW_OWNER_PROFILE: <></>, // 채팅방 소유자 프로필
+          SHOW_MANAGER_PROFILE: <></>, // 채팅방 관리자 프로필
           CHECK_LOGOUT: <LogoutModal />, // 로그아웃 확인
         }[modal]}
     </>
