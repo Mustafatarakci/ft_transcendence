@@ -26,11 +26,9 @@ export class UsersService {
     }
 
     const user = new User();
-    user.username = createUserDto.username;
     user.nickname = createUserDto.nickname;
     user.avatar = createUserDto.avatar;
     user.email = createUserDto.email;
-    user.secondAuth = createUserDto.secondAuth;
 
     return await this.userRepo.save(user);
   }
