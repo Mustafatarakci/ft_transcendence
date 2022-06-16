@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import LogoImg from '../../assets/logo-white.png';
-import { MenuType, GAME, CHAT } from '../../utils/interface';
+import { MenuType, GAME, CHAT, LOGOUT, CHECK_LOGOUT } from '../../utils/interface';
+import { AllContext } from '../../store';
 
 interface HeaderProps {
   onClickMenu: (menuType: MenuType) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ onClickMenu }) => {
+  const { setModal } = useContext(AllContext).modalData;
+
   return (
     <HeaderContainer>
       <LogoWrap onClick={() => onClickMenu(GAME)}>
@@ -16,6 +19,7 @@ const Header: React.FC<HeaderProps> = ({ onClickMenu }) => {
       <Menus>
         <Menu onClick={() => onClickMenu(GAME)}>GAME</Menu>
         <Menu onClick={() => onClickMenu(CHAT)}>CHAT</Menu>
+        <Menu onClick={() => setModal(CHECK_LOGOUT)}>LOGOUT</Menu>
       </Menus>
     </HeaderContainer>
   );
@@ -52,6 +56,9 @@ const Menu = styled.span`
   text-align: center;
   cursor: pointer;
   user-select: none;
+  &:hover {
+    color: ${({ theme }) => theme.colors.lightBlue};
+  }
 `;
 
 export default Header;

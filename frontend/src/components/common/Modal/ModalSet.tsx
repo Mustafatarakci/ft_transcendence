@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Modal from '.';
 import LadderModal from '../../Game/LadderModal';
 import { AllContext } from '../../../store';
+import LogoutModal from './LogoutModal';
 
 const ModalSet: React.FC = () => {
   const { modal } = useContext(AllContext).modalData;
@@ -65,11 +66,7 @@ const ModalSet: React.FC = () => {
               test
             </Modal>
           ), // 채팅방 관리자 프로필
-          CHECK_LOGOUT: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 로그아웃 확인
+          CHECK_LOGOUT: <LogoutModal />, // 로그아웃 확인
         }[modal]}
     </>
   );

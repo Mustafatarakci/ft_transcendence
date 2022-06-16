@@ -7,6 +7,7 @@ import {
   SET_NICKNAME,
   User,
   UserStateType,
+  UserType,
 } from '../utils/interface';
 
 export const AllContext = createContext<stateType>({
@@ -31,7 +32,7 @@ type stateType = {
   };
   userData: {
     user: User | null;
-    setUser: (type: string, user?: User) => void;
+    setUser: (type: UserType, user?: User) => void;
   };
   userStatus: {
     userStatus: UserStateType;
@@ -54,7 +55,7 @@ const AllContextApi = ({ children }: AllContextApiProps) => {
 
   const handleUser = (type: string, user?: User) => {
     switch (type) {
-      case 'login':
+      case LOGIN:
         if (user) {
           setUser(user);
           if (!user.nickname) {
@@ -66,7 +67,7 @@ const AllContextApi = ({ children }: AllContextApiProps) => {
           }
         }
         return;
-      case 'logout':
+      case LOGOUT:
         setUser(null);
         return;
       default:

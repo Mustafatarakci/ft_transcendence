@@ -24,6 +24,7 @@ export const SET_NICKNAME = 'SET_NICKNAME' as const;
 export const SECOND_AUTH = 'SECOND_AUTH' as const;
 
 export type UserStateType = 'LOGIN' | 'LOGOUT' | 'SET_NICKNAME' | 'SECOND_AUTH';
+export type UserType = 'LOGIN' | 'LOGOUT';
 
 export const GAME = 'GAME' as const;
 export const CHAT = 'CHAT' as const;

@@ -16,7 +16,7 @@ const OauthPage: React.FC = () => {
     }
     const getUser = async () => {
       const { data } = await axios('http://localhost:4000/user');
-      setUser('login', {
+      setUser(LOGIN, {
         id: data.id,
         nickname: data.nickname,
         username: data.username,
