@@ -5,9 +5,9 @@ import {
   ModalType,
   SECOND_AUTH,
   SET_NICKNAME,
-  User,
-  UserStateType,
-  UserType,
+  IUser,
+  UserStatusType,
+  HandleUserType,
 } from '../utils/interface';
 
 export const AllContext = createContext<stateType>({
@@ -31,12 +31,12 @@ type stateType = {
     setModal: (type: ModalType | null) => void;
   };
   userData: {
-    user: User | null;
-    setUser: (type: UserType, user?: User) => void;
+    user: IUser | null;
+    setUser: (type: HandleUserType, user?: IUser) => void;
   };
   userStatus: {
-    userStatus: UserStateType;
-    setUserStatus: (type: UserStateType) => void;
+    userStatus: UserStatusType;
+    setUserStatus: (type: UserStatusType) => void;
   };
 };
 
@@ -46,24 +46,24 @@ interface AllContextApiProps {
 
 const AllContextApi = ({ children }: AllContextApiProps) => {
   const [modal, setModal] = useState<ModalType | null>(null);
-  const [user, setUser] = useState<User | null>(null);
-  const [userStatus, setUserState] = useState<UserStateType>(LOGOUT);
+  const [user, setUser] = useState<IUser | null>(null);
+  const [userStatus, setUserStatus] = useState<UserStatusType>(LOGOUT);
 
   const handleModal = (type: ModalType | null) => {
     setModal(type);
   };
 
-  const handleUser = (type: string, user?: User) => {
+  const handleUser = (type: string, user?: IUser) => {
     switch (type) {
       case LOGIN:
         if (user) {
           setUser(user);
           if (!user.nickname) {
-            setUserState(SET_NICKNAME);
+            setUserStatus(SET_NICKNAME);
           } else if (user.secondAuth) {
-            setUserState(SECOND_AUTH);
+            setUserStatus(SECOND_AUTH);
           } else {
-            setUserState(LOGIN);
+            setUserStatus(LOGIN);
           }
         }
         return;
@@ -75,8 +75,8 @@ const AllContextApi = ({ children }: AllContextApiProps) => {
     }
   };
 
-  const handleUserStatus = (type: UserStateType) => {
-    setUserState(type);
+  const handleUserStatus = (type: UserStatusType) => {
+    setUserStatus(type);
   };
 
   const data = {

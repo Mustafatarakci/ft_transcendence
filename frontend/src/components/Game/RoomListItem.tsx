@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { RoomListInterface } from '../../utils/interface';
+import { IRoomList } from '../../utils/interface';
 import Button from '../common/Button';
 
 interface RoomListItemProps {
-  item: RoomListInterface;
+  item: IRoomList;
 }
 
 const RoomListItem: React.FC<RoomListItemProps> = ({ item }) => {

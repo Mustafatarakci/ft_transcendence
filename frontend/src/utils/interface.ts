@@ -1,4 +1,4 @@
-export interface User {
+export interface IUser {
   id: number;
   nickname: string;
   username: string;
@@ -9,7 +9,7 @@ export interface User {
   isSigned: boolean;
 }
 
-export interface RoomListInterface {
+export interface IRoomList {
   id: number;
   title: string;
   isPublic: boolean;
@@ -23,8 +23,8 @@ export const LOGOUT = 'LOGOUT' as const;
 export const SET_NICKNAME = 'SET_NICKNAME' as const;
 export const SECOND_AUTH = 'SECOND_AUTH' as const;
 
-export type UserStateType = 'LOGIN' | 'LOGOUT' | 'SET_NICKNAME' | 'SECOND_AUTH';
-export type UserType = 'LOGIN' | 'LOGOUT';
+export type UserStatusType = 'LOGIN' | 'LOGOUT' | 'SET_NICKNAME' | 'SECOND_AUTH';
+export type HandleUserType = 'LOGIN' | 'LOGOUT';
 
 export const GAME = 'GAME' as const;
 export const CHAT = 'CHAT' as const;
