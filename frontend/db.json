@@ -20,5 +20,12 @@
   ],
   "profile": {
     "name": "typicode"
+  },
+  "user": {
+    "id": 1,
+    "nickname": "dd",
+    "email": "noenna@naver.com",
+    "profileImg": "",
+    "secondAuth": false
   }
 }
