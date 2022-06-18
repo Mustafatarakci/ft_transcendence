@@ -54,8 +54,8 @@ const ShowProfile: React.FC = () => {
         </RecordBlock>
 
         <OtherBtnBlock>
-          <Button color="gradient" text="닉네임 변경" width={200} height={40} />
-          <Button color="gradient" text="2차 인증 활성화" width={200} height={40} />
+          <Button color="gradient" text="친구 추가" width={200} height={40} />
+          <Button color="gradient" text="게임 신청" width={200} height={40} />
           <Button color="gradient" text="DM 보내기" width={200} height={40} />
           <Button color="white" text="차단하기" width={200} height={40} />
         </OtherBtnBlock>
