@@ -38,7 +38,7 @@ const ProfilePage: React.FC = () => {
       <MainText>내 프로필</MainText>
       <ProfileBlock>
         <PictureBlock>
-          <ProfilePicture src={user.picture} alt="img" />
+          <ProfilePicture src={user.picture} alt="UserProfileImage" />
         </PictureBlock>
         <UserInfo>
           <UserName>
@@ -166,6 +166,8 @@ const RecordBlock = styled.div`
 
 const Record = styled.span`
   display: inline-block;
+  font-weight: 400px;
+  font-size: 16px;
   
   text-align: center;
   margin-top: 15px;
