@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import Modal from '.';
 import LadderModal from '../../Game/LadderModal';
 import { AllContext } from '../../../store';
 import LogoutModal from './LogoutModal';
+import ShowProfile from './ShowProfile';
 
 const ModalSet: React.FC = () => {
   const { modal } = useContext(AllContext).modalData;
@@ -11,11 +11,7 @@ const ModalSet: React.FC = () => {
       {modal &&
         {
           LOADING_LADDER_GAME: <LadderModal />,
-          SHOW_PROFILE: (
-            <Modal width={200} height={200}>
-              test
-            </Modal>
-          ), // 프로필 정보 보기
+          SHOW_PROFILE: <ShowProfile />, // 프로필 정보 보기
           HANDLE_SECOND_AUTH: <></>, // 이메일 인증
           EDIT_NICKNAME: <></>, // 닉네임 수정
           MAKE_GAME_ROOM: <></>, // 게임방 만들기

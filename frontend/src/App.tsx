@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage';
 import ChatPage from './pages/ChatPage';
 import ProfilePage from './components/UserProfile';
 import { AllContextApi } from './store';
+import ModalTester from './components/common/Modal/ModalTester';
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
             <Route path="/profilePage" element={<ProfilePage />} />
             <Route path="/game" element={<HomePage />} />
             <Route path="/chat" element={<ChatPage />} />
+
+            {/* Tester */}
+            <Route path="/modaltester" element={<ModalTester />} />
+            {/* ====== */}
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
