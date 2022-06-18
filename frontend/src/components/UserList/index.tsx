@@ -107,7 +107,9 @@ const UserList: React.FC = () => {
   );
 };
 
-/*상태값 확인해서, 서클의 색을 바꿔야되니까*/
+/*
+ *서클(유저현재상태표시) 기본상태지정
+ */
 const Circle = styled.div`
   margin-right: 5px;
   border-radius: 50%;
@@ -115,8 +117,10 @@ const Circle = styled.div`
   border: 1px solid ${props => props.theme.colors.green};
 `;
 
-/*서클의 프롭스는, 말그대로 서클에대한거고
-유저아이텐에 프롭스는, 유저이름을 감싸는 박스*/
+/*
+ * 서클(유저현재상태표시) 프롭스 : 서클 커스텀
+ * 유저아이텐에 프롭스는, 유저이름을 감싸는 박스 커스텀
+ */
 const UserItem = styled.li<{ status: string }>`
   #circle {
     width: 8px;
@@ -151,14 +155,12 @@ const UserItem = styled.li<{ status: string }>`
  **
  */
 const ButtonBox = styled.div`
-  /* 아마도 3항연산으로 컬러값을 다르게 넣어봅시다 클릭이  */
   & :first-of-type {
     margin-right: 15px;
   }
   & button {
     font-size: 18px;
   }
-  /* 그래서 저스티파이로 좌우여백을 정렬한다.. */
   display: flex;
   justify-content: space-between;
   align-items: center;
