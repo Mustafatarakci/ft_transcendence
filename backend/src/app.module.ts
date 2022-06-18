@@ -19,6 +19,7 @@ import { LoggerMiddleware } from './logger.middleware';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { AllExceptionsFilter } from './all-exceptions.filter';
 import { TransformInterceptor } from './response.interceptor';
+import { UsersService } from './users/users.service';
 
 @Module({
   imports: [TypeOrmModule.forRoot(TypeORMConfig), UsersModule, AuthModule,
@@ -44,7 +45,7 @@ import { TransformInterceptor } from './response.interceptor';
         };
       },
     }),
-    UsersModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [
@@ -62,7 +63,7 @@ import { TransformInterceptor } from './response.interceptor';
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,
-    },
+    }
   ],
 })
 export class AppModule implements NestModule {

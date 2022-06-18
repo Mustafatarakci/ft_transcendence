@@ -1,7 +1,7 @@
-import { Controller, Get, Param, Body, Post } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from './users.entity';
-import { UsersService as UsersService } from './users.service';
+import { UsersService } from './users.service';
 import { EmailService } from 'src/emails/email.service';
 import { CreateUserDto } from './dto/users.dto';
 
@@ -9,18 +9,27 @@ import { CreateUserDto } from './dto/users.dto';
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly userService: UsersService,
+    private readonly usersService: UsersService,
     private readonly emailService: EmailService) {}
 
   @Get('/email')
-  async secondAuth() {
-    await this.emailService.sendEmail('dudns0503@naver.com');
-    return 'email';
+  async secondAuth(@Query("email") email: string) : Promise<boolean> {
+    let user = await this.usersService.getUserByEmail(email);
+    if ( user === null ) {
+      return false;
+    }
+    await this.emailService.sendEmail(user.email, user.secondAuthCode);
+    // await this.emailService.sendEmail('dudns0503@naver.com');
+    return true;
+    
   }
 
   @Post('/emailVerify')
-  async checkVerity(@Body('code') code: number) : Promise<boolean> {
-    return await this.emailService.emailVerify(code);
+  async checkVerity ( 
+    @Query("email") email: string,
+    @Body('code') code: number ) : Promise<boolean> {
+      let user = await this.usersService.getUserByEmail(email);
+      return (user.secondAuthCode === code);
   }
 
   @Post('/emailAuthSetup')
@@ -39,7 +48,7 @@ export class UsersController {
 
   @Get(':id')
   async getUser(@Param('id') id: string): Promise<User> {
-    const ret = await this.userService.getUserById(id);
+    const ret = await this.usersService.getUserById(id);
     return ret;
   }
 }
