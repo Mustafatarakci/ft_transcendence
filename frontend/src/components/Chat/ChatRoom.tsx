@@ -50,6 +50,7 @@ const Background = styled.div`
   width: 100%;
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.main};
+  overflow: hidden;
 `;
 const ChatRoomContainer = styled.div`
   width: 1000px;
