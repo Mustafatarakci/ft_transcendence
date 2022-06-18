@@ -1,13 +1,13 @@
-import { IsBoolean, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsBoolean, IsEmail, IsString } from 'class-validator';
 
 export class UserDataDto {
-  @IsString()
-  username: string;
-
+  @ApiProperty({ description: '아바타' })
   @IsString()
   avatar: string;
 
-  @IsString()
+  @ApiProperty({ description: '이메일' })
+  @IsEmail()
   email: string;
 
   @IsBoolean()
@@ -18,14 +18,17 @@ export class UserDataDto {
 }
 
 export class SignInResultDto extends UserDataDto {
+  @ApiProperty({ description: '42api accessToken' })
   @IsString()
   accessToken: string;
 
+  @ApiProperty({ description: '회원가입 여부' })
   @IsBoolean()
-  isSigned: boolean;
+  isSignedUp: boolean;
 }
 
 export class CreateUserDto extends UserDataDto {
+  @ApiProperty({ description: '닉네임' })
   @IsString()
   nickname: string;
 }

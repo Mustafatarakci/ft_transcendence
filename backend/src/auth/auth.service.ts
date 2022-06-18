@@ -48,9 +48,8 @@ export class AuthService {
       },
     });
 
-    const { email, login, image_url } = axiosResult.data;
+    const { email, image_url } = axiosResult.data;
     const userData: UserDataDto = {
-      username: login,
       avatar: image_url,
       email,
       secondAuth: false,
@@ -69,7 +68,7 @@ export class AuthService {
       return {
         ...userData,
         accessToken,
-        isSigned: false,
+        isSignedUp: false,
       };
       // return {
       //   ...userData,
@@ -81,13 +80,8 @@ export class AuthService {
     return this.jwtService.sign({
       ...userData,
       accessToken,
-      isSigned: true,
+      isSignedUp: true,
     });
-    // return {
-    //   ...userData,
-    //   accessToken,
-    //   isSigned: true,
-    // };
   }
 
   async signUp(createUserDto: CreateUserDto): Promise<string> {

@@ -20,6 +20,7 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { AllExceptionsFilter } from './all-exceptions.filter';
 import { TransformInterceptor } from './response.interceptor';
 import { UsersService } from './users/users.service';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot(TypeORMConfig), UsersModule, AuthModule,
@@ -45,7 +46,8 @@ import { UsersService } from './users/users.service';
         };
       },
     }),
-    UsersModule
+    AuthModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [
