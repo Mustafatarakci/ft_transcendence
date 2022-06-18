@@ -1,10 +1,19 @@
 import React, { createContext, useState } from 'react';
-import { LOGIN, LOGOUT, SECOND_AUTH, SET_NICKNAME, User, UserStateType } from '../utils/interface';
+import {
+  LOGIN,
+  LOGOUT,
+  ModalType,
+  SECOND_AUTH,
+  SET_NICKNAME,
+  IUser,
+  UserStatusType,
+  HandleUserType,
+} from '../utils/interface';
 
 export const AllContext = createContext<stateType>({
   modalData: {
-    isModal: false,
-    setIsModal: () => null,
+    modal: null,
+    setModal: () => null,
   },
   userData: {
     user: null,
@@ -18,16 +27,16 @@ export const AllContext = createContext<stateType>({
 
 type stateType = {
   modalData: {
-    isModal: boolean;
-    setIsModal: () => void;
+    modal: ModalType | null;
+    setModal: (type: ModalType | null) => void;
   };
   userData: {
-    user: User | null;
-    setUser: (type: string, user?: User) => void;
+    user: IUser | null;
+    setUser: (type: HandleUserType, user?: IUser) => void;
   };
   userStatus: {
-    userStatus: UserStateType;
-    setUserStatus: (type: UserStateType) => void;
+    userStatus: UserStatusType;
+    setUserStatus: (type: UserStatusType) => void;
   };
 };
 
@@ -36,29 +45,29 @@ interface AllContextApiProps {
 }
 
 const AllContextApi = ({ children }: AllContextApiProps) => {
-  const [isModal, setIsModal] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
-  const [userStatus, setUserState] = useState<UserStateType>(LOGOUT);
+  const [modal, setModal] = useState<ModalType | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
+  const [userStatus, setUserStatus] = useState<UserStatusType>(LOGOUT);
 
-  const handleModal = () => {
-    setIsModal(!isModal);
+  const handleModal = (type: ModalType | null) => {
+    setModal(type);
   };
 
-  const handleUser = (type: string, user?: User) => {
+  const handleUser = (type: string, user?: IUser) => {
     switch (type) {
-      case 'login':
+      case LOGIN:
         if (user) {
           setUser(user);
           if (!user.nickname) {
-            setUserState(SET_NICKNAME);
+            setUserStatus(SET_NICKNAME);
           } else if (user.secondAuth) {
-            setUserState(SECOND_AUTH);
+            setUserStatus(SECOND_AUTH);
           } else {
-            setUserState(LOGIN);
+            setUserStatus(LOGIN);
           }
         }
         return;
-      case 'logout':
+      case LOGOUT:
         setUser(null);
         return;
       default:
@@ -66,14 +75,14 @@ const AllContextApi = ({ children }: AllContextApiProps) => {
     }
   };
 
-  const handleUserStatus = (type: UserStateType) => {
-    setUserState(type);
+  const handleUserStatus = (type: UserStatusType) => {
+    setUserStatus(type);
   };
 
   const data = {
     modalData: {
-      isModal,
-      setIsModal: handleModal,
+      modal,
+      setModal: handleModal,
     },
     userData: {
       user,
