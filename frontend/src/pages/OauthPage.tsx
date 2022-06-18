@@ -16,14 +16,16 @@ const OauthPage: React.FC = () => {
     }
     const getUser = async () => {
       const { data } = await axios('http://localhost:4000/user');
-      setUser('login', {
+      setUser(LOGIN, {
         id: data.id,
         nickname: data.nickname,
+        username: data.username,
         email: data.email,
-        profileImg: data.profileImg,
+        avatar: data.avatar,
         secondAuth: data.secondAuth,
+        isSigned: data.isSigned,
       });
-      if (!data.nickname) {
+      if (!data.isSigned) {
         setUserStatus(SET_NICKNAME);
       } else if (data.secondAuth) {
         setUserStatus(SECOND_AUTH);
