@@ -80,6 +80,7 @@ const MessageName = styled.span`
 const MessageContent = styled.div`
   display: flex;
   align-items: flex-end;
+  width: 100%;
 `;
 
 const MessageBox = styled.p`
@@ -87,6 +88,9 @@ const MessageBox = styled.p`
   background-color: ${({ theme }) => theme.colors.grey};
   border-radius: 10px;
   padding: 10px 10px;
+  word-wrap: break-spaces;
+  word-break: break-all;
+  max-width: 100%;
 `;
 const MessageTime = styled.span`
   font-size: 12px;
