@@ -6,6 +6,14 @@ interface MessageItemProps {
   message: IMessage;
 }
 
+const getTime = (time: string | number) => {
+  const date = new Date(time);
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+  const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+
+  return `${hours}:${minutes}`;
+};
+
 const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
   if (message.isBroadcast) return <BroadcastMsg>{message.message}</BroadcastMsg>;
   else
@@ -21,7 +29,9 @@ const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
             <MessageWrapper fromUser={message.fromUser}>
               {!message.fromUser && <MessageName>{message.from.nickname}</MessageName>}
               <MessageContent>
-                <p>{message.message}</p>
+                {message.fromUser && <MessageTime>{getTime(message.createdAt)}</MessageTime>}
+                <MessageBox>{message.message}</MessageBox>
+                {!message.fromUser && <MessageTime>{getTime(message.createdAt)}</MessageTime>}
               </MessageContent>
             </MessageWrapper>
           </MessageItemContainer>
@@ -68,9 +78,21 @@ const MessageName = styled.span`
   margin-bottom: 10px;
 `;
 const MessageContent = styled.div`
+  display: flex;
+  align-items: flex-end;
+`;
+
+const MessageBox = styled.p`
+  display: block;
   background-color: ${({ theme }) => theme.colors.grey};
   border-radius: 10px;
   padding: 10px 10px;
+`;
+const MessageTime = styled.span`
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.deepGrey};
+  margin: 0 8px;
+  padding-bottom: 5px;
 `;
 
 export default MessageItem;
