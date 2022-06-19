@@ -6,8 +6,18 @@ import axios from 'axios';
 /*
  ** 제이슨서버에서 유저리스트를 받아와 정렬합니다.
  ** 리스트를 유저네임기준 오름차순으로 정렬 후, 상태 (로그인, 게임중) vs 로그아웃으로 비교하여 정렬합니다.
+ ** 서클과 균형을 맞추기 위해서 넣었던 유저네임의 div가 필요없어져서 삭제함 <---- div에 바로 스타일주는거 고치라던 요청사항 수정중 2222
+ ** 삼항연산으로 클릭을 확인하고, 또다시 친구관계를 확인하던 복잡한 구조를 개선함 <---- 요청사항 333
+ ** useState 두개로 컬러값을 클릭마다 설정해주던거를, 버튼컬러에대한 삼항연산으로 개선했습니다.
+ ** 전체유저버튼과 친구버튼의 클릭상태를 체크하는 useState 'click'의 이름을 직관적으로 수정하였습니다. 'allUser'
+ ** props는 타입은 오브젝트로 수정.
  */
 const UserList: React.FC = () => {
+  const userBtnClickHandler = (e: any) => {
+    e.preventDefault();
+    console.log(e.target.attributes.id);
+    alert(e.target.attributes.id.value);
+  };
   const [userList, setuserList] = useState([]);
   useEffect(() => {
     axios.get('http://localhost:4000/userlist').then(({ data }) => {
@@ -15,124 +25,96 @@ const UserList: React.FC = () => {
         if (a.status === b.status) {
           return a.username.localeCompare(b.username);
         } else {
-          if (b.status === 'off') return b.status.localeCompare(a.status);
+          return b.status.localeCompare(a.status);
+        }
+      });
+      data.sort((a: any, b: any) => {
+        if (a.status !== 'off' && b.status !== 'off') {
+          return a.username.localeCompare(b.username);
         }
       });
       setuserList(data);
     });
   }, []);
+  type ActiveMenuType = 'ALL' | 'FRIEND';
 
-  /*
-   ** click       : 탭메뉴 클릭된 상태 체크.
-   ** tuserColor  : 전체유저 컬러박스.
-   ** fuserColor  : 친구유저 컬러박스.
-   */
-  const [click, setClick] = useState(1);
-  const [tuserColor, setTuserColor] = useState('white');
-  const [fuserColor, setFuserColor] = useState('white');
+  const [activeMenu, setActiveMenu] = useState<ActiveMenuType>('ALL');
   return (
-    <div>
-      <ListBox>
-        <ButtonBox>
-          <Button
-            color={tuserColor}
-            text="전체유저"
-            width={120}
-            height={40}
-            onClick={() => {
-              setClick(0);
-              setTuserColor('gradient');
-              setFuserColor('white');
-            }}
-          />
-          <Button
-            color={fuserColor}
-            text="친구"
-            width={120}
-            height={40}
-            onClick={() => {
-              setClick(1);
-              setTuserColor('white');
-              setFuserColor('gradient');
-            }}
-          />
-        </ButtonBox>
-        <UserContainer>
-          {click === 1 ? (
-            <div>
-              {userList.map((list: any, index: any) => (
-                <div key={index}>
-                  {list.isfriend && (
-                    <ul>
-                      {list.status === 'on' ? (
-                        <UserItem status={list.status} key={index}>
-                          <Circle id="circle"></Circle>
-                          <div style={{ height: 35 }}>{list.username}</div>
-                        </UserItem>
-                      ) : (
-                        <UserItem status={list.status} key={index}>
-                          <Circle id="circle"></Circle>
-                          <div style={{ height: 35 }}>{list.username}</div>
-                        </UserItem>
-                      )}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div>
-              {userList.map((list: any, index: any) => (
-                <div key={index}>
-                  <ul>
-                    {list.status === 'on' ? (
-                      <UserItem status={list.status} key={index}>
-                        <Circle id="circle"></Circle>
-                        <div style={{ height: 35 }}>{list.username}</div>
-                      </UserItem>
-                    ) : (
-                      <UserItem status={list.status} key={index}>
-                        <Circle id="circle"></Circle>
-                        <div style={{ height: 35 }}>{list.username}</div>
-                      </UserItem>
-                    )}
-                  </ul>
-                </div>
-              ))}
-            </div>
+    <ListBox>
+      <ButtonBox>
+        <Button
+          color={activeMenu === 'ALL' ? 'gradient' : 'white'}
+          text="전체유저"
+          width={120}
+          height={40}
+          onClick={() => {
+            setActiveMenu('ALL');
+          }}
+        />
+        <Button
+          color={activeMenu === 'FRIEND' ? 'gradient' : 'white'}
+          text="친구"
+          width={120}
+          height={40}
+          onClick={() => {
+            setActiveMenu('FRIEND');
+          }}
+        />
+      </ButtonBox>
+      <UserContainer>
+        <ul>
+          {userList.map((list: any, index: number) =>
+            activeMenu === 'ALL' ? (
+              <UserItem
+                id={'user_' + index.toString()}
+                status={list.status}
+                key={index}
+                onClick={e => {
+                  userBtnClickHandler(e);
+                }}
+              >
+                {list.username}
+              </UserItem>
+            ) : (
+              list.isfriend && (
+                <UserItem id={'user_' + index.toString()} status={list.status} key={index}>
+                  {list.username}
+                </UserItem>
+              )
+            ),
           )}
-        </UserContainer>
-      </ListBox>
-    </div>
+        </ul>
+      </UserContainer>
+    </ListBox>
   );
 };
 
 /*
- *서클(유저현재상태표시) 기본상태지정
- */
-const Circle = styled.div`
-  margin-right: 5px;
-  border-radius: 50%;
-  background-color: ${props => props.theme.colors.green};
-  border: 1px solid ${props => props.theme.colors.green};
-`;
-
-/*
  * 서클(유저현재상태표시) 프롭스 : 서클 커스텀
  * 유저아이텐에 프롭스는, 유저이름을 감싸는 박스 커스텀
+ * #circle 로 아이템박스에 정의하던 속성 합쳤습니다 <-- 다솜님 요청사항
+ * 서클 컴포넌트가 유저아이템의 가상요소(pseudo element) before로 합쳐졌습니다.
  */
 const UserItem = styled.li<{ status: string }>`
-  #circle {
+  ::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border-radius: 50%;
+    background-color: ${props => props.theme.colors.green};
     width: 8px;
     height: 8px;
-    line-height: 8px;
     ${props =>
       props.status === 'play'
-        ? `background-color: ${props.theme.colors.red};border: 1px solid ${props.theme.colors.red};`
+        ? `background: ${props.theme.colors.red};`
         : props.status === 'on'
-        ? `background-color: ${props.theme.colors.green};border: 1px solid ${props.theme.colors.green};`
-        : `background-color: ${props.theme.colors.deepGrey};border: 1px solid ${props.theme.colors.deepGrey};`}
+        ? `background: ${props.theme.colors.green};`
+        : `background: ${props.theme.colors.deepGrey};`}
   }
+  //마우스 포인트 버튼되는 형태로. >> 이후 추가할 이벤트를 위해서 임시로.
+  cursor: pointer;
+  position: relative;
   border: 1px solid ${props => props.theme.colors.grey};
   display: flex;
   justify-content: left;
@@ -141,7 +123,7 @@ const UserItem = styled.li<{ status: string }>`
   height: 35px;
   line-height: 30px;
   margin-top: 10px;
-  padding-left: 20px;
+  padding-left: 30px;
   border-radius: 10px;
   background-color: transparent;
   font-style: normal;
@@ -185,6 +167,8 @@ const UserContainer = styled.div`
       border-radius: 10px;
     }
   }
+  // 내눈이 편안하기위한 마진탑 임. 반박시 니말이맞음
+  margin-top: 12px;
   overflow-y: scroll;
   height: 320px;
   width: 270px;
