@@ -67,7 +67,7 @@ const ShowProfile: React.FC = () => {
 // Main Block
 const MainBlock = styled.div`
   padding: 13px;
-  margin-top: 73px;
+  margin-top: 50px;
   width: 100%;
 `;
 //============================================
