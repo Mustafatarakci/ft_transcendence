@@ -4,9 +4,11 @@
       "id": 1,
       "title": "json-server",
       "author": "typicode"
-    },
+    }
+  ],
+  "auth": [
     {
-      "id": 2,
+      "id": 1,
       "user": "junselee",
       "authCode": "1208"
     }
@@ -63,7 +65,7 @@
       "id": 6,
       "username": "jihokim",
       "isfriend": false,
-      "status": "off"
+      "status": "on"
     },
     {
       "id": 7,
@@ -75,17 +77,77 @@
       "id": 8,
       "username": "hyechoi",
       "isfriend": true,
-      "status": "on"
+      "status": "off"
     },
     {
       "id": 9,
       "username": "inshin",
       "isfriend": false,
-      "status": "on"
+      "status": "play"
     },
     {
       "id": 10,
       "username": "yuchoi",
+      "isfriend": false,
+      "status": "on"
+    },
+    {
+      "id": 11,
+      "username": "amigo",
+      "isfriend": false,
+      "status": "on"
+    },
+    {
+      "id": 12,
+      "username": "friend",
+      "isfriend": true,
+      "status": "on"
+    },
+    {
+      "id": 13,
+      "username": "domodacci",
+      "isfriend": true,
+      "status": "play"
+    },
+    {
+      "id": 14,
+      "username": "mate",
+      "isfriend": false,
+      "status": "off"
+    },
+    {
+      "id": 15,
+      "username": "rosa",
+      "isfriend": true,
+      "status": "off"
+    },
+    {
+      "id": 16,
+      "username": "dacci",
+      "isfriend": true,
+      "status": "off"
+    },
+    {
+      "id": 17,
+      "username": "temate",
+      "isfriend": false,
+      "status": "off"
+    },
+    {
+      "id": 18,
+      "username": "noah",
+      "isfriend": true,
+      "status": "off"
+    },
+    {
+      "id": 19,
+      "username": "jun",
+      "isfriend": true,
+      "status": "play"
+    },
+    {
+      "id": 20,
+      "username": "polarbear",
       "isfriend": false,
       "status": "on"
     }
