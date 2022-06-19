@@ -13,8 +13,8 @@ const SecondAuthPage: React.FC = () => {
    * authCode : 서버로부터 받아온 인증코드 관리.
    * errMsg : "코드가 일치하지 않습니다." 문구 관리.
    */
-  const [authCode, setAuthcode] = useState('');
-  const [errMsg, setErrmsg] = useState('');
+  const [authCode, setAuthcode] = useState<string>('');
+  const [errMsg, setErrmsg] = useState<string>('');
 
   /*
    * 요청사항 : onCheck 이벤트 속성 명시
@@ -23,7 +23,7 @@ const SecondAuthPage: React.FC = () => {
    */
   const onCheck = () => {
     axios
-      .get(`http://localhost:4000/posts/${2}`)
+      .get(`http://localhost:4000/auth/${1}`)
       .then(function (response) {
         if (authCode === response.data.authCode) {
           setErrmsg('');
@@ -44,7 +44,7 @@ const SecondAuthPage: React.FC = () => {
    */
   const onGetQuery = () => {
     axios
-      .get(`http://localhost:4000/posts/${2}`)
+      .get(`http://localhost:4000/auth/${1}`)
       .then(function (response) {
         alert('인증코드 : ' + response.data.authCode);
       })
