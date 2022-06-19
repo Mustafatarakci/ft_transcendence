@@ -23,9 +23,7 @@ const ChatRoom: React.FC = () => {
   return (
     <Background>
       <ChatRoomContainer>
-        <ChatRoomHeader>
-          <Header />
-        </ChatRoomHeader>
+        <Header />
         <ChatRoomBody>
           <ChatArea>
             <ChatTitle>dhyeon의 채팅방</ChatTitle>
@@ -56,7 +54,6 @@ const ChatRoomContainer = styled.div`
   width: 1000px;
   margin: 0 auto;
 `;
-const ChatRoomHeader = styled.div``;
 const ChatRoomBody = styled.div`
   display: flex;
   height: calc(100vh - 160px);
