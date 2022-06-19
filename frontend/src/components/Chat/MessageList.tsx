@@ -11,18 +11,25 @@ const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   const messageBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (messageBoxRef.current) {
-      messageBoxRef.current.addEventListener('DOMNodeInserted', e => {
-        e.stopPropagation();
-        e.preventDefault();
-        const target = e.currentTarget as HTMLDivElement;
+    const handleScroll = (e: Event) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const target = e.currentTarget as HTMLDivElement;
 
-        target.scroll({
-          top: target.scrollHeight,
-          behavior: 'smooth',
-        });
+      target.scroll({
+        top: target.scrollHeight,
+        behavior: 'smooth',
       });
+    };
+    if (messageBoxRef.current) {
+      messageBoxRef.current.addEventListener('DOMNodeInserted', handleScroll);
     }
+
+    return () => {
+      if (messageBoxRef.current) {
+        messageBoxRef.current.removeEventListener('DOMNodeInserted', handleScroll);
+      }
+    };
   }, []);
 
   return (
