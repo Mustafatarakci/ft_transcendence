@@ -6,8 +6,8 @@ import ModalSet from './ModalSet';
 import { AllContext } from '../../../store';
 import { SHOW_PROFILE } from '../../../utils/interface';
 import { MAKE_GAME_ROOM } from '../../../utils/interface';
+import { MAKE_CHAT_ROOM } from '../../../utils/interface';
 
-// import { SHOW_PROFILE } from '../../../utils/interface'
 // import { SHOW_PROFILE } from '../../../utils/interface'
 // import { SHOW_PROFILE } from '../../../utils/interface'
 // import { SHOW_PROFILE } from '../../../utils/interface'
@@ -49,10 +49,10 @@ const ModalTester: React.FC = () => {
           />
           <Button
             color="gradient"
-            text="Ladder"
+            text="MakeChatRoom"
             width={120}
             height={30}
-            onClick={() => setModal(SHOW_PROFILE)}
+            onClick={() => setModal(MAKE_CHAT_ROOM)}
           />
         </OtherBtnBlock>
       </MainBlock>

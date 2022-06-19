@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import Button from '../Button';
 import Modal from '.';
 
-const MakeGameRoom: React.FC = () => {
+const MakeChatRoom: React.FC = () => {
   return (
-    <Modal width={570} height={300} title={'놀이방 만들기'}>
+    <Modal width={570} height={300} title={'대화방 만들기'}>
       <MainBlock>
         <TextGridBlock>
           <RoomNPwd>방 제목</RoomNPwd>
@@ -68,4 +68,4 @@ const BtnBlock = styled.div`
 `;
 //============================================
 
-export default MakeGameRoom;
+export default MakeChatRoom;
