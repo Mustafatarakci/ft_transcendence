@@ -15,6 +15,8 @@ const ShowProfile: React.FC = () => {
     lad_win: '',
     lad_lose: '',
     picture: '',
+    isFriend: false,
+    isBlock: false,
   });
 
   useEffect(() => {
@@ -29,9 +31,27 @@ const ShowProfile: React.FC = () => {
         lad_win: res.data.lad_win,
         lad_lose: res.data.lad_lose,
         picture: res.data.picture,
+        isFriend: res.data.isFriend,
+        isBlock: res.data.isBlock,
       }),
     );
   }, []);
+
+  const onClickFriend = () => {
+    setUser({
+      ...user,
+      isFriend: !user.isFriend,
+    });
+  };
+
+  const onClickBlock = () => {
+    if (user.isFriend)
+      setUser({
+        ...user,
+        isFriend: false,
+        isBlock: !user.isBlock,
+      });
+  };
 
   return (
     <Modal width={505} height={514} title={'프로필 보기'}>
@@ -54,10 +74,23 @@ const ShowProfile: React.FC = () => {
         </RecordBlock>
 
         <OtherBtnBlock>
-          <Button color="gradient" text="친구 추가" width={200} height={40} />
+          <Button
+            color="gradient"
+            text={user.isFriend ? '친구 해제' : '친구 추가'}
+            width={200}
+            height={40}
+            onClick={onClickFriend}
+            // disabled={user.isBlock ? true : false}
+          />
           <Button color="gradient" text="게임 신청" width={200} height={40} />
           <Button color="gradient" text="DM 보내기" width={200} height={40} />
-          <Button color="white" text="차단하기" width={200} height={40} />
+          <Button
+            color="white"
+            text={user.isBlock ? '차단해제' : '차단하기'}
+            width={200}
+            height={40}
+            onClick={onClickBlock}
+          />
         </OtherBtnBlock>
       </MainBlock>
     </Modal>
