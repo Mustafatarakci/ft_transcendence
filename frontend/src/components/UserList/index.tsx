@@ -13,11 +13,6 @@ import axios from 'axios';
  ** props는 타입은 오브젝트로 수정.
  */
 const UserList: React.FC = () => {
-  const userBtnClickHandler = (e: any) => {
-    e.preventDefault();
-    console.log(e.target.attributes.id);
-    alert(e.target.attributes.id.value);
-  };
   const [userList, setuserList] = useState([]);
   useEffect(() => {
     axios.get('http://localhost:4000/userlist').then(({ data }) => {
@@ -65,19 +60,16 @@ const UserList: React.FC = () => {
         <ul>
           {userList.map((list: any, index: number) =>
             activeMenu === 'ALL' ? (
-              <UserItem
-                id={'user_' + index.toString()}
-                status={list.status}
-                key={index}
-                onClick={e => {
-                  userBtnClickHandler(e);
-                }}
-              >
+              <UserItem status={list.status} key={index} onClick={() => console.log(list.username)}>
                 {list.username}
               </UserItem>
             ) : (
               list.isfriend && (
-                <UserItem id={'user_' + index.toString()} status={list.status} key={index}>
+                <UserItem
+                  status={list.status}
+                  key={index}
+                  onClick={() => console.log(list.username)}
+                >
                   {list.username}
                 </UserItem>
               )
