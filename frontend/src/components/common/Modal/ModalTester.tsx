@@ -7,9 +7,9 @@ import { AllContext } from '../../../store';
 import { SHOW_PROFILE } from '../../../utils/interface';
 import { MAKE_GAME_ROOM } from '../../../utils/interface';
 import { MAKE_CHAT_ROOM } from '../../../utils/interface';
+import { ENTER_GAME_ROOM } from '../../../utils/interface';
+import { ENTER_CHAT_ROOM } from '../../../utils/interface';
 
-// import { SHOW_PROFILE } from '../../../utils/interface'
-// import { SHOW_PROFILE } from '../../../utils/interface'
 // import { SHOW_PROFILE } from '../../../utils/interface'
 // import { SHOW_PROFILE } from '../../../utils/interface'
 
@@ -53,6 +53,20 @@ const ModalTester: React.FC = () => {
             width={120}
             height={30}
             onClick={() => setModal(MAKE_CHAT_ROOM)}
+          />
+          <Button
+            color="gradient"
+            text="EnterGameRoom"
+            width={120}
+            height={30}
+            onClick={() => setModal(ENTER_GAME_ROOM)}
+          />
+          <Button
+            color="gradient"
+            text="EnterChatRoom"
+            width={120}
+            height={30}
+            onClick={() => setModal(ENTER_CHAT_ROOM)}
           />
         </OtherBtnBlock>
       </MainBlock>
