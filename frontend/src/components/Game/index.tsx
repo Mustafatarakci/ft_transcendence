@@ -49,7 +49,7 @@ const LadderGame = styled.div`
   button {
     margin: 0;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 500;
     &:last-of-type {
       margin-left: 10px;
     }
