@@ -6,10 +6,11 @@ interface ButtonProps {
   text: string;
   width: number;
   height: number;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ color, text, width, height, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ color, text, width, height, disabled, onClick }) => {
   return (
     <ButtonContainer
       width={width}
@@ -17,6 +18,7 @@ const Button: React.FC<ButtonProps> = ({ color, text, width, height, onClick }) 
       gradient={color === 'gradient' ? true : false}
       color={color}
       onClick={onClick}
+      disabled={disabled !== undefined ? disabled : false}
     >
       {text}
     </ButtonContainer>
@@ -42,9 +44,15 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
   margin: 0 auto;
   display: block;
   transition: all 0.2s ease-in-out;
+  user-select: none;
 
   &:hover {
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 `;
 
