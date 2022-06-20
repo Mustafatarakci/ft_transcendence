@@ -21,4 +21,8 @@ export class Games extends BaseEntity {
   @ApiProperty({ description: '비밀 번호' })
   @Column()
   password: string;
+
+  @ApiProperty({ description: '래더게임 여부' })
+  @Column()
+  isLadder: string;
 }
