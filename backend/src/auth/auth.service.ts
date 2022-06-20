@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import axios from 'axios';
 import {
@@ -32,7 +32,6 @@ export class AuthService {
 
     return axiosResult.data.access_token;
   }
-
 
   makeRand6Num = (): number => {
     const randNum = Math.floor(Math.random() * 1000000);
@@ -93,6 +92,10 @@ export class AuthService {
   }
 
   async isDuplicateNickname(nickname: string): Promise<boolean> {
+    if (nickname.length < 2 || nickname.length > 8) {
+      throw new BadRequestException('닉네임은 최소2자 최대 8자 입니다.');
+    }
+
     return await this.usersService.isDuplicateNickname(nickname);
   }
 }
