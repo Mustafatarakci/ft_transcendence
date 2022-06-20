@@ -101,5 +101,59 @@
       "playerCount": 1,
       "isLadder": false
     }
+  ],
+  "messages": [
+    {
+      "id": 0,
+      "isBroadcast": true,
+      "message": "sgang님이 입장하셨습니다.",
+      "fromUser": false,
+
+      "createdAt": "2022-06-18T14:11:30.000Z"
+    },
+    {
+      "id": 1,
+      "isBroadcast": false,
+      "from": {
+        "id": 1,
+        "nickname": "sgang",
+        "profileImage": "https://interbalance.org/wp-content/uploads/2021/08/ray-zhuang-Px2Y-sio6-c-unsplash-scaled.jpg"
+      },
+      "message": "안녕하세요 하하하하",
+      "fromUser": false,
+      "createdAt": "2022-06-18T14:11:00.000Z"
+    },
+    {
+      "id": 2,
+      "isBroadcast": false,
+      "from": {
+        "id": 1,
+        "nickname": "sgang",
+        "profileImage": "https://interbalance.org/wp-content/uploads/2021/08/ray-zhuang-Px2Y-sio6-c-unsplash-scaled.jpg"
+      },
+      "message": "ㅎㅇㅎㅇ",
+      "fromUser": false,
+      "createdAt": "2022-06-18T14:12:00.000Z"
+    },
+    {
+      "id": 3,
+      "isBroadcast": true,
+      "message": "dhyeon님이 입장하셨습니다.",
+      "fromUser": false,
+
+      "createdAt": "2022-06-18T14:11:30.000Z"
+    },
+    {
+      "id": 4,
+      "isBroadcast": false,
+      "from": {
+        "id": 2,
+        "nickname": "dhyeon",
+        "profileImage": "https://src.hidoc.co.kr/image/lib/2022/5/4/1651651323632_0.jpg"
+      },
+      "message": "하이 헬로 안녕",
+      "fromUser": true,
+      "createdAt": "2022-06-18T14:12:00.000Z"
+    }
   ]
 }

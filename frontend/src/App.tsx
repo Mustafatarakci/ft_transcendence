@@ -9,7 +9,8 @@ import OauthPage from './pages/OauthPage';
 import NicknamPage from './pages/NicknamPage';
 import SecondAuthPage from './pages/SecondAuthPage';
 import HomePage from './pages/HomePage';
-import ChatPage from './pages/ChatPage';
+import ChatRoom from './components/Chat/ChatRoom';
+
 import ProfilePage from './components/UserProfile';
 import { AllContextApi } from './store';
 import ModalTester from './components/common/Modal/ModalTester';
@@ -27,7 +28,7 @@ function App() {
             <Route path="/secondAuth" element={<SecondAuthPage />} />
             <Route path="/profilePage" element={<ProfilePage />} />
             <Route path="/game" element={<HomePage />} />
-            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/chat" element={<ChatRoom />} />
 
             {/* Tester */}
             <Route path="/modaltester" element={<ModalTester />} />

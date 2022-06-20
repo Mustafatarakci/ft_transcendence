@@ -18,6 +18,19 @@ export interface IRoomList {
   isGameStart?: boolean;
 }
 
+export interface IMessage {
+  id: number;
+  isBroadcast: boolean;
+  from?: {
+    id: number;
+    nickname: string;
+    profileImage: string;
+  };
+  message: string;
+  fromUser: boolean;
+  createdAt: string | number;
+}
+
 export const LOGIN = 'LOGIN' as const;
 export const LOGOUT = 'LOGOUT' as const;
 export const SET_NICKNAME = 'SET_NICKNAME' as const;
