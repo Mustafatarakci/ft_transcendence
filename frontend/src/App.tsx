@@ -8,10 +8,13 @@ import './utils/styles/common.css';
 import OauthPage from './pages/OauthPage';
 import NicknamPage from './pages/NicknamPage';
 import SecondAuthPage from './pages/SecondAuthPage';
-import GamePage from './pages/GamePage';
-import ChatPage from './pages/ChatPage';
+import HomePage from './pages/HomePage';
+import ChatRoom from './components/Chat/ChatRoom';
 import UserList from './components/UserList/index';
+
+import ProfilePage from './components/UserProfile';
 import { AllContextApi } from './store';
+import ModalTester from './components/common/Modal/ModalTester';
 
 function App() {
   return (
@@ -24,9 +27,14 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/nickname" element={<NicknamPage />} />
             <Route path="/secondAuth" element={<SecondAuthPage />} />
-            <Route path="/game" element={<GamePage />} />
+            <Route path="/profilePage" element={<ProfilePage />} />
+            <Route path="/game" element={<HomePage />} />
+            <Route path="/chat" element={<ChatRoom />} />
             <Route path="/userlist" element={<UserList />} />
-            <Route path="/chat" element={<ChatPage />} />
+
+            {/* Tester */}
+            <Route path="/modaltester" element={<ModalTester />} />
+            {/* ====== */}
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
