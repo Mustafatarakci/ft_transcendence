@@ -138,12 +138,13 @@ const Input = styled.input`
  * 그다음은 서브텍스트 스타일링입니다.
  * "코드가 일치하지 않습니다" 라는 문구를 임시적으로 스타일링 해뒀습니다.
  * 안쪽 패딩값을 통해서, 비율을 맞춰줬습니다.
- * (다현님 피드백에 따라 p태그로 바꿨습니다)
+ * (다현님 피드백에 따라 p태그로 바꿨습니다) ---> span수정 !
  * SubText의 패딩값으로 정렬하지말고, 마진값으로 정렬했습니다.
  * padding: 40px 0; -> margin: 10px 0;
  * font-family: 'Noto Sans KR', sans-serif;가 전역에 설정되어있으니까 빼자
  */
-const SubText = styled.p`
+const SubText = styled.span`
+  display: block;
   margin: 10px 0;
   color: ${props => props.theme.colors.red};
   font-style: normal;

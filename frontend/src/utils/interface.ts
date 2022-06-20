@@ -6,6 +6,13 @@ export interface User {
   secondAuth: boolean;
 }
 
+export interface IUserList {
+  id: number;
+  username: string;
+  isfriend: boolean;
+  status: 'on' | 'off' | 'play';
+}
+
 export const LOGIN = 'LOGIN' as const;
 export const LOGOUT = 'LOGOUT' as const;
 export const SET_NICKNAME = 'SET_NICKNAME' as const;

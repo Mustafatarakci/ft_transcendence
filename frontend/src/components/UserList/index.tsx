@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Button from '../common/Button';
 import axios from 'axios';
+import { IUserList } from '../../utils/interface';
 
 /*
  ** 제이슨서버에서 유저리스트를 받아와 정렬합니다.
@@ -11,22 +12,20 @@ import axios from 'axios';
  ** useState 두개로 컬러값을 클릭마다 설정해주던거를, 버튼컬러에대한 삼항연산으로 개선했습니다.
  ** 전체유저버튼과 친구버튼의 클릭상태를 체크하는 useState 'click'의 이름을 직관적으로 수정하였습니다. 'allUser'
  ** props는 타입은 오브젝트로 수정.
+ ** 타입명시할때 인터페이스사용한 적용 요청사항 111 <-- 인터페이스.tsx에 넣어서 가져다쓰자
+ ** 충돌원인 /gamepage에 넣어논 태그삭제  요청사항 222
  */
+
 const UserList: React.FC = () => {
-  const [userList, setuserList] = useState([]);
+  const [userList, setuserList] = useState<IUserList[] | []>([]);
   useEffect(() => {
     axios.get('http://localhost:4000/userlist').then(({ data }) => {
-      data.sort((a: any, b: any) => {
-        if (a.status === b.status) {
-          return a.username.localeCompare(b.username);
-        } else {
-          return b.status.localeCompare(a.status);
-        }
+      data.sort((a: IUserList, b: IUserList) => {
+        if (a.status === b.status) return a.username.localeCompare(b.username);
+        else return b.status.localeCompare(a.status);
       });
-      data.sort((a: any, b: any) => {
-        if (a.status !== 'off' && b.status !== 'off') {
-          return a.username.localeCompare(b.username);
-        }
+      data.sort((a: IUserList, b: IUserList) => {
+        if (a.status !== 'off' && b.status !== 'off') return a.username.localeCompare(b.username);
       });
       setuserList(data);
     });
@@ -58,7 +57,7 @@ const UserList: React.FC = () => {
       </ButtonBox>
       <UserContainer>
         <ul>
-          {userList.map((list: any, index: number) =>
+          {userList.map((list: IUserList, index: number) =>
             activeMenu === 'ALL' ? (
               <UserItem status={list.status} key={index} onClick={() => console.log(list.username)}>
                 {list.username}
@@ -87,6 +86,13 @@ const UserList: React.FC = () => {
  * #circle 로 아이템박스에 정의하던 속성 합쳤습니다 <-- 다솜님 요청사항
  * 서클 컴포넌트가 유저아이템의 가상요소(pseudo element) before로 합쳐졌습니다.
  */
+
+// props.status === 'play'
+//   ? `background: ${props.theme.colors.red};`
+//   : props.status === 'on'
+//   ? `background: ${props.theme.colors.green};`
+//   : `background: ${props.theme.colors.deepGrey};`}
+//마우스 포인트 버튼되는 형태로. >> 이후 추가할 이벤트를 위해서 임시로.
 const UserItem = styled.li<{ status: string }>`
   ::before {
     content: '';
@@ -97,14 +103,17 @@ const UserItem = styled.li<{ status: string }>`
     background-color: ${props => props.theme.colors.green};
     width: 8px;
     height: 8px;
-    ${props =>
-      props.status === 'play'
-        ? `background: ${props.theme.colors.red};`
-        : props.status === 'on'
-        ? `background: ${props.theme.colors.green};`
-        : `background: ${props.theme.colors.deepGrey};`}
+    ${props => {
+      switch (props.status) {
+        case 'play':
+          return `background: ${props.theme.colors.red};`;
+        case 'on':
+          return `background: ${props.theme.colors.green};`;
+        default:
+          return `background: ${props.theme.colors.deepGrey};`;
+      }
+    }}
   }
-  //마우스 포인트 버튼되는 형태로. >> 이후 추가할 이벤트를 위해서 임시로.
   cursor: pointer;
   position: relative;
   border: 1px solid ${props => props.theme.colors.grey};
