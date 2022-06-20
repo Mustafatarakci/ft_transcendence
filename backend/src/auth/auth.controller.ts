@@ -17,7 +17,11 @@ export class AuthController {
     return 'getOauthPage';
   }
 
-  @ApiOperation({ summary: '로그인' })
+  @ApiOperation({
+    summary: '로그인',
+    description:
+      '비회원일 경우 SignInResultDto 타입으로 리턴하고 회원일 경우 JWT로 리턴함',
+  })
   @Get('signIn')
   async signIn(@Query('code') code: string): Promise<SignInResultDto | string> {
     const signInResult = await this.authService.signIn(code);
