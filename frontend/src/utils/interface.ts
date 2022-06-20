@@ -13,6 +13,10 @@ export interface IUserList {
   status: 'on' | 'off' | 'play';
 }
 
+export const ON = 'on' as const;
+export const OFF = 'off' as const;
+export const PLAY = 'play' as const;
+
 export const LOGIN = 'LOGIN' as const;
 export const LOGOUT = 'LOGOUT' as const;
 export const SET_NICKNAME = 'SET_NICKNAME' as const;

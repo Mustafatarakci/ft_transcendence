@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Button from '../common/Button';
 import axios from 'axios';
-import { IUserList } from '../../utils/interface';
+import { IUserList, ON, OFF, PLAY } from '../../utils/interface';
 
 /*
  ** 제이슨서버에서 유저리스트를 받아와 정렬합니다.
@@ -25,7 +25,7 @@ const UserList: React.FC = () => {
         else return b.status.localeCompare(a.status);
       });
       data.sort((a: IUserList, b: IUserList) => {
-        if (a.status !== 'off' && b.status !== 'off') return a.username.localeCompare(b.username);
+        if (a.status !== OFF && b.status !== OFF) return a.username.localeCompare(b.username);
       });
       setuserList(data);
     });
@@ -105,9 +105,9 @@ const UserItem = styled.li<{ status: string }>`
     height: 8px;
     ${props => {
       switch (props.status) {
-        case 'play':
+        case PLAY:
           return `background: ${props.theme.colors.red};`;
-        case 'on':
+        case ON:
           return `background: ${props.theme.colors.green};`;
         default:
           return `background: ${props.theme.colors.deepGrey};`;
@@ -129,7 +129,7 @@ const UserItem = styled.li<{ status: string }>`
   background-color: transparent;
   font-style: normal;
   font-size: 14px;
-  ${props => props.status === 'off' && `color: ${props.theme.colors.deepGrey};`}
+  ${props => props.status === OFF && `color: ${props.theme.colors.deepGrey};`}
 `;
 
 /*
