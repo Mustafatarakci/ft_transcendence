@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EmailModule } from 'src/emails/email.module';
 import { EmailService } from 'src/emails/email.service';
 import { UsersController } from './users.controller';
-import { User } from './users.entity';
+import { User } from './entities/users.entity';
 import { UsersService } from './users.service';
 
 @Module({
