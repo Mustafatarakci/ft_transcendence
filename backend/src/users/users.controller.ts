@@ -1,9 +1,9 @@
-import { Controller, Get, Param, Body, Post, Query } from '@nestjs/common';
+import { Controller, Get, Body, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from './entities/users.entity';
 import { UsersService } from './users.service';
 import { EmailService } from 'src/emails/email.service';
-import { CreateUserDto, EmailDto } from './dto/users.dto';
+import { EmailDto } from './dto/users.dto';
 
 @ApiTags('users')
 @Controller('users')
