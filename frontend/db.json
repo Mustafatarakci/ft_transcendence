@@ -29,6 +29,8 @@
     "id": 0,
     "user": "sgang",
     "user_nick": "SGANG",
+    "isFriend": true,
+    "isBlock": false,
     "user_lv": 5,
     "gen_win": 10,
     "gen_lose": 1,
