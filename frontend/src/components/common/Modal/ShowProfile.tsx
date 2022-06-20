@@ -45,12 +45,11 @@ const ShowProfile: React.FC = () => {
   };
 
   const onClickBlock = () => {
-    if (user.isFriend)
-      setUser({
-        ...user,
-        isFriend: false,
-        isBlock: !user.isBlock,
-      });
+    setUser({
+      ...user,
+      isFriend: false,
+      isBlock: !user.isBlock,
+    });
   };
 
   return (
