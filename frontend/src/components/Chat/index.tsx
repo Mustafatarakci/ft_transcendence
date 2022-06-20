@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import styled from '@emotion/styled';
 import Button from '../common/Button';
 import RoomList from '../Game/RoomList';
+import { MAKE_CHAT_ROOM } from '../../utils/interface';
+import { AllContext } from '../../store';
 
 const Chat: React.FC = () => {
   const [chatList, setChatList] = useState([]);
+  const { setModal } = useContext(AllContext).modalData;
 
   useEffect(() => {
     const getChatList = async () => {
@@ -18,6 +21,13 @@ const Chat: React.FC = () => {
   return (
     <>
       <EnteredRoomBtn>
+        <Button
+          width={120}
+          height={40}
+          color="white"
+          text="방 만들기"
+          onClick={() => setModal(MAKE_CHAT_ROOM)}
+        />
         <Button width={160} height={40} color="gradient" text="참여중인 채팅방 보기" />
       </EnteredRoomBtn>
       <RoomList list={chatList} />
@@ -34,6 +44,9 @@ const EnteredRoomBtn = styled.div`
     margin: 0;
     font-size: 14px;
     font-weight: bold;
+    &:last-of-type {
+      margin-left: 10px;
+    }
   }
 `;
 

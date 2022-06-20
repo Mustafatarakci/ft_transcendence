@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Button from '../common/Button';
 import GameList from './RoomList';
 import { AllContext } from '../../store';
-import { LOADING_LADDER_GAME, IRoomList } from '../../utils/interface';
+import { LOADING_LADDER_GAME, IRoomList, MAKE_GAME_ROOM } from '../../utils/interface';
 
 const Game: React.FC = () => {
   const [gameList, setGameList] = useState<IRoomList[] | []>([]);
@@ -21,6 +21,13 @@ const Game: React.FC = () => {
   return (
     <>
       <LadderGame>
+        <Button
+          width={120}
+          height={40}
+          color="white"
+          text="방 만들기"
+          onClick={() => setModal(MAKE_GAME_ROOM)}
+        />
         <Button
           width={160}
           height={40}
@@ -43,6 +50,9 @@ const LadderGame = styled.div`
     margin: 0;
     font-size: 14px;
     font-weight: bold;
+    &:last-of-type {
+      margin-left: 10px;
+    }
   }
 `;
 
