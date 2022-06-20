@@ -72,8 +72,7 @@ const MainBlock = styled.div`
   border-radius: 20px;
   width: 300px;
   height: 338px;
-  padding-left: 25px;
-  padding-right: 25px;
+  padding: 20px 25px;
   font-style: normal;
   font-weight: 400;
 `;
@@ -82,7 +81,6 @@ const MainBlock = styled.div`
 const MainText = styled.h3`
   font-size: 20px;
   line-height: 29px;
-  margin-top: 20px;
 
   color: ${props => props.theme.colors.main};
 `;

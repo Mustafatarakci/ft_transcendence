@@ -65,7 +65,6 @@ const MainArea = styled.div`
 const HomeMenus = styled.div`
   width: 300px;
   height: 100%;
-  background-color: white;
 `;
 
 export default GamePage;
