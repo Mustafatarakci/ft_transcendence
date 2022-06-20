@@ -8,11 +8,11 @@ export class Games extends BaseEntity {
 
   @ApiProperty({ description: '첫번째 플래이어의 유저 id' })
   @Column()
-  firstPlayer: number;
+  firstPlayerId: number;
 
   @ApiProperty({ description: '두번째 플레이어의 유저 id' })
   @Column()
-  secondPlayer: number;
+  secondPlayerId: number;
 
   @ApiProperty({ description: '방 제목' })
   @Column()
@@ -25,4 +25,12 @@ export class Games extends BaseEntity {
   @ApiProperty({ description: '래더게임 여부' })
   @Column()
   isLadder: string;
+
+  @ApiProperty({ description: '첫번째 플레이어의 점수' })
+  @Column()
+  firstPlayerScore: number;
+
+  @ApiProperty({ description: '두번째 플레이어의 점수' })
+  @Column()
+  secondPlayerScore: number;
 }
