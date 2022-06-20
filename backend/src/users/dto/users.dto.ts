@@ -9,12 +9,6 @@ export class UserDataDto {
   @ApiProperty({ description: '이메일' })
   @IsEmail()
   email: string;
-
-  @IsBoolean()
-  secondAuth: boolean;
-
-  @IsString()
-  secondAuthCode: number;
 }
 
 export class SignInResultDto extends UserDataDto {

@@ -46,5 +46,5 @@ export class User extends BaseEntity {
   @Column({ default: 0 })
   ladderloseCount: number;
 
-  // 친구, 승패, 레더레벨, 업적, 모든 경기 기록
+  // 친구, 레더레벨, 업적, 모든 경기 기록
 }

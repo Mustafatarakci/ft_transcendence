@@ -33,8 +33,6 @@ export class UsersService {
     user.nickname = createUserDto.nickname;
     user.avatar = createUserDto.avatar;
     user.email = createUserDto.email;
-    user.secondAuth = createUserDto.secondAuth;
-    user.secondAuthCode = createUserDto.secondAuthCode;
 
     return await this.userRepo.save(user);
   }

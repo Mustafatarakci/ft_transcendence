@@ -51,8 +51,6 @@ export class AuthService {
     const userData: UserDataDto = {
       avatar: image_url,
       email,
-      secondAuth: false,
-      secondAuthCode: this.makeRand6Num(),
     };
     return userData;
   }
