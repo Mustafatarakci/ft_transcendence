@@ -44,4 +44,21 @@ export class UsersService {
     }
     return false;
   }
+
+  async toggleSecondAuth(email: string): Promise<void> {
+    const user = await this.getUserByEmail(email);
+
+    if (user === undefined) {
+      throw new BadRequestException('존재하지 않는 유저입니다.');
+    }
+
+    if (!user.isSecondAuthOn) {
+      console.log('이메일 2차 인증 설정');
+      user.isSecondAuthOn = true;
+    } else {
+      console.log('이메일 2차 인증 설정 해제');
+      user.isSecondAuthOn = false;
+    }
+    user.save();
+  }
 }

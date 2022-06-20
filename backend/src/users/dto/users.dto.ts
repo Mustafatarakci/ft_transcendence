@@ -26,3 +26,9 @@ export class CreateUserDto extends UserDataDto {
   @IsString()
   nickname: string;
 }
+
+export class EmailDto {
+  @ApiProperty({ description: '이메일' })
+  @IsEmail()
+  email: string;
+}

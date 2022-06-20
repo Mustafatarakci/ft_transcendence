@@ -3,7 +3,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from './entities/users.entity';
 import { UsersService } from './users.service';
 import { EmailService } from 'src/emails/email.service';
-import { CreateUserDto } from './dto/users.dto';
+import { CreateUserDto, EmailDto } from './dto/users.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -34,14 +34,8 @@ export class UsersController {
   }
 
   @Post('/emailAuthSetup')
-  async codeSetup(createUserDto: CreateUserDto) {
-    if (!createUserDto.secondAuth) {
-      console.log('이메일 2차 인증 설정');
-      createUserDto.secondAuth = true;
-    } else {
-      console.log('이메일 2차 인증 설정 해제');
-      createUserDto.secondAuth = false;
-    }
+  async codeSetup(@Body() emailDto: EmailDto): Promise<void> {
+    this.usersService.toggleSecondAuth(emailDto.email);
   }
 
   @ApiOperation({ summary: '유저 목록 가져오기' })
