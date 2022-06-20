@@ -24,7 +24,10 @@ import { ChatModule } from './chat/chat.module';
 import { GamesModule } from './games/games.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(TypeORMConfig), UsersModule, AuthModule,
+  imports: [
+    TypeOrmModule.forRoot(TypeORMConfig),
+    UsersModule,
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configEmail],
@@ -67,7 +70,7 @@ import { GamesModule } from './games/games.module';
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,
-    }
+    },
   ],
 })
 export class AppModule implements NestModule {
