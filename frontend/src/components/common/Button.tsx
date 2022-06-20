@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { ButtonColorType } from '../../utils/interface';
 
 interface ButtonProps {
-  color: string;
+  color: ButtonColorType;
   text: string;
   width: number;
   height: number;
@@ -34,10 +35,21 @@ interface ButtonContainerProps {
 
 const ButtonContainer = styled.button<ButtonContainerProps>`
   ${({ color, gradient, theme }) =>
-    gradient ? `background: ${theme.colors[color]};` : `background-color: ${theme.colors[color]};`}
+    gradient
+      ? `background: ${theme.colors[color]};`
+      : `background-color: ${theme.colors[color === 'white1' ? 'white' : color]};`}
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  color: ${({ color }) => (color === 'white' ? 'black' : 'white')};
+  color: ${({ color, theme }) => {
+    switch (color) {
+      case 'white':
+        return 'black';
+      case 'white2':
+        return theme.colors.main;
+      default:
+        return 'white';
+    }
+  }};
   border: ${({ color, theme }) => (color === 'white' ? `1px solid ${theme.colors.main}` : 'none')};
   border-radius: 10px;
   cursor: pointer;

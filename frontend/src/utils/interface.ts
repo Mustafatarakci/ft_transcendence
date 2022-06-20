@@ -31,6 +31,8 @@ export interface IMessage {
   createdAt: string | number;
 }
 
+export type ButtonColorType = 'white' | 'white2' | 'main' | 'gradient';
+
 export const LOGIN = 'LOGIN' as const;
 export const LOGOUT = 'LOGOUT' as const;
 export const SET_NICKNAME = 'SET_NICKNAME' as const;
