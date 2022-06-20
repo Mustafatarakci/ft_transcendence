@@ -28,7 +28,6 @@ const EnterGameRoom: React.FC = () => {
       <MainBlock>
         <PwdText>비밀번호를 입력해주세요.</PwdText>
         <InputPwd
-          id="pwdVal"
           type="password"
           onChange={event => {
             setPwd(event.target.value);
@@ -62,6 +61,7 @@ const PwdText = styled.span`
   text-align: center;
   margin: 0 auto;
   font-size: 16px;
+  font-weight: 400;
 `;
 //Input
 const InputPwd = styled.input`
@@ -83,6 +83,7 @@ const CheckerText = styled.span`
   margin: 0 auto;
   margin-top: 5px;
   font-size: 12px;
+  font-weight: 400;
   color: #ff6363;
 `;
 //============================================
