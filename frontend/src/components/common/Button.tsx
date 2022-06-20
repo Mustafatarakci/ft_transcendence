@@ -37,7 +37,7 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
   ${({ color, gradient, theme }) =>
     gradient
       ? `background: ${theme.colors[color]};`
-      : `background-color: ${theme.colors[color === 'white1' ? 'white' : color]};`}
+      : `background-color: ${theme.colors[color === 'white2' ? 'white' : color]};`}
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   color: ${({ color, theme }) => {
@@ -50,7 +50,8 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
         return 'white';
     }
   }};
-  border: ${({ color, theme }) => (color === 'white' ? `1px solid ${theme.colors.main}` : 'none')};
+  border: ${({ color, theme }) =>
+    color.includes('white') ? `1px solid ${theme.colors.main}` : 'none'};
   border-radius: 10px;
   cursor: pointer;
   margin: 0 auto;
