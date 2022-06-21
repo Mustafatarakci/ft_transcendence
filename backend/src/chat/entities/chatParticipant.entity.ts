@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/users.entity';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class ChatParticipant extends BaseEntity {
@@ -10,9 +18,9 @@ export class ChatParticipant extends BaseEntity {
   @Column()
   chattingRoomId: number;
 
-  @ApiProperty({ description: '채팅방 참여자의 유저 id' })
-  @Column()
-  userId: number;
+  // @ApiProperty({ description: '채팅방 참여자의 유저 id' })
+  // @Column()
+  // userId: number;
 
   @ApiProperty({ description: '채팅방에서 유저의 역할' })
   @Column({ default: 'guest' })
@@ -25,4 +33,9 @@ export class ChatParticipant extends BaseEntity {
   @ApiProperty({ description: '음소거 여부' })
   @Column({ default: false })
   isMuted: boolean;
+
+  @ApiProperty({ description: '채팅방 참여자의 유저 id' })
+  @ManyToOne(() => User, (user) => user.chatParticipant)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 }

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ChatContents } from 'src/chat/entities/chatContents.entity';
+import { ChatParticipant } from 'src/chat/entities/chatParticipant.entity';
 import { GameRecord } from 'src/gameRecord/entities/gameRecord.entity';
 import {
   BaseEntity,
@@ -72,6 +73,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => ChatContents, (chatContents) => chatContents.sender)
   sender: ChatContents[];
+
+  @OneToMany(() => ChatParticipant, (chatParticipant) => chatParticipant.user)
+  chatParticipant: ChatParticipant[];
 
   // 친구, 레더레벨, 업적, 모든 경기 기록
 }
