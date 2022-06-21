@@ -32,6 +32,16 @@ export interface IMessage {
 }
 
 export type ButtonColorType = 'white' | 'white2' | 'main' | 'gradient';
+export interface IUserList {
+  id: number;
+  username: string;
+  isfriend: boolean;
+  status: 'on' | 'off' | 'play';
+}
+
+export const ON = 'on' as const;
+export const OFF = 'off' as const;
+export const PLAY = 'play' as const;
 
 export const LOGIN = 'LOGIN' as const;
 export const LOGOUT = 'LOGOUT' as const;
