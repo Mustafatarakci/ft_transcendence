@@ -28,6 +28,6 @@ export class Follow extends BaseEntity {
 
   @ApiProperty({ description: '팔로우 당하는 유저의 id' })
   @ManyToOne(() => User, (user) => user.follow)
-  @JoinColumn({ name: 'followerId' })
+  @JoinColumn({ name: 'followId' })
   follow: User;
 }
