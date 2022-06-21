@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { GameRecord } from 'src/games/entities/games.entity';
 import {
   BaseEntity,
   Column,
@@ -61,5 +62,11 @@ export class User extends BaseEntity {
 
   @OneToMany(() => BlockedUser, (blockedUser) => blockedUser.blocked)
   blocked: BlockedUser[];
+
+  @OneToMany(() => GameRecord, (gameRecord) => gameRecord.playerOne)
+  playerOne: GameRecord[];
+
+  @OneToMany(() => GameRecord, (gameRecord) => gameRecord.playerTwo)
+  playerTwo: GameRecord[];
   // 친구, 레더레벨, 업적, 모든 경기 기록
 }
