@@ -39,12 +39,12 @@ export class GameRecord extends BaseEntity {
   isLadder: string;
 
   @ApiProperty({ description: '첫번째 플래이어의 유저 id' })
-  @ManyToOne(() => User, (user) => user.plyaerOne)
-  @JoinColumn({ name: 'plyaerOneId' })
-  plyaerOne: User;
+  @ManyToOne(() => User, (user) => user.playerOne)
+  @JoinColumn({ name: 'playerOneId' })
+  playerOne: User;
 
   @ApiProperty({ description: '두번째 플레이어의 유저 id' })
-  @ManyToOne(() => User, (user) => user.plyaerTwo)
-  @JoinColumn({ name: 'plyaerTwoId' })
-  plyaerTwo: User;
+  @ManyToOne(() => User, (user) => user.playerTwo)
+  @JoinColumn({ name: 'playerTwoId' })
+  playerTwo: User;
 }

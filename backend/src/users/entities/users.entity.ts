@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { GameRecord } from 'src/games/entities/games.entity';
+import { GameRecord } from 'src/gameRecord/entities/gameRecord.entity';
 import {
   BaseEntity,
   Column,
