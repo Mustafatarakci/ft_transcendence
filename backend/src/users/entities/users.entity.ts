@@ -71,7 +71,7 @@ export class User extends BaseEntity {
   @OneToMany(() => GameRecord, (gameRecord) => gameRecord.playerTwo)
   playerTwo: GameRecord[];
 
-  @OneToMany(() => ChatContents, (chatContents) => chatContents.sender)
+  @OneToMany(() => ChatContents, (chatContents) => chatContents.user)
   sender: ChatContents[];
 
   @OneToMany(() => ChatParticipant, (chatParticipant) => chatParticipant.user)

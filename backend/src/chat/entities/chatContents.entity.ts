@@ -33,6 +33,6 @@ export class ChatContents extends BaseEntity {
 
   @ApiProperty({ description: '메세지 보낸 유저 id' })
   @ManyToOne(() => User, (user) => user.sender)
-  @JoinColumn({ name: 'senderId' })
-  sender: User;
+  @JoinColumn({ name: 'userId' })
+  user: User;
 }
