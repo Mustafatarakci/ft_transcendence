@@ -13,7 +13,7 @@ const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,8}$/;
 const minNickName = 2;
 const maxNickName = 8;
 
-const NicknamPage: React.FC = () => {
+const NicknamePage: React.FC = () => {
   const [profileImg, setProfileImg] = useState<string>(DEFAULT_PROFILE);
   const [nickName, setNickName] = useState<string>('');
   const [checkNickMsg, setCheckNickMsg] = useState<string>('');
@@ -22,9 +22,16 @@ const NicknamPage: React.FC = () => {
   const { setUserStatus } = useContext(AllContext).userStatus;
 
   const onEditNick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckNickMsg('');
+    //  NOTE : 정규식 적용
+    const inputNickValue = e.target.value;
+
+    if (!regex.test(inputNickValue)) {
+      if (inputNickValue.length >= minNickName && inputNickValue.length <= maxNickName)
+        setCheckNickMsg('한글, 영어, 숫자로만 작성해주세요');
+      else setCheckNickMsg(`최소 2자, 최대 8자로 작성해주세요`);
+    } else setCheckNickMsg('');
     setIsEnabled(false);
-    setNickName(e.target.value);
+    setNickName(inputNickValue);
   };
   const onFindImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
@@ -43,21 +50,7 @@ const NicknamPage: React.FC = () => {
     }
   };
   const checkNickName = (resNickName: string) => {
-    // NOTE : 공백문자 제거
-    const nickNameTrim = nickName.trim();
-
-    //  NOTE : 정규식 적용
-    if (!regex.test(nickName)) {
-      if (
-        nickName.includes(' ') ||
-        (nickNameTrim.length >= minNickName && nickNameTrim.length <= maxNickName)
-      )
-        setCheckNickMsg('한글, 영어, 숫자로만 작성해주세요');
-      else setCheckNickMsg(`최소 2자, 최대 8자로 작성해주세요`);
-      return false;
-    }
-
-    if (nickNameTrim === resNickName) {
+    if (nickName === resNickName) {
       setCheckNickMsg(`중복된 닉네임입니다.`);
       setIsEnabled(false);
       return false;
@@ -121,22 +114,15 @@ const NicknamPage: React.FC = () => {
 };
 
 const NickTemplate = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100vh;
+  overflow: auto;
 `;
 
 const NickForm = styled.div`
-  display: block;
   width: 700px;
-  height: 800px;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
   padding: 55px;
+  margin: 50px auto 20px;
   border: 2px solid ${props => props.theme.colors.main};
   border-radius: 20px;
   text-align: center;
@@ -234,4 +220,4 @@ const DupMsg = styled.span`
   height: 40px;
 `;
 
-export default NicknamPage;
+export default NicknamePage;

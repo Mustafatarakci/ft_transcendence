@@ -6,7 +6,7 @@ import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
 import './utils/styles/common.css';
 import OauthPage from './pages/OauthPage';
-import NicknamPage from './pages/NicknamPage';
+import NicknamePage from './pages/NicknamePage';
 import SecondAuthPage from './pages/SecondAuthPage';
 import HomePage from './pages/HomePage';
 import ChatRoom from './components/Chat/ChatRoom';
@@ -25,7 +25,7 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/callback" element={<OauthPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/nickname" element={<NicknamPage />} />
+            <Route path="/nickname" element={<NicknamePage />} />
             <Route path="/secondAuth" element={<SecondAuthPage />} />
             <Route path="/profilePage" element={<ProfilePage />} />
             <Route path="/game" element={<HomePage />} />
