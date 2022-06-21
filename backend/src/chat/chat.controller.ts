@@ -9,12 +9,12 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ChatService } from './chat.service';
+import { ChattingRoomsDto } from './dto/chat.dto';
 import { ChatContents } from './entities/chatContents.entity';
 import { ChatParticipant } from './entities/chatParticipant.entity';
-import { ChattingRoom } from './entities/chattingRoom.entity';
 
 @ApiTags('chat')
-@Controller('chat')
+@Controller('chats')
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
@@ -23,8 +23,10 @@ export class ChatController {
   // 채팅방 목록 가져오기
   @ApiOperation({ summary: '채팅방 목록 가져오기' })
   @Get('')
-  async getChatRooms(): Promise<ChattingRoom[]> {
-    return [];
+  async getChattingRooms(): Promise<ChattingRoomsDto[]> {
+    const chattingRooms = this.chatService.getChattingRooms();
+
+    return chattingRooms;
   }
 
   // 채팅방 유저 목록 가져오기
