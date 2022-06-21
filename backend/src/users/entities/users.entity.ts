@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Follow } from './follow.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -42,5 +49,10 @@ export class User extends BaseEntity {
   @Column({ default: 0 })
   ladderLoseCount: number;
 
+  @OneToMany(() => Follow, (follow) => follow.follower)
+  follower: Follow[];
+
+  @OneToMany(() => Follow, (follow) => follow.follow)
+  follow: Follow[];
   // 친구, 레더레벨, 업적, 모든 경기 기록
 }
