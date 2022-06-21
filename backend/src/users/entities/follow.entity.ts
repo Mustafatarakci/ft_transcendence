@@ -8,9 +8,9 @@ export class BlockedUser extends BaseEntity {
 
   @ApiProperty({ description: '팔로우 하는 유저의 id' })
   @Column()
-  follower: number;
+  followerId: number;
 
   @ApiProperty({ description: '팔로우 당하는 유저의 id' })
   @Column()
-  followed: number;
+  followId: number;
 }

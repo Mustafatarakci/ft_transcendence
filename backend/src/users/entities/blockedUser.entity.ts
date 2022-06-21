@@ -8,9 +8,9 @@ export class BlockedUser extends BaseEntity {
 
   @ApiProperty({ description: '차단 하는 유저의 id' })
   @Column()
-  blocker: number;
+  blockerId: number;
 
   @ApiProperty({ description: '차단 당하는 유저의 id' })
   @Column()
-  blocked: number;
+  blockedId: number;
 }

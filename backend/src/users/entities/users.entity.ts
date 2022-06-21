@@ -11,7 +11,7 @@ export class User extends BaseEntity {
   nickname: string;
 
   @ApiProperty({ description: '아바타' })
-  @Column()
+  @Column({ nullable: true })
   avatar: string;
 
   @ApiProperty({ description: '이메일' })
@@ -22,11 +22,7 @@ export class User extends BaseEntity {
   @Column({ default: false })
   isSecondAuthOn: boolean;
 
-  @ApiProperty({ description: '이메일로 보낸 코드와 비교할2차 인증 코드' })
-  @Column({ nullable: true, default: null })
-  secondAuth: boolean;
-
-  @ApiProperty({ description: '이메일로 보낸 코드와 비교할2차 인증 코드' })
+  @ApiProperty({ description: '이메일로 보낸 코드와 비교할 2차 인증 코드' })
   @Column({ nullable: true, default: null })
   secondAuthCode: number;
 
@@ -44,7 +40,7 @@ export class User extends BaseEntity {
 
   @ApiProperty({ description: '래더 패배 횟수' })
   @Column({ default: 0 })
-  ladderloseCount: number;
+  ladderLoseCount: number;
 
   // 친구, 레더레벨, 업적, 모든 경기 기록
 }
