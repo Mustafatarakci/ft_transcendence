@@ -5,7 +5,7 @@ import Modal from '.';
 
 const MakeGameRoom: React.FC = () => {
   return (
-    <Modal width={570} height={300} title={'놀이방 만들기'}>
+    <Modal width={570} height={300} title={'게임방 만들기'}>
       <MainBlock>
         <TextGridBlock>
           <RoomNPwd>방 제목</RoomNPwd>

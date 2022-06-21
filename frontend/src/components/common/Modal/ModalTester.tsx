@@ -17,13 +17,11 @@ import { SHOW_MANAGER_PROFILE } from '../../../utils/interface';
 
 import { HANDLE_SECOND_AUTH } from '../../../utils/interface';
 
-// HANDLE_SECOND_AUTH;
-// EDIT_NICKNAME;
+import { EDIT_NICKNAME } from '../../../utils/interface';
+
 // CHECK_SCORE;
 // LOADING_LADDER_GAME;
 // EDIT_CHAT_ROOM;
-// SHOW_OWNER_PROFILE;
-// SHOW_MANAGER_PROFILE;
 // CHECK_LOGOUT;
 
 const ModalTester: React.FC = () => {
@@ -88,6 +86,13 @@ const ModalTester: React.FC = () => {
             width={200}
             height={30}
             onClick={() => setModal(HANDLE_SECOND_AUTH)}
+          />
+          <Button
+            color="gradient"
+            text="EditNickName"
+            width={200}
+            height={30}
+            onClick={() => setModal(EDIT_NICKNAME)}
           />
         </OtherBtnBlock>
       </MainBlock>

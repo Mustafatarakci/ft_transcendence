@@ -25,9 +25,9 @@ const HandleSecondAuth: React.FC = () => {
 
   const authCodeChecker = () => {
     if (authCode === '1234') {
-      setEmailMsg('');
+      setAuthMsg('');
       alert(`정답ㅋ`);
-    } else setEmailMsg('코드가 일치하지 않습니다.');
+    } else setAuthMsg('코드가 일치하지 않습니다.');
   };
 
   const AuthhandleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -39,8 +39,8 @@ const HandleSecondAuth: React.FC = () => {
   return (
     <Modal width={570} height={510} title={'2차 인증 활성화'}>
       <MainBlock>
-        <SecondAutoText>2차인증을 설정할 이메일을 입력해주세요.</SecondAutoText>
-        <Input
+        <EmailText>2차인증을 설정할 이메일을 입력해주세요.</EmailText>
+        <InputEmail
           onChange={event => {
             setEmail(event.target.value);
             setEmailMsg('');
@@ -48,28 +48,28 @@ const HandleSecondAuth: React.FC = () => {
           value={email}
           onKeyPress={EmailhandleEnter}
         />
-        <CheckerText>{emailMsg}</CheckerText>
-        <BtnBlock>
-          <Button
-            color="white"
-            text="인증코드 발송"
-            width={150}
-            height={40}
-            onClick={validEmailChecker}
-          />
-        </BtnBlock>
-        <>
-          <SecondAutoText>인증 코드: </SecondAutoText>
-          <Input
+        <ErrEmail>{emailMsg}</ErrEmail>
+        <Button
+          color="white"
+          text="인증코드 발송"
+          width={150}
+          height={40}
+          onClick={validEmailChecker}
+        />
+        <AuthBlock>
+          <AuthText>인증 코드 : </AuthText>
+          <InputAuthCode
             onChange={event => {
               setAuth(event.target.value);
               setAuthMsg('');
             }}
-            value={email}
+            value={authCode}
             onKeyPress={AuthhandleEnter}
           />
-          <Button color="white" text="확인" width={150} height={40} onClick={authCodeChecker} />
-        </>
+          <Button color="white" text="확인" width={70} height={35} onClick={authCodeChecker} />
+        </AuthBlock>
+        <ErrAuth>{authMsg}</ErrAuth>
+        <Button color="gradient" text="활성화" width={200} height={40} />
       </MainBlock>
     </Modal>
   );
@@ -79,26 +79,28 @@ const HandleSecondAuth: React.FC = () => {
 const MainBlock = styled.div`
   padding: 13px;
   width: 100%;
+
+  & button {
+    border-radius: 5px;
+    &:first-of-type {
+      margin-top: 10px;
+    }
+  }
 `;
 //============================================
 
-//============================================
-//SecondAutoText
-const SecondAutoText = styled.span`
+//EmailSection
+const EmailText = styled.span`
   display: block;
-  width: 350px;
+  width: 370px;
   text-align: center;
   margin: 0 auto;
   margin-top: 40px;
   font-size: 20px;
   font-weight: 400;
-  &:last-of-child {
-    display: none;
-    width: 90px;
-  }
 `;
-//Input
-const Input = styled.input`
+
+const InputEmail = styled.input`
   display: block;
   margin: 0 auto;
   margin-top: 30px;
@@ -107,38 +109,60 @@ const Input = styled.input`
   border: none;
   outline: none;
   border-bottom: 1px solid;
-  &:last-of-child {
-    display: none;
-    width: 190px;
-  }
 `;
-//CheckerText
-const CheckerText = styled.span`
+
+const ErrEmail = styled.span`
   display: block;
-  width: 350px;
+  width: 370px;
   height: 14px;
   text-align: center;
   margin: 0 auto;
-  margin-top: 10px;
+  margin-top: 15px;
   font-size: 14px;
+  font-weight: 400;
   color: #ff6363;
 `;
 //============================================
 
-//BtnSection
-const BtnBlock = styled.div`
+//AuthSection
+const AuthBlock = styled.div`
+  width: 370px;
+  height: 45px;
   margin: 0 auto;
-  margin-top: 15px;
-  //   display: flex;
-  //   justify-content: center;
-  //   & button {
-  //     border-radius: 5px;
-  //     margin: 0;
-  //     &:last-of-type {
-  //       margin-left: 40px;
-  //     }
-  //   }
+  margin-top: 50px;
+  & button {
+    display: inline-block;
+    margin-left: 10px;
+  }
+`;
+
+const AuthText = styled.span`
+  width: 90px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+`;
+
+const InputAuthCode = styled.input`
+  width: 180px;
+  text-align: center;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid;
+`;
+
+const ErrAuth = styled.span`
+  display: block;
+  width: 370px;
+  height: 14px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  font-size: 14px;
+  font-weight: 400;
+  color: #ff6363;
 `;
 //============================================
-
 export default HandleSecondAuth;

@@ -10,6 +10,7 @@ import EnterChatRoom from './EnterChatRoom';
 import ShowOwnerProfile from './ShowOwnerProfile';
 import ShowManagerProfile from './ShowManagerProfile';
 import HandleSecondAuth from './HandleSecondAuth';
+import EditNickName from './EditNickName';
 
 const ModalSet: React.FC = () => {
   const { modal } = useContext(AllContext).modalData;
@@ -20,7 +21,7 @@ const ModalSet: React.FC = () => {
           LOADING_LADDER_GAME: <LadderModal />,
           SHOW_PROFILE: <ShowProfile />, // 프로필 정보 보기
           HANDLE_SECOND_AUTH: <HandleSecondAuth />, // 이메일 인증
-          EDIT_NICKNAME: <></>, // 닉네임 수정
+          EDIT_NICKNAME: <EditNickName />, // 닉네임 수정
           MAKE_GAME_ROOM: <MakeGameRoom />, // 게임방 만들기
           MAKE_CHAT_ROOM: <MakeChatRoom />, // 채팅방 만들기
           ENTER_GAME_ROOM: <EnterGameRoom />, // 비밀 게임방 입장

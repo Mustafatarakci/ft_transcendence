@@ -94,7 +94,6 @@ const ProfilePicture = styled.img`
 const UserName = styled.span`
   display: block;
   font-size: 20px;
-  line-height: 23px;
 
   margin-top: 25px;
   margin-left: 25px;
@@ -103,7 +102,6 @@ const UserName = styled.span`
 const UserLevel = styled.span`
   display: block;
   font-size: 14px;
-  line-height: 16px;
 
   margin-top: 5px;
   margin-left: 25px;
@@ -119,7 +117,6 @@ const RecordBlock = styled.div`
 const RecordText = styled.span`
   display: inline-block;
   font-size: 20px;
-  line-height: 23px;
 
   margin-top: 71px;
 `;
@@ -127,7 +124,6 @@ const RecordText = styled.span`
 const Record = styled.span`
   display: inline-block;
   font-size: 20px;
-  line-height: 23px;
 
   margin-top: 71px;
 `;
