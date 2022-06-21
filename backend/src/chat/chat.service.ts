@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ChattingRoomsDto } from './dto/chat.dto';
+import {
+  ChattingRoomDataDto,
+  ChattingRoomsDto,
+  CreateChattingRoomDto,
+} from './dto/chat.dto';
 import { ChatContents } from './entities/chatContents.entity';
 import { ChatParticipant } from './entities/chatParticipant.entity';
 import { ChattingRoom } from './entities/chattingRoom.entity';
@@ -36,5 +40,44 @@ export class ChatService {
 
       return chattingRoomsDto;
     });
+  }
+
+  async addUserToChattingRoom(
+    chattingRoomId: number,
+    userId: number,
+    role: 'owner' | 'manager' | 'guest',
+  ) {
+    const chatParticipant = new ChatParticipant();
+    chatParticipant.role = role;
+    chatParticipant.chattingRoomId = chattingRoomId;
+    chatParticipant.userId = userId;
+
+    this.chatParticipantRepo.save(chatParticipant);
+  }
+
+  async createChattingRoom(
+    createChattingRoomDto: CreateChattingRoomDto,
+  ): Promise<ChattingRoomDataDto> {
+    const chattingRoom = new ChattingRoom();
+    chattingRoom.title = createChattingRoomDto.title;
+    chattingRoom.password = createChattingRoomDto.password;
+    chattingRoom.ownerId = createChattingRoomDto.ownerId;
+    chattingRoom.isDm = createChattingRoomDto.isDm;
+
+    const createdChattingRoom = await this.chattingRoomRepo.save(chattingRoom);
+
+    await this.addUserToChattingRoom(
+      createdChattingRoom.id,
+      createdChattingRoom.ownerId,
+      'owner',
+    );
+
+    const chattingRoomDataDto = new ChattingRoomDataDto();
+    chattingRoomDataDto.id = createdChattingRoom.id;
+    chattingRoomDataDto.title = createdChattingRoom.title;
+    chattingRoomDataDto.password = createdChattingRoom.password;
+    chattingRoomDataDto.ownerId = createdChattingRoom.ownerId;
+
+    return chattingRoomDataDto;
   }
 }

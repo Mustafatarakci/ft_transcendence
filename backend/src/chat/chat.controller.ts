@@ -1,15 +1,21 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
   Param,
   ParseIntPipe,
   Patch,
+  Post,
   Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ChatService } from './chat.service';
-import { ChattingRoomsDto } from './dto/chat.dto';
+import {
+  ChattingRoomDataDto,
+  ChattingRoomsDto,
+  CreateChattingRoomDto,
+} from './dto/chat.dto';
 import { ChatContents } from './entities/chatContents.entity';
 import { ChatParticipant } from './entities/chatParticipant.entity';
 
@@ -27,6 +33,19 @@ export class ChatController {
     const chattingRooms = this.chatService.getChattingRooms();
 
     return chattingRooms;
+  }
+
+  // 채팅방 만들기
+  @ApiOperation({ summary: '채팅방 만들기' })
+  @Post('')
+  async createChattingRoom(
+    @Body() createChattingRoomDto: CreateChattingRoomDto,
+  ): Promise<ChattingRoomDataDto> {
+    const chattingRoom = await this.chatService.createChattingRoom(
+      createChattingRoomDto,
+    );
+
+    return chattingRoom;
   }
 
   // 채팅방 유저 목록 가져오기
