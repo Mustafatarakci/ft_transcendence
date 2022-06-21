@@ -11,7 +11,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from './entities/users.entity';
 import { UsersService } from './users.service';
 import { EmailService } from 'src/emails/email.service';
-import { EmailDto } from './dto/users.dto';
+import { EmailDto, UserProfileDto } from './dto/users.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -55,7 +55,9 @@ export class UsersController {
 
   @ApiOperation({ summary: '특정 유저의 정보 조회' })
   @Get(':id')
-  async getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
+  async getUser(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<UserProfileDto> {
     const user = await this.usersService.getUserById(id);
 
     return user;

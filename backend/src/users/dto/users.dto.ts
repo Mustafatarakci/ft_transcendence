@@ -32,3 +32,14 @@ export class EmailDto {
   @IsEmail()
   email: string;
 }
+
+export class UserProfileDto {
+  id: number;
+  nickname: string;
+  avatar: string;
+  email: string;
+  winCount: number;
+  loseCount: number;
+  ladderWinCount: number;
+  ladderLoseCount: number;
+}
