@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ChatParticipant } from './chatParticipant.entity';
 
 @Entity()
 export class ChattingRoom extends BaseEntity {
@@ -21,4 +28,10 @@ export class ChattingRoom extends BaseEntity {
   @ApiProperty({ description: 'dm방인지 여부' })
   @Column({ default: false })
   isDm: boolean;
+
+  @OneToMany(
+    () => ChatParticipant,
+    (chatParticipant) => chatParticipant.chattingRoom,
+  )
+  chatParticipant: ChatParticipant[];
 }

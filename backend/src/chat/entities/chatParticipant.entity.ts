@@ -8,6 +8,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ChattingRoom } from './chattingRoom.entity';
 
 @Entity()
 export class ChatParticipant extends BaseEntity {
@@ -33,6 +34,11 @@ export class ChatParticipant extends BaseEntity {
   @ApiProperty({ description: '음소거 여부' })
   @Column({ default: false })
   isMuted: boolean;
+
+  @ApiProperty({ description: '채팅방 id' })
+  @ManyToOne(() => ChattingRoom, (chattingRoom) => chattingRoom.chatParticipant)
+  @JoinColumn({ name: 'chattingRoomId' })
+  chattingRoom: ChattingRoom;
 
   @ApiProperty({ description: '채팅방 참여자의 유저 id' })
   @ManyToOne(() => User, (user) => user.chatParticipant)
