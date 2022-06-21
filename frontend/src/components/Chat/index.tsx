@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import styled from '@emotion/styled';
 import Button from '../common/Button';
-import RoomList from '../Game/RoomList';
+import RoomList from '../RoomList';
 import { MAKE_CHAT_ROOM } from '../../utils/interface';
 import { AllContext } from '../../store';
 

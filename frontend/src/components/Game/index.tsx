@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import styled from '@emotion/styled';
 import Button from '../common/Button';
-import GameList from './RoomList';
+import GameList from '../RoomList';
 import { AllContext } from '../../store';
 import { LOADING_LADDER_GAME, IRoomList, MAKE_GAME_ROOM } from '../../utils/interface';
 
