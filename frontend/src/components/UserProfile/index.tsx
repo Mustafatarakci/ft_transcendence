@@ -72,7 +72,7 @@ const MainBlock = styled.div`
   background-color: white;
   border-radius: 20px;
   width: 300px;
-  height: 338px;
+  height: 340px;
   padding: 20px 25px;
   font-style: normal;
   font-weight: 400;

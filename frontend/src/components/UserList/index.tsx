@@ -171,17 +171,20 @@ const UserContainer = styled.div`
   // 내눈이 편안하기위한 마진탑 임. 반박시 니말이맞음
   margin-top: 12px;
   overflow-y: scroll;
-  height: 320px;
+  height: calc(100% - 52px);
   width: 270px;
 `;
 
 const ListBox = styled.div`
+  background-color: white;
   border: 2px solid ${props => props.theme.colors.main};
   border-radius: 20px;
   min-width: 300px;
   width: 300px;
-  height: 422px;
+  height: calc(100vh - 520px);
+  min-height: 340px;
   padding: 17px 23px;
+  margin-bottom: 20px;
 `;
 
 export default UserList;
