@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import defaultImage from '../../assets/default-image.png';
 
 interface ProfileImageProps {
   src: string;
@@ -7,9 +8,13 @@ interface ProfileImageProps {
 }
 
 const ProfileImage: React.FC<ProfileImageProps> = ({ src, size }) => {
+  const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = defaultImage;
+  };
+
   return (
     <ProfileImageContainer size={size}>
-      <ProfileImageImg src={src} alt="ProfileImage" />
+      <ProfileImageImg src={src} alt="ProfileImage" onError={handleError} />
     </ProfileImageContainer>
   );
 };
@@ -18,7 +23,10 @@ const ProfileImageContainer = styled.div<{ size: number }>`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.grey};
+  background-image: url(${defaultImage});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   overflow: hidden;
 `;
 
