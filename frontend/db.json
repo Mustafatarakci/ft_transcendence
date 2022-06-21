@@ -44,11 +44,11 @@
   ],
   "user": {
     "id": 1,
-    "nickname": "aaa",
+    "nickname": "",
     "username": "bbb",
     "email": "noenna@naver.com",
     "avatar": "",
-    "secondAuth": false,
+    "secondAuth": true,
     "isSigned": true
   },
   "user_info": {

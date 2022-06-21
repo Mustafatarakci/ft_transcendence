@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
 import styled from '@emotion/styled';
 import Button from '../components/common/Button';
-import axios from 'axios';
+import { AllContext } from '../store';
+import { LOGIN } from '../utils/interface';
 
 /*
  * 요청사항 : line20 useStete이름 변경. 버튼으로 교체
@@ -15,6 +17,7 @@ const SecondAuthPage: React.FC = () => {
    */
   const [authCode, setAuthcode] = useState<string>('');
   const [errMsg, setErrmsg] = useState<string>('');
+  const { setUserStatus } = useContext(AllContext).userStatus;
 
   /*
    * 요청사항 : onCheck 이벤트 속성 명시
@@ -26,8 +29,8 @@ const SecondAuthPage: React.FC = () => {
       .get(`http://localhost:4000/auth/${1}`)
       .then(function (response) {
         if (authCode === response.data.authCode) {
-          setErrmsg('');
           alert(`안녕하세요 ${response.data.user}!`);
+          setUserStatus(LOGIN);
         } else setErrmsg('코드가 일치하지 않습니다');
       })
       .catch(function (error) {

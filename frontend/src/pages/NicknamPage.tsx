@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
+import axios from 'axios';
 import Button from '../components/common/Button';
 import styled from '@emotion/styled';
-import axios from 'axios';
+import { AllContext } from '../store';
+import { LOGIN } from '../utils/interface';
 
 // TODO : 최초 42api 토큰 요청시 성공하면 인트라 사진도 갖고오도록 할 예정?
 const DEFAULT_PROFILE =
@@ -17,6 +19,7 @@ const NicknamPage: React.FC = () => {
   const [checkNickMsg, setCheckNickMsg] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const profileIamge = useRef<HTMLInputElement>(null);
+  const { setUserStatus } = useContext(AllContext).userStatus;
 
   const onEditNick = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckNickMsg('');
@@ -74,6 +77,15 @@ const NicknamPage: React.FC = () => {
       setIsEnabled(true);
     }
   };
+
+  const onClickSubmit = () => {
+    if (!isEnabled) {
+      setCheckNickMsg(`닉네임 중복 체크를 먼저 해주세요.`);
+    } else {
+      // TODO : 서버에 전송하기
+      setUserStatus(LOGIN);
+    }
+  };
   return (
     <NickTemplate>
       <NickForm>
@@ -102,22 +114,7 @@ const NicknamPage: React.FC = () => {
           <CheckDuplicate onClick={onCheck}>중복 체크</CheckDuplicate>
           <DupMsg>{checkNickMsg}</DupMsg>
         </Nick>
-        <Button
-          width={130}
-          height={30}
-          color="gradient"
-          text="확인"
-          onClick={() => {
-            if (isEnabled) {
-              console.dir(profileImg);
-              console.dir(nickName);
-            } else {
-              if (!checkNickName(nickName)) {
-                alert('닉네임 수정 필요');
-              }
-            }
-          }}
-        />
+        <Button width={130} height={30} color="gradient" text="확인" onClick={onClickSubmit} />
       </NickForm>
     </NickTemplate>
   );
@@ -146,11 +143,11 @@ const NickForm = styled.div`
 `;
 
 const NickGuide = styled.h2`
-  width: 227px;
   height: 28px;
 
   font-weight: 700;
   font-size: 24px;
+  text-align: left;
 
   color: ${props => props.theme.colors.main};
 `;
