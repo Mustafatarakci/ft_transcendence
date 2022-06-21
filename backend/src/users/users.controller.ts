@@ -62,4 +62,13 @@ export class UsersController {
 
     return user;
   }
+
+  @ApiOperation({ summary: '친구 추가' })
+  @Post(':id/friends')
+  async addFriend(
+    @Param('id', ParseIntPipe) myId: number,
+    @Body('targetId', ParseIntPipe) targetId: number,
+  ): Promise<void> {
+    await this.usersService.addFriend(myId, targetId);
+  }
 }
