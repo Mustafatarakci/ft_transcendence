@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { BlockedUser } from './blockedUser.entity';
 import { Follow } from './follow.entity';
 
 @Entity()
@@ -54,5 +55,11 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Follow, (follow) => follow.follow)
   follow: Follow[];
+
+  @OneToMany(() => BlockedUser, (blockedUser) => blockedUser.blocker)
+  blocker: BlockedUser[];
+
+  @OneToMany(() => BlockedUser, (blockedUser) => blockedUser.blocked)
+  blocked: BlockedUser[];
   // 친구, 레더레벨, 업적, 모든 경기 기록
 }
