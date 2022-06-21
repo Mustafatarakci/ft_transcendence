@@ -19,6 +19,12 @@ export class UsersService {
     return ret;
   }
 
+  async getUserById(id: number): Promise<User> {
+    const user = await this.userRepo.findOneOrFail({ where: { id } });
+
+    return user;
+  }
+
   // async getUserBySecondAuthCode(secondAuthCode: number): Promise<User> {
   //   const ret = await this.userRepo.findOne({ where: { secondAuthCode } });
   //   return ret;

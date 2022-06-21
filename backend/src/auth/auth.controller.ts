@@ -11,7 +11,7 @@ export class AuthController {
   @ApiOperation({ summary: '42 oauth page 로 redirection' })
   @Get('oauthPage')
   @Redirect(
-    'https://api.intra.42.fr/oauth/authorize?client_id=c44164aba01e6b4652fb6a4107e5188020a7e0c823b5013b2879b85ef7ea9abb&redirect_uri=http://localhost:3000/auth/signIn&response_type=code',
+    'https://api.intra.42.fr/oauth/authorize?client_id=c44164aba01e6b4652fb6a4107e5188020a7e0c823b5013b2879b85ef7ea9abb&redirect_uri=http://localhost:5500/auth/signIn&response_type=code',
   )
   async getOatuhPage() {
     return 'getOauthPage';
