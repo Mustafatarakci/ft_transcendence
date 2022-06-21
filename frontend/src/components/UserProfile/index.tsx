@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Button from '../common/Button';
 import axios from 'axios';
+import ProfileImage from '../common/ProfileImage';
 
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState({
@@ -39,7 +40,7 @@ const ProfilePage: React.FC = () => {
       <MainText>내 프로필</MainText>
       <ProfileBlock>
         <PictureBlock>
-          <ProfilePicture src={user.picture} alt="UserProfileImage" />
+          <ProfileImage src={user.picture} size={100} />
         </PictureBlock>
         <UserInfo>
           <UserName>{user.user_nick}</UserName>
@@ -93,13 +94,7 @@ const ProfileBlock = styled.div`
 `;
 const UserInfo = styled.div``;
 
-const PictureBlock = styled.div``;
-
-const ProfilePicture = styled.img`
-  width: 101px;
-  height: 101px;
-  border-radius: 50px;
-  background: #c4c4c4;
+const PictureBlock = styled.div`
   margin-top: 20px;
   margin-left: 15px;
 `;
