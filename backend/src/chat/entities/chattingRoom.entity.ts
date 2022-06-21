@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ChatContents } from './chatContents.entity';
 import { ChatParticipant } from './chatParticipant.entity';
 
 @Entity()
@@ -34,4 +35,7 @@ export class ChattingRoom extends BaseEntity {
     (chatParticipant) => chatParticipant.chattingRoom,
   )
   chatParticipant: ChatParticipant[];
+
+  @OneToMany(() => ChatContents, (chatContents) => chatContents.chattingRoom)
+  chatContents: ChatContents[];
 }

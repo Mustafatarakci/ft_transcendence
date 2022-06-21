@@ -9,15 +9,16 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ChattingRoom } from './chattingRoom.entity';
 
 @Entity()
 export class ChatContents extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ description: '채팅방 id' })
-  @Column()
-  chattingRoomId: number;
+  // @ApiProperty({ description: '채팅방 id' })
+  // @Column()
+  // chattingRoomId: number;
 
   // @ApiProperty({ description: '메세지 보낸 유저 id' })
   // @Column()
@@ -30,6 +31,11 @@ export class ChatContents extends BaseEntity {
   @ApiProperty({ description: '메세지 보낸 시간' })
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdTime: Date;
+
+  @ApiProperty({ description: '채팅방 id' })
+  @ManyToOne(() => ChattingRoom, (chattingRoom) => chattingRoom.chatContents)
+  @JoinColumn({ name: 'chattingRoomId' })
+  chattingRoom: ChattingRoom;
 
   @ApiProperty({ description: '메세지 보낸 유저 id' })
   @ManyToOne(() => User, (user) => user.sender)
