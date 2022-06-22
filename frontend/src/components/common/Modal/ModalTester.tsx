@@ -26,10 +26,16 @@ import { EDIT_NICKNAME } from '../../../utils/interface';
 
 const ModalTester: React.FC = () => {
   const { setModal } = useContext(AllContext).modalData;
+  const onKeyGoBack = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const key = e.key || e.keyCode;
+    if (key == 'Escape' || key === 27 || key == 'Backspace' || key == 8) {
+      setModal(null);
+    }
+  };
 
   return (
     <>
-      <MainBlock>
+      <MainBlock onKeyDown={onKeyGoBack}>
         <OtherBtnBlock>
           <Button
             color="gradient"
