@@ -1,7 +1,8 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import CloseImg from '../../../assets/close.png';
 import { AllContext } from '../../../store';
+import { keyboardKey } from '@testing-library/user-event';
 
 interface ModalProps {
   width: number;
@@ -21,6 +22,14 @@ const Modal: React.FC<ModalProps> = ({ width, height, title, children }) => {
       setModal(null);
     }
   };
+  // TODO : escape, backspace 관련 event
+  // const onKeyGoBack = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   const key = e.key || e.keyCode;
+
+  //   if (key == 'Escape' || key === 27 || key == 'Backspace' || key == 8) {
+  //     setModal(null);
+  //   }
+  // };
 
   return (
     <ModalBackground onClick={onClickBackground} ref={backGroundRef}>
