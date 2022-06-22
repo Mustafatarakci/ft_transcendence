@@ -1,17 +1,24 @@
 import {
   Controller,
+  Res,
   Get,
   Body,
   Post,
   Query,
   Param,
   ParseIntPipe,
+  UploadedFile,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from './entities/users.entity';
 import { UsersService } from './users.service';
 import { EmailService } from 'src/emails/email.service';
 import { EmailDto, UserProfileDto } from './dto/users.dto';
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from '../files/file-uploading.utils';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('users')
 @Controller('users')
@@ -20,6 +27,53 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly emailService: EmailService,
   ) {}
+
+  @Post('/file')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './files',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+
+  async uploadedFile(@UploadedFile() file) {
+    const response = {
+      originalname: file.originalname,
+      filename: file.filename,
+    };
+    return response;
+  }
+
+  @Post('/files')
+  @UseInterceptors(
+    FilesInterceptor('image', 20, {
+      storage: diskStorage({
+        destination: './files',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+
+  async uploadMultipleFiles(@UploadedFiles() files) {
+    const response = [];
+    files.forEach(file => {
+      const fileReponse = {
+        originalname: file.originalname,
+        filename: file.filename,
+      };
+      response.push(fileReponse);
+    });
+    return response;
+  }
+
+  @Get(':imgpath')
+  seeUploadedFile(@Param('imgpath') image, @Res() res) {
+    return res.sendFile(image, { root: '../files' });
+  }
 
   @Get('/email')
   async secondAuth(@Query('email') email: string): Promise<boolean> {

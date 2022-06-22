@@ -22,9 +22,13 @@ import { TransformInterceptor } from './response.interceptor';
 import { UsersService } from './users/users.service';
 import { ChatModule } from './chat/chat.module';
 import { GamesModule } from './gameRecord/gameRecord.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
+    MulterModule.register({
+      dest: './files',
+    }),
     TypeOrmModule.forRoot(TypeORMConfig),
     UsersModule,
     AuthModule,
