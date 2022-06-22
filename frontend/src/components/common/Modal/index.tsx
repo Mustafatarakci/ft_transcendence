@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({ width, height, title, children }) => {
       setModal(null);
     }
   };
-  const handleEscape = (e: KeyboardEvent) => {
+  const handleEscape = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Escape') {
       setModal(null);
     }
@@ -29,15 +29,15 @@ const Modal: React.FC<ModalProps> = ({ width, height, title, children }) => {
 
   useEffect(() => {
     backGroundRef.current?.focus();
-    backGroundRef.current?.addEventListener('keydown', handleEscape);
-
-    return () => {
-      backGroundRef.current?.removeEventListener('keydown', handleEscape);
-    };
   }, []);
 
   return (
-    <ModalBackground onClick={onClickBackground} ref={backGroundRef} tabIndex={0}>
+    <ModalBackground
+      onClick={onClickBackground}
+      ref={backGroundRef}
+      tabIndex={0}
+      onKeyDown={handleEscape}
+    >
       <ModalBox width={width} height={height}>
         <ModalHeader>
           {title && (
