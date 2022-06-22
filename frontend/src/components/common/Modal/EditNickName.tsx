@@ -4,19 +4,19 @@ import Button from '../Button';
 import Modal from '.';
 
 const EditNickName: React.FC = () => {
-  const [emailMsg, setEmailMsg] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+  const [nickNameMsg, setNickNameMsg] = useState<string>('');
+  const [nickname, setNickName] = useState<string>('');
 
-  const validEmailChecker = () => {
-    if (email === 'sgang') {
-      setEmailMsg('');
+  const validNicknameChecker = () => {
+    if (nickname === 'sgang') {
+      setNickName('');
       alert(`올ㅋ`);
-    } else setEmailMsg('중복된 닉네임입니다.');
+    } else setNickNameMsg('중복된 닉네임입니다.');
   };
 
-  const EmailhandleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const nickHandlerEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      validEmailChecker();
+      validNicknameChecker();
     }
   };
 
@@ -24,24 +24,24 @@ const EditNickName: React.FC = () => {
     <Modal width={570} height={400} title={'닉네임 변경'}>
       <MainBlock>
         <NickNameText>새로운 닉네임을 입력해주세요.</NickNameText>
-        <AuthBlock>
-          <InputAuthCode
+        <NicknameBlock>
+          <NickNameInput
             onChange={event => {
-              setEmail(event.target.value);
-              setEmailMsg('');
+              setNickName(event.target.value);
+              setNickNameMsg('');
             }}
-            value={email}
-            onKeyPress={EmailhandleEnter}
+            value={nickname}
+            onKeyPress={nickHandlerEnter}
           />
           <Button
             color="white"
             text="중복 체크"
             width={100}
             height={40}
-            onClick={validEmailChecker}
+            onClick={validNicknameChecker}
           />
-        </AuthBlock>
-        <ErrAuth>{emailMsg}</ErrAuth>
+        </NicknameBlock>
+        <ErrNickName>{nickNameMsg}</ErrNickName>
         <Button color="gradient" text="변경" width={200} height={40} />
       </MainBlock>
     </Modal>
@@ -74,8 +74,8 @@ const NickNameText = styled.span`
 `;
 //============================================
 
-//AuthSection
-const AuthBlock = styled.div`
+//NickNameChangeSection
+const NicknameBlock = styled.div`
   width: 360px;
   height: 45px;
   margin: 0 auto;
@@ -86,7 +86,7 @@ const AuthBlock = styled.div`
   }
 `;
 
-const InputAuthCode = styled.input`
+const NickNameInput = styled.input`
   width: 250px;
   text-align: center;
   border: none;
@@ -94,7 +94,7 @@ const InputAuthCode = styled.input`
   border-bottom: 1px solid;
 `;
 
-const ErrAuth = styled.span`
+const ErrNickName = styled.span`
   display: block;
   width: 370px;
   height: 14px;

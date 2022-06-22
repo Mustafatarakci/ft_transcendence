@@ -7,7 +7,7 @@ const EnterGameRoom: React.FC = () => {
   const [errMsg, setErrMsg] = useState<string>('');
   const [inputPwd, setPwd] = useState<string>('');
 
-  const checkPwd = () => {
+  const comparePwd = () => {
     if (inputPwd === '1234') {
       setErrMsg('');
       alert(`정답ㅋ`);
@@ -19,7 +19,7 @@ const EnterGameRoom: React.FC = () => {
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      checkPwd();
+      comparePwd();
     }
   };
 
@@ -39,7 +39,7 @@ const EnterGameRoom: React.FC = () => {
         <CheckerText>{errMsg}</CheckerText>
         <BtnBlock>
           <Button color="white" text="취소" width={150} height={40} />
-          <Button color="gradient" text="입장하기" width={150} height={40} onClick={checkPwd} />
+          <Button color="gradient" text="입장하기" width={150} height={40} onClick={comparePwd} />
         </BtnBlock>
       </MainBlock>
     </Modal>
