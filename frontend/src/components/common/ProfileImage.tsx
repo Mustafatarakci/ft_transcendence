@@ -14,11 +14,7 @@ const ProfileImage: React.FC<ProfileImageProps> = ({ src, size }) => {
 
   return (
     <ProfileImageContainer size={size}>
-      <ProfileImageImg
-        src={src === '' ? defaultImage : src}
-        alt="ProfileImage"
-        onError={handleError}
-      />
+      <ProfileImageImg src={src || defaultImage} alt="ProfileImage" onError={handleError} />
     </ProfileImageContainer>
   );
 };
