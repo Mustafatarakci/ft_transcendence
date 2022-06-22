@@ -35,6 +35,18 @@ export class ChatController {
     return chattingRooms;
   }
 
+  // 참여중인 채팅방 목록 가져오기
+  @ApiOperation({ summary: '참여중인 채팅방 목록 가져오기' })
+  @Get(':userId')
+  async getParticipatingChattingRooms(
+    @Param('userId') userId: number,
+  ): Promise<ChattingRoomsDto[]> {
+    const chattingRooms =
+      this.chatService.getParticipatingChattingRooms(userId);
+
+    return chattingRooms;
+  }
+
   // 채팅방 만들기
   @ApiOperation({ summary: '채팅방 만들기' })
   @Post('')

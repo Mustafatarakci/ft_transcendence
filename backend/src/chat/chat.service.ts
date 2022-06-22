@@ -42,6 +42,28 @@ export class ChatService {
     });
   }
 
+  async getParticipatingChattingRooms(
+    userId: number,
+  ): Promise<ChattingRoomsDto[]> {
+    const chattingRooms = await this.chattingRoomRepo
+      .createQueryBuilder('chattingRoom')
+      .leftJoinAndSelect('chattingRoom.chatParticipant', 'chatParticipant')
+      .where('chatParticipant.userId = :userId', { userId })
+      .getMany();
+
+    return chattingRooms.map((chattingRoom) => {
+      const chattingRoomsDto = new ChattingRoomsDto();
+      chattingRoomsDto.id = chattingRoom.id;
+      chattingRoomsDto.title = chattingRoom.title;
+      chattingRoomsDto.password = chattingRoom.password;
+      chattingRoomsDto.ownerId = chattingRoom.ownerId;
+      chattingRoomsDto.numberOfParticipants =
+        chattingRoom.chatParticipant.length;
+
+      return chattingRoomsDto;
+    });
+  }
+
   async addUserToChattingRoom(
     chattingRoomId: number,
     userId: number,
