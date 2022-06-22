@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from '@emotion/styled';
 import Button from '../Button';
 import Modal from '.';
+import { AllContext } from '../../../store';
 
 const EnterChatRoom: React.FC = () => {
   const [errMsg, setErrMsg] = useState<string>('');
   const [inputPwd, setPwd] = useState<string>('');
+  const { setModal } = useContext(AllContext).modalData;
 
   const checkPwd = () => {
     if (inputPwd === '1234') {
@@ -38,7 +40,13 @@ const EnterChatRoom: React.FC = () => {
         />
         <CheckerText>{errMsg}</CheckerText>
         <BtnBlock>
-          <Button color="white" text="취소" width={150} height={40} />
+          <Button
+            color="white"
+            text="취소"
+            width={150}
+            height={40}
+            onClick={() => setModal(null)}
+          />
           <Button color="gradient" text="입장하기" width={150} height={40} onClick={checkPwd} />
         </BtnBlock>
       </MainBlock>
