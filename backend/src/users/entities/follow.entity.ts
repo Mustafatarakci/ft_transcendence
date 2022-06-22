@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   BaseEntity,
+  Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -13,21 +13,17 @@ export class Follow extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @ApiProperty({ description: '팔로우 하는 유저의 id' })
-  // @Column()
-  // followerId: number;
-
-  // @ApiProperty({ description: '팔로우 당하는 유저의 id' })
-  // @Column()
-  // followId: number;
-
   @ApiProperty({ description: '팔로우 하는 유저의 id' })
-  @ManyToOne(() => User, (user) => user.follower)
-  @JoinColumn({ name: 'followerId' })
-  follower: User;
+  @Column()
+  followerId: number;
 
   @ApiProperty({ description: '팔로우 당하는 유저의 id' })
+  @Column()
+  followId: number;
+
+  @ManyToOne(() => User, (user) => user.follower)
+  follower: User;
+
   @ManyToOne(() => User, (user) => user.follow)
-  @JoinColumn({ name: 'followId' })
   follow: User;
 }
