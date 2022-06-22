@@ -23,6 +23,11 @@ export class EmailDto {
   email: string;
 }
 
+export class Nickname {
+  @ApiProperty({ description: '닉네임' })
+  nickname: string;
+}
+
 export class UserProfileDto {
   @ApiProperty({ description: '유저 id' })
   id: number;

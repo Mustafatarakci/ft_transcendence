@@ -26,8 +26,7 @@ export class ChatController {
 
   // todo: 로그인한 유저의 권한 확인해야함, @UseGuard 사용하고 @req() 로 받아서 req.user 이렇게 사용하면 될까?
 
-  // 채팅방 목록 가져오기
-  @ApiOperation({ summary: '채팅방 목록 가져오기' })
+  @ApiOperation({ summary: '✅ 채팅방 목록 가져오기' })
   @Get('')
   async getChattingRooms(): Promise<ChattingRoomsDto[]> {
     const chattingRooms = this.chatService.getChattingRooms();
@@ -35,8 +34,7 @@ export class ChatController {
     return chattingRooms;
   }
 
-  // 참여중인 채팅방 목록 가져오기
-  @ApiOperation({ summary: '참여중인 채팅방 목록 가져오기' })
+  @ApiOperation({ summary: '✅ 참여중인 채팅방 목록 가져오기' })
   @Get(':userId')
   async getParticipatingChattingRooms(
     @Param('userId') userId: number,
@@ -47,8 +45,7 @@ export class ChatController {
     return chattingRooms;
   }
 
-  // 채팅방 만들기
-  @ApiOperation({ summary: '채팅방 만들기' })
+  @ApiOperation({ summary: '✅ 채팅방 만들기' })
   @Post('')
   async createChattingRoom(
     @Body() createChattingRoomDto: CreateChattingRoomDto,
