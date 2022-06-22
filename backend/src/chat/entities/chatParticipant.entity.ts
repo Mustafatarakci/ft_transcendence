@@ -4,7 +4,6 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -15,13 +14,13 @@ export class ChatParticipant extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ description: '채팅방 id' })
+  @ApiProperty({ description: '[FK] 채팅방 id' })
   @Column()
   chattingRoomId: number;
 
-  // @ApiProperty({ description: '채팅방 참여자의 유저 id' })
-  // @Column()
-  // userId: number;
+  @ApiProperty({ description: '[FK] 채팅방 참여자의 유저 id' })
+  @Column()
+  userId: number;
 
   @ApiProperty({ description: '채팅방에서 유저의 역할' })
   @Column({ default: 'guest' })
@@ -35,13 +34,13 @@ export class ChatParticipant extends BaseEntity {
   @Column({ default: false })
   isMuted: boolean;
 
-  @ApiProperty({ description: '채팅방 id' })
+  // @ApiProperty({ description: '채팅방 id' })
   @ManyToOne(() => ChattingRoom, (chattingRoom) => chattingRoom.chatParticipant)
-  @JoinColumn({ name: 'chattingRoomId' })
+  // @JoinColumn({ name: 'chattingRoomId' })
   chattingRoom: ChattingRoom;
 
-  @ApiProperty({ description: '채팅방 참여자의 유저 id' })
+  // @ApiProperty({ description: '채팅방 참여자의 유저 id' })
   @ManyToOne(() => User, (user) => user.chatParticipant)
-  @JoinColumn({ name: 'userId' })
+  // @JoinColumn({ name: 'userId' })
   user: User;
 }

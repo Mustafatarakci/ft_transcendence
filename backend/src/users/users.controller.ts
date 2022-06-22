@@ -1,9 +1,17 @@
-import { Controller, Get, Body, Post, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Body,
+  Post,
+  Query,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from './entities/users.entity';
 import { UsersService } from './users.service';
 import { EmailService } from 'src/emails/email.service';
-import { EmailDto } from './dto/users.dto';
+import { EmailDto, UserProfileDto } from './dto/users.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -43,5 +51,24 @@ export class UsersController {
   async getUsers(): Promise<User[]> {
     const ret = await this.usersService.getUsers();
     return ret;
+  }
+
+  @ApiOperation({ summary: '특정 유저의 정보 조회' })
+  @Get(':id')
+  async getUser(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<UserProfileDto> {
+    const user = await this.usersService.getUserById(id);
+
+    return user;
+  }
+
+  @ApiOperation({ summary: '친구 추가' })
+  @Post(':id/friends')
+  async addFriend(
+    @Param('id', ParseIntPipe) myId: number,
+    @Body('targetId', ParseIntPipe) targetId: number,
+  ): Promise<void> {
+    await this.usersService.addFriend(myId, targetId);
   }
 }

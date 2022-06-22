@@ -2,12 +2,17 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/users.dto';
+import { BlockedUser } from './entities/blockedUser.entity';
+import { Follow } from './entities/follow.entity';
 import { User } from './entities/users.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(Follow) private readonly followRepo: Repository<Follow>,
+    @InjectRepository(BlockedUser)
+    private readonly blockedUserRepo: Repository<BlockedUser>,
   ) {}
 
   async getUsers(): Promise<User[]> {
@@ -17,6 +22,12 @@ export class UsersService {
   async getUserByEmail(email: string): Promise<User> {
     const ret = await this.userRepo.findOne({ where: { email } });
     return ret;
+  }
+
+  async getUserById(id: number): Promise<User> {
+    const user = await this.userRepo.findOneOrFail({ where: { id } });
+
+    return user;
   }
 
   // async getUserBySecondAuthCode(secondAuthCode: number): Promise<User> {
@@ -60,5 +71,18 @@ export class UsersService {
       user.isSecondAuthOn = false;
     }
     user.save();
+  }
+
+  async addFriend(myId: number, targetId: number): Promise<void> {
+    const [followerUser, followUser] = await Promise.all([
+      this.getUserById(myId),
+      this.getUserById(targetId),
+    ]);
+
+    const follow = new Follow();
+    follow.follower = followerUser;
+    follow.follow = followUser;
+
+    await this.followRepo.save(follow);
   }
 }
