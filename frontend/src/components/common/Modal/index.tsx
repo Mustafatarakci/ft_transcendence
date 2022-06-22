@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import CloseImg from '../../../assets/close.png';
 import { AllContext } from '../../../store';
@@ -21,9 +21,23 @@ const Modal: React.FC<ModalProps> = ({ width, height, title, children }) => {
       setModal(null);
     }
   };
+  const handleEscape = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setModal(null);
+    }
+  };
+
+  useEffect(() => {
+    backGroundRef.current?.focus();
+    backGroundRef.current?.addEventListener('keydown', handleEscape);
+
+    return () => {
+      backGroundRef.current?.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
 
   return (
-    <ModalBackground onClick={onClickBackground} ref={backGroundRef}>
+    <ModalBackground onClick={onClickBackground} ref={backGroundRef} tabIndex={0}>
       <ModalBox width={width} height={height}>
         <ModalHeader>
           {title && (
