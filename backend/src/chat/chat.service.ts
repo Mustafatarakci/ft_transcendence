@@ -30,15 +30,7 @@ export class ChatService {
     chattingRooms = chattingRooms.filter((chattingRoom) => !chattingRoom.isDm);
 
     return chattingRooms.map((chattingRoom) => {
-      const chattingRoomsDto = new ChattingRoomsDto();
-      chattingRoomsDto.id = chattingRoom.id;
-      chattingRoomsDto.title = chattingRoom.title;
-      chattingRoomsDto.password = chattingRoom.password;
-      chattingRoomsDto.ownerId = chattingRoom.ownerId;
-      chattingRoomsDto.numberOfParticipants =
-        chattingRoom.chatParticipant.length;
-
-      return chattingRoomsDto;
+      return chattingRoom.toChattingRoomsDto();
     });
   }
 
@@ -52,15 +44,7 @@ export class ChatService {
       .getMany();
 
     return chattingRooms.map((chattingRoom) => {
-      const chattingRoomsDto = new ChattingRoomsDto();
-      chattingRoomsDto.id = chattingRoom.id;
-      chattingRoomsDto.title = chattingRoom.title;
-      chattingRoomsDto.password = chattingRoom.password;
-      chattingRoomsDto.ownerId = chattingRoom.ownerId;
-      chattingRoomsDto.numberOfParticipants =
-        chattingRoom.chatParticipant.length;
-
-      return chattingRoomsDto;
+      return chattingRoom.toChattingRoomsDto();
     });
   }
 

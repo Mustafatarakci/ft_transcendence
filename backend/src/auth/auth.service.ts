@@ -73,6 +73,11 @@ export class AuthService {
       //   isSigned: false,
       // };
     }
+    /**
+     * 비회원일 경우
+     * jwt
+     *
+     */
 
     return this.jwtService.sign({
       ...userData,
