@@ -46,11 +46,14 @@ const ShowManagerProfile: React.FC = () => {
           </UserInfo>
         </ProfileBlock>
 
+        <RecordText>전적/래더전적</RecordText>
         <RecordBlock>
-          <RecordText>전적/래더전적</RecordText>
           <Record>
             {user.gen_win}승 {user.gen_lose}패/{user.lad_win}승 {user.lad_lose}패
           </Record>
+          <RecordBtn>
+            <Button color="white" text="전적 기록" width={97} height={30} />
+          </RecordBtn>
         </RecordBlock>
 
         <OtherBtnBlock>
@@ -122,9 +125,17 @@ const RecordText = styled.span`
 
 const Record = styled.span`
   display: inline-block;
-  font-size: 20px;
+  font-size: 16px;
 
-  margin-top: 71px;
+  margin-top: 10px;
+`;
+
+const RecordBtn = styled.div`
+  margin-top: 10px;
+  & button {
+    color: ${props => props.theme.colors.main};
+    border-radius: 5px;
+  }
 `;
 
 //============================================
@@ -136,7 +147,7 @@ const OtherBtnBlock = styled.div`
   grid-template-rows: 1fr 1fr 1fr;
   gap: 10px 20px;
 
-  margin-top: 30px;
+  margin-top: 11px;
   & button {
     border-radius: 5px;
   }
