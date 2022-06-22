@@ -1,12 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import axios from 'axios';
-import {
-  CreateUserDto,
-  SignInResultDto,
-  UserDataDto,
-} from 'src/users/dto/users.dto';
+import { CreateUserDto, BasicUserDataDto } from 'src/users/dto/users.dto';
 import { UsersService } from 'src/users/users.service';
+import { IsSignedUpDto } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +22,7 @@ export class AuthService {
           'c44164aba01e6b4652fb6a4107e5188020a7e0c823b5013b2879b85ef7ea9abb',
         client_secret:
           'b3ee694a82c2014be143f7a31575cd6b15c3e7bf3fbf0ba7ca6de057e9f8673d',
-        redirect_uri: 'http://localhost:5500/auth/signIn',
+        redirect_uri: 'http://localhost:3000/callback',
         code,
       },
     });
@@ -38,7 +35,7 @@ export class AuthService {
     return randNum;
   };
 
-  async getUserData(accessToken: string): Promise<UserDataDto> {
+  async getUserData(accessToken: string): Promise<BasicUserDataDto> {
     const axiosResult = await axios({
       method: 'GET',
       url: 'https://api.intra.42.fr/v2/me',
@@ -48,42 +45,34 @@ export class AuthService {
     });
 
     const { email, image_url } = axiosResult.data;
-    const userData: UserDataDto = {
+    const userData: BasicUserDataDto = {
       avatar: image_url,
       email,
     };
     return userData;
   }
 
-  async signIn(code: string): Promise<SignInResultDto | string> {
+  async isSignedUp(code: string): Promise<IsSignedUpDto> {
     const accessToken = await this.getAccessToken(code);
     const userData = await this.getUserData(accessToken);
 
     const user = await this.usersService.getUserByEmail(userData.email);
 
-    if (!user) {
-      return {
-        ...userData,
-        accessToken,
-        isSignedUp: false,
-      };
-      // return {
-      //   ...userData,
-      //   accessToken,
-      //   isSigned: false,
-      // };
-    }
-    /**
-     * 비회원일 경우
-     * jwt
-     *
-     */
+    const isSignedUpDto = new IsSignedUpDto();
+    isSignedUpDto.user.avatar = user.avatar;
+    isSignedUpDto.user.email = user.email;
+    isSignedUpDto.jwt = null;
 
-    return this.jwtService.sign({
-      ...userData,
-      accessToken,
-      isSignedUp: true,
+    if (!user) {
+      return isSignedUpDto;
+    }
+
+    isSignedUpDto.jwt = this.jwtService.sign({
+      id: user.id,
+      nickname: user.nickname,
     });
+
+    return isSignedUpDto;
   }
 
   async signUp(createUserDto: CreateUserDto): Promise<string> {
