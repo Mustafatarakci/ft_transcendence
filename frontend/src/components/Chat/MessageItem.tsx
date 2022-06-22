@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { IMessage } from '../../utils/interface';
+import ProfileImage from '../common/ProfileImage';
 
 interface MessageItemProps {
   message: IMessage;
@@ -21,11 +22,7 @@ const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
       <>
         {message.from && (
           <MessageItemContainer fromUser={message.fromUser}>
-            {!message.fromUser && (
-              <ProfileImgWrapper>
-                <ProfilImage src={message.from.profileImage} alt="userProfilImg" />
-              </ProfileImgWrapper>
-            )}
+            {!message.fromUser && <ProfileImage src={message.from.profileImage} size={40} />}
             <MessageWrapper fromUser={message.fromUser}>
               {!message.fromUser && <MessageName>{message.from.nickname}</MessageName>}
               <MessageContent>
@@ -55,21 +52,11 @@ const MessageItemContainer = styled.div<{ fromUser: boolean }>`
   justify-content: ${props => (props.fromUser ? 'flex-end' : 'flex-start')};
   margin-bottom: 10px;
 `;
-const ProfileImgWrapper = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 10px;
-`;
-const ProfilImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
+
 const MessageWrapper = styled.div<{ fromUser: boolean }>`
   text-align: ${props => (props.fromUser ? 'right' : 'left')};
   max-width: 70%;
+  margin-left: 10px;
 `;
 const MessageName = styled.span`
   display: block;

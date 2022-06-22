@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Button from '../Button';
 import axios from 'axios';
 import Modal from '.';
+import ProfileImage from '../ProfileImage';
 
 const ShowProfile: React.FC = () => {
   const [user, setUser] = useState({
@@ -56,9 +57,7 @@ const ShowProfile: React.FC = () => {
     <Modal width={505} height={514} title={'프로필 보기'}>
       <MainBlock>
         <ProfileBlock>
-          <PictureBlock>
-            <ProfilePicture src={user.picture} alt="UserProfileImage" />
-          </PictureBlock>
+          <ProfileImage src={user.picture} size={100} />
           <UserInfo>
             <UserName>{user.user_nick}</UserName>
             <UserLevel>lv.{user.user_lv}</UserLevel>
@@ -110,15 +109,6 @@ const ProfileBlock = styled.div`
   display: flex;
 `;
 const UserInfo = styled.div``;
-
-const PictureBlock = styled.div``;
-
-const ProfilePicture = styled.img`
-  width: 101px;
-  height: 101px;
-  border-radius: 50px;
-  background: #c4c4c4;
-`;
 
 const UserName = styled.span`
   display: block;

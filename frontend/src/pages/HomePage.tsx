@@ -41,7 +41,7 @@ const Background = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.main};
-  overflow: hidden;
+  overflow-y: auto;
 `;
 const HomeContainer = styled.div`
   width: 1000px;
@@ -51,6 +51,8 @@ const HomeContainer = styled.div`
 const HomeContents = styled.div`
   display: flex;
   height: calc(100vh - 160px);
+  min-height: 700px;
+  margin-bottom: 20px;
 `;
 
 const MainArea = styled.div`
@@ -65,7 +67,6 @@ const MainArea = styled.div`
 const HomeMenus = styled.div`
   width: 300px;
   height: 100%;
-  background-color: white;
 `;
 
 export default GamePage;

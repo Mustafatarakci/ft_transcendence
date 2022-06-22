@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
+import axios from 'axios';
 import Button from '../components/common/Button';
 import styled from '@emotion/styled';
-import axios from 'axios';
+import { AllContext } from '../store';
+import { LOGIN } from '../utils/interface';
 
 // TODO : 최초 42api 토큰 요청시 성공하면 인트라 사진도 갖고오도록 할 예정?
 const DEFAULT_PROFILE =
@@ -11,17 +13,25 @@ const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,8}$/;
 const minNickName = 2;
 const maxNickName = 8;
 
-const NicknamPage: React.FC = () => {
+const NicknamePage: React.FC = () => {
   const [profileImg, setProfileImg] = useState<string>(DEFAULT_PROFILE);
   const [nickName, setNickName] = useState<string>('');
   const [checkNickMsg, setCheckNickMsg] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const profileIamge = useRef<HTMLInputElement>(null);
+  const { setUserStatus } = useContext(AllContext).userStatus;
 
   const onEditNick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckNickMsg('');
+    //  NOTE : 정규식 적용
+    const inputNickValue = e.target.value;
+
+    if (!regex.test(inputNickValue)) {
+      if (inputNickValue.length >= minNickName && inputNickValue.length <= maxNickName)
+        setCheckNickMsg('한글, 영어, 숫자로만 작성해주세요');
+      else setCheckNickMsg(`최소 2자, 최대 8자로 작성해주세요`);
+    } else setCheckNickMsg('');
     setIsEnabled(false);
-    setNickName(e.target.value);
+    setNickName(inputNickValue);
   };
   const onFindImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
@@ -40,21 +50,7 @@ const NicknamPage: React.FC = () => {
     }
   };
   const checkNickName = (resNickName: string) => {
-    // NOTE : 공백문자 제거
-    const nickNameTrim = nickName.trim();
-
-    //  NOTE : 정규식 적용
-    if (!regex.test(nickName)) {
-      if (
-        nickName.includes(' ') ||
-        (nickNameTrim.length >= minNickName && nickNameTrim.length <= maxNickName)
-      )
-        setCheckNickMsg('한글, 영어, 숫자로만 작성해주세요');
-      else setCheckNickMsg(`최소 2자, 최대 8자로 작성해주세요`);
-      return false;
-    }
-
-    if (nickNameTrim === resNickName) {
+    if (nickName === resNickName) {
       setCheckNickMsg(`중복된 닉네임입니다.`);
       setIsEnabled(false);
       return false;
@@ -72,6 +68,15 @@ const NicknamPage: React.FC = () => {
     if (checkNickName(resNickName)) {
       setCheckNickMsg(`사용 가능한 닉네임입니다.`);
       setIsEnabled(true);
+    }
+  };
+
+  const onClickSubmit = () => {
+    if (!isEnabled) {
+      setCheckNickMsg(`닉네임 중복 체크를 먼저 해주세요.`);
+    } else {
+      // TODO : 서버에 전송하기
+      setUserStatus(LOGIN);
     }
   };
   return (
@@ -102,55 +107,33 @@ const NicknamPage: React.FC = () => {
           <CheckDuplicate onClick={onCheck}>중복 체크</CheckDuplicate>
           <DupMsg>{checkNickMsg}</DupMsg>
         </Nick>
-        <Button
-          width={130}
-          height={30}
-          color="gradient"
-          text="확인"
-          onClick={() => {
-            if (isEnabled) {
-              console.dir(profileImg);
-              console.dir(nickName);
-            } else {
-              if (!checkNickName(nickName)) {
-                alert('닉네임 수정 필요');
-              }
-            }
-          }}
-        />
+        <Button width={130} height={30} color="gradient" text="확인" onClick={onClickSubmit} />
       </NickForm>
     </NickTemplate>
   );
 };
 
 const NickTemplate = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100vh;
+  overflow: auto;
 `;
 
 const NickForm = styled.div`
-  display: block;
   width: 700px;
-  height: 800px;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
   padding: 55px;
+  margin: 50px auto 20px;
   border: 2px solid ${props => props.theme.colors.main};
   border-radius: 20px;
   text-align: center;
 `;
 
 const NickGuide = styled.h2`
-  width: 227px;
   height: 28px;
 
   font-weight: 700;
   font-size: 24px;
+  text-align: left;
 
   color: ${props => props.theme.colors.main};
 `;
@@ -237,4 +220,4 @@ const DupMsg = styled.span`
   height: 40px;
 `;
 
-export default NicknamPage;
+export default NicknamePage;

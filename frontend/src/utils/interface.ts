@@ -31,12 +31,16 @@ export interface IMessage {
   createdAt: string | number;
 }
 
+export type ButtonColorType = 'white' | 'white2' | 'main' | 'gradient';
+
 export interface IUserList {
   id: number;
   username: string;
   isfriend: boolean;
   status: 'on' | 'off' | 'play';
 }
+
+export type ActiveMenuType = 'ALL' | 'FRIEND';
 
 export const ON = 'on' as const;
 export const OFF = 'off' as const;
