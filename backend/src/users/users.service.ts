@@ -23,6 +23,18 @@ export class UsersService {
     });
   }
 
+  async getFriends(userId: number): Promise<Nickname[]> {
+    const friends = await this.followRepo
+      .createQueryBuilder('follow')
+      .leftJoinAndSelect('follow.follow', 'followee')
+      .where('follow.followerId = :userId', { userId })
+      .getMany();
+
+    return friends.map((friend) => {
+      return { nickname: friend.follow.nickname };
+    });
+  }
+
   async getUserByEmail(email: string): Promise<User> {
     const ret = await this.userRepo.findOne({ where: { email } });
     return ret;

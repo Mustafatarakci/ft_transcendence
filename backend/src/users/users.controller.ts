@@ -8,7 +8,6 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { User } from './entities/users.entity';
 import { UsersService } from './users.service';
 import { EmailService } from 'src/emails/email.service';
 import { EmailDto, Nickname, UserProfileDto } from './dto/users.dto';
@@ -71,5 +70,13 @@ export class UsersController {
     @Body('targetId', ParseIntPipe) targetId: number,
   ): Promise<void> {
     await this.usersService.addFriend(myId, targetId);
+  }
+
+  @ApiOperation({ summary: '✅ 친구 목록 조회' })
+  @Get(':id/friends')
+  async getFriends(
+    @Param('id', ParseIntPipe) userId: number,
+  ): Promise<Nickname[]> {
+    return await this.usersService.getFriends(userId);
   }
 }
