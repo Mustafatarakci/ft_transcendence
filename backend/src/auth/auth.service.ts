@@ -61,6 +61,7 @@ export class AuthService {
     const isSignedUpDto = new IsSignedUpDto();
     isSignedUpDto.user.avatar = user.avatar;
     isSignedUpDto.user.email = user.email;
+    isSignedUpDto.isSecondAuth = false;
     isSignedUpDto.jwt = null;
 
     if (!user) {
