@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GameRecordDto } from './dto/gameRecord.dto';
 import { CreateUserDto, Nickname } from './dto/users.dto';
 import { BlockedUser } from './entities/blockedUser.entity';
 import { Follow } from './entities/follow.entity';
@@ -103,5 +104,17 @@ export class UsersService {
     follow.follow = followUser;
 
     await this.followRepo.save(follow);
+  }
+
+  async getGameRecords(userId: number): Promise<GameRecordDto[]> {
+    const gameRecords = await this.gameRecordRepo
+      .createQueryBuilder('gameRecord')
+      .leftJoinAndSelect('gameRecord.playerOne', 'playerOne')
+      .leftJoinAndSelect('gameRecord.playerTwo', 'playerTwo')
+      .where('gameRecord.playerOneId = :userId', { userId })
+      .orWhere('gameRecord.playerTwoId = :userId', { userId })
+      .getMany();
+
+    return gameRecords.map((gameRecord) => gameRecord.toGameRecordDto(userId));
   }
 }

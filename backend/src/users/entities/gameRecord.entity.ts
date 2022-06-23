@@ -7,6 +7,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { GameRecordDto } from '../dto/gameRecord.dto';
 
 @Entity()
 export class GameRecord extends BaseEntity {
@@ -34,12 +35,25 @@ export class GameRecord extends BaseEntity {
   winnerId: number;
 
   @ApiProperty({ description: '래더게임 여부' })
-  @Column()
-  isLadder: string;
+  @Column({ default: false })
+  isLadder: boolean;
 
   @ManyToOne(() => User, (user) => user.playerOne)
   playerOne: User;
 
   @ManyToOne(() => User, (user) => user.playerTwo)
   playerTwo: User;
+
+  toGameRecordDto(myId: number): GameRecordDto {
+    const gameRecordDto = new GameRecordDto();
+
+    gameRecordDto.isLadder = this.isLadder;
+    gameRecordDto.isWin = this.winnerId === myId ? true : false;
+    gameRecordDto.opponentNickname =
+      this.playerOneId === myId
+        ? this.playerTwo.nickname
+        : this.playerOne.nickname;
+
+    return gameRecordDto;
+  }
 }
