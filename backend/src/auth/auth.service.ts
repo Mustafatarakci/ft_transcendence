@@ -1,7 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import axios from 'axios';
-import { CreateUserDto, BasicUserDataDto } from 'src/users/dto/users.dto';
+import { UpdateUserDto, UserProfileDto } from 'src/users/dto/users.dto';
+import { User } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { IsSignedUpDto } from './dto/auth.dto';
 
@@ -35,7 +36,7 @@ export class AuthService {
     return randNum;
   };
 
-  async getUserData(accessToken: string): Promise<BasicUserDataDto> {
+  async getUserEmail(accessToken: string): Promise<string> {
     const axiosResult = await axios({
       method: 'GET',
       url: 'https://api.intra.42.fr/v2/me',
@@ -44,43 +45,49 @@ export class AuthService {
       },
     });
 
-    const { email, image_url } = axiosResult.data;
-    const userData: BasicUserDataDto = {
-      avatar: image_url,
-      email,
-    };
-    return userData;
+    const { email } = axiosResult.data;
+    return email;
+  }
+
+  userToIsSignedUpDto(user: User): IsSignedUpDto {
+    const isSignedUpDto = new IsSignedUpDto();
+
+    isSignedUpDto.nickname = user.nickname;
+    isSignedUpDto.avatar = user.avatar;
+    isSignedUpDto.isSecondAuthOn = user.isSecondAuthOn;
+    isSignedUpDto.jwt = this.jwtService.sign({
+      id: user.id,
+      email: user.email,
+    });
+    return isSignedUpDto;
   }
 
   async isSignedUp(code: string): Promise<IsSignedUpDto> {
     const accessToken = await this.getAccessToken(code);
-    const userData = await this.getUserData(accessToken);
+    const userEmail = await this.getUserEmail(accessToken);
 
-    const user = await this.usersService.getUserByEmail(userData.email);
-
-    const isSignedUpDto = new IsSignedUpDto();
-    isSignedUpDto.user.avatar = user.avatar;
-    isSignedUpDto.user.email = user.email;
-    isSignedUpDto.jwt = null;
+    const user = await this.usersService.getUserByEmail(userEmail);
 
     if (!user) {
-      return isSignedUpDto;
+      const createdUser = await this.usersService.createUser({
+        email: userEmail,
+      });
+
+      return this.userToIsSignedUpDto(createdUser);
     }
 
-    isSignedUpDto.jwt = this.jwtService.sign({
-      id: user.id,
-      nickname: user.nickname,
-    });
-
-    return isSignedUpDto;
+    return this.userToIsSignedUpDto(user);
   }
 
-  async signUp(createUserDto: CreateUserDto): Promise<string> {
-    const { nickname, avatar } = await this.usersService.createUser(
-      createUserDto,
-    );
+  async signUp(updateUserDto: UpdateUserDto): Promise<UserProfileDto> {
+    if (
+      updateUserDto.nickname &&
+      (await this.isDuplicateNickname(updateUserDto.nickname))
+    ) {
+      throw new BadRequestException('중복된 닉네임 입니다.');
+    }
 
-    return this.jwtService.sign({ nickname, avatar });
+    return await this.usersService.updateUser(updateUserDto);
   }
 
   async isDuplicateNickname(nickname: string): Promise<boolean> {

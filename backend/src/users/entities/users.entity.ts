@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsSignedUpDto } from 'src/auth/dto/auth.dto';
 import { ChatContents } from 'src/chat/entities/chatContents.entity';
 import { ChatParticipant } from 'src/chat/entities/chatParticipant.entity';
 import { GameRecord } from 'src/users/entities/gameRecord.entity';
@@ -9,6 +10,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { UserProfileDto } from '../dto/users.dto';
 import { BlockedUser } from './blockedUser.entity';
 import { Follow } from './follow.entity';
 
@@ -78,4 +80,18 @@ export class User extends BaseEntity {
   chatParticipant: ChatParticipant[];
 
   // 친구, 레더레벨, 업적, 모든 경기 기록
+
+  toUserProfileDto() {
+    const userProfileDto = new UserProfileDto();
+    userProfileDto.id = this.id;
+    userProfileDto.nickname = this.nickname;
+    userProfileDto.avatar = this.avatar;
+    userProfileDto.email = this.email;
+    userProfileDto.winCount = this.winCount;
+    userProfileDto.loseCount = this.loseCount;
+    userProfileDto.ladderWinCount = this.ladderWinCount;
+    userProfileDto.ladderLoseCount = this.ladderLoseCount;
+
+    return userProfileDto;
+  }
 }

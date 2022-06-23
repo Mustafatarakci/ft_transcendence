@@ -1,18 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsNumber, IsString } from 'class-validator';
 
-export class BasicUserDataDto {
+export class UpdateUserDto {
+  @ApiProperty({ description: '유저 id' })
+  @IsNumber()
+  userId: number;
+
   @ApiProperty({ description: '아바타' })
   @IsString()
   avatar: string;
 
   @ApiProperty({ description: '이메일' })
-  @IsEmail()
-  email: string;
-}
-
-export class CreateUserDto extends BasicUserDataDto {
-  @ApiProperty({ description: '닉네임' })
   @IsString()
   nickname: string;
 }
