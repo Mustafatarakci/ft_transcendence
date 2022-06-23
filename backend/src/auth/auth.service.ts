@@ -1,12 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import axios from 'axios';
-import {
-  CreateUserDto,
-  SignInResultDto,
-  UserDataDto,
-} from 'src/users/dto/users.dto';
+import { CreateUserDto, BasicUserDataDto } from 'src/users/dto/users.dto';
 import { UsersService } from 'src/users/users.service';
+import { IsSignedUpDto } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -38,7 +35,7 @@ export class AuthService {
     return randNum;
   };
 
-  async getUserData(accessToken: string): Promise<UserDataDto> {
+  async getUserData(accessToken: string): Promise<BasicUserDataDto> {
     const axiosResult = await axios({
       method: 'GET',
       url: 'https://api.intra.42.fr/v2/me',
@@ -48,37 +45,34 @@ export class AuthService {
     });
 
     const { email, image_url } = axiosResult.data;
-    const userData: UserDataDto = {
+    const userData: BasicUserDataDto = {
       avatar: image_url,
       email,
     };
     return userData;
   }
 
-  async signIn(code: string): Promise<SignInResultDto | string> {
+  async isSignedUp(code: string): Promise<IsSignedUpDto> {
     const accessToken = await this.getAccessToken(code);
     const userData = await this.getUserData(accessToken);
 
     const user = await this.usersService.getUserByEmail(userData.email);
 
+    const isSignedUpDto = new IsSignedUpDto();
+    isSignedUpDto.user.avatar = user.avatar;
+    isSignedUpDto.user.email = user.email;
+    isSignedUpDto.jwt = null;
+
     if (!user) {
-      return {
-        ...userData,
-        accessToken,
-        isSignedUp: false,
-      };
-      // return {
-      //   ...userData,
-      //   accessToken,
-      //   isSigned: false,
-      // };
+      return isSignedUpDto;
     }
 
-    return this.jwtService.sign({
-      ...userData,
-      accessToken,
-      isSignedUp: true,
+    isSignedUpDto.jwt = this.jwtService.sign({
+      id: user.id,
+      nickname: user.nickname,
     });
+
+    return isSignedUpDto;
   }
 
   async signUp(createUserDto: CreateUserDto): Promise<string> {

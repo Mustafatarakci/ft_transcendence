@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ChattingRoomsDto } from '../dto/chat.dto';
 import { ChatContents } from './chatContents.entity';
 import { ChatParticipant } from './chatParticipant.entity';
 
@@ -38,4 +39,19 @@ export class ChattingRoom extends BaseEntity {
 
   @OneToMany(() => ChatContents, (chatContents) => chatContents.chattingRoom)
   chatContents: ChatContents[];
+
+  toChattingRoomsDto(): ChattingRoomsDto {
+    if (this.chatParticipant === undefined) {
+      throw Error('chatParticipant join required to chattingRoom');
+    }
+
+    const chattingRoomsDto = new ChattingRoomsDto();
+    chattingRoomsDto.id = this.id;
+    chattingRoomsDto.title = this.title;
+    chattingRoomsDto.password = this.password;
+    chattingRoomsDto.ownerId = this.ownerId;
+    chattingRoomsDto.numberOfParticipants = this.chatParticipant.length;
+
+    return chattingRoomsDto;
+  }
 }

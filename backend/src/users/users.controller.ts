@@ -8,10 +8,9 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { User } from './entities/users.entity';
 import { UsersService } from './users.service';
 import { EmailService } from 'src/emails/email.service';
-import { EmailDto, UserProfileDto } from './dto/users.dto';
+import { EmailDto, Nickname, UserProfileDto } from './dto/users.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -46,14 +45,15 @@ export class UsersController {
     this.usersService.toggleSecondAuth(emailDto.email);
   }
 
-  @ApiOperation({ summary: '유저 목록 가져오기' })
+  @ApiOperation({ summary: '✅ 모든 유저 목록 가져오기' })
   @Get('')
-  async getUsers(): Promise<User[]> {
-    const ret = await this.usersService.getUsers();
-    return ret;
+  async getUsers(): Promise<Nickname[]> {
+    const nicknames = await this.usersService.getUsers();
+
+    return nicknames;
   }
 
-  @ApiOperation({ summary: '특정 유저의 정보 조회' })
+  @ApiOperation({ summary: '✅ 특정 유저의 정보 조회' })
   @Get(':id')
   async getUser(
     @Param('id', ParseIntPipe) id: number,
@@ -63,12 +63,20 @@ export class UsersController {
     return user;
   }
 
-  @ApiOperation({ summary: '친구 추가' })
+  @ApiOperation({ summary: '✅ 친구 추가' })
   @Post(':id/friends')
   async addFriend(
     @Param('id', ParseIntPipe) myId: number,
     @Body('targetId', ParseIntPipe) targetId: number,
   ): Promise<void> {
     await this.usersService.addFriend(myId, targetId);
+  }
+
+  @ApiOperation({ summary: '✅ 친구 목록 조회' })
+  @Get(':id/friends')
+  async getFriends(
+    @Param('id', ParseIntPipe) userId: number,
+  ): Promise<Nickname[]> {
+    return await this.usersService.getFriends(userId);
   }
 }

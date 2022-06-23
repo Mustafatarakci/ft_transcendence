@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsString } from 'class-validator';
 
-export class UserDataDto {
+export class BasicUserDataDto {
   @ApiProperty({ description: '아바타' })
   @IsString()
   avatar: string;
@@ -11,17 +11,7 @@ export class UserDataDto {
   email: string;
 }
 
-export class SignInResultDto extends UserDataDto {
-  @ApiProperty({ description: '42api accessToken' })
-  @IsString()
-  accessToken: string;
-
-  @ApiProperty({ description: '회원가입 여부' })
-  @IsBoolean()
-  isSignedUp: boolean;
-}
-
-export class CreateUserDto extends UserDataDto {
+export class CreateUserDto extends BasicUserDataDto {
   @ApiProperty({ description: '닉네임' })
   @IsString()
   nickname: string;
@@ -31,6 +21,11 @@ export class EmailDto {
   @ApiProperty({ description: '이메일' })
   @IsEmail()
   email: string;
+}
+
+export class Nickname {
+  @ApiProperty({ description: '닉네임' })
+  nickname: string;
 }
 
 export class UserProfileDto {

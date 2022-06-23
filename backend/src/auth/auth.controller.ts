@@ -1,14 +1,15 @@
 import { Body, Controller, Get, Post, Query, Redirect } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto, SignInResultDto } from 'src/users/dto/users.dto';
+import { CreateUserDto } from 'src/users/dto/users.dto';
 import { AuthService } from './auth.service';
+import { IsSignedUpDto } from './dto/auth.dto';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @ApiOperation({ summary: '42 oauth page 로 redirection' })
+  @ApiOperation({ summary: '[test for backend] 42 oauth page 로 redirection' })
   @Get('oauthPage')
   @Redirect(
     'https://api.intra.42.fr/oauth/authorize?client_id=c44164aba01e6b4652fb6a4107e5188020a7e0c823b5013b2879b85ef7ea9abb&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&response_type=code',
@@ -18,25 +19,23 @@ export class AuthController {
   }
 
   @ApiOperation({
-    summary: '로그인',
-    description:
-      '비회원일 경우 SignInResultDto 타입으로 리턴하고 회원일 경우 JWT로 리턴함',
+    summary: '✅ 유저의 회원가입 여부 확인',
   })
-  @Get('signIn')
-  async signIn(@Query('code') code: string): Promise<SignInResultDto | string> {
-    const signInResult = await this.authService.signIn(code);
+  @Post('isSignedUp')
+  async isSignedUp(@Query('code') code: string): Promise<IsSignedUpDto> {
+    const isSignedUpDto = await this.authService.isSignedUp(code);
 
-    return signInResult;
+    return isSignedUpDto;
   }
 
-  @ApiOperation({ summary: '회원가입' })
+  @ApiOperation({ summary: '✅ 회원가입' })
   @Post('signUp')
   async signUp(@Body() createUserDto: CreateUserDto): Promise<string> {
     return await this.authService.signUp(createUserDto);
   }
 
-  @ApiOperation({ summary: '닉네임 중복 확인' })
-  @Get('isDuplicateNickname')
+  @ApiOperation({ summary: '✅ 닉네임 중복 확인' })
+  @Post('isDuplicateNickname')
   async isDuplicateNickname(@Query() nickname: string): Promise<boolean> {
     return await this.authService.isDuplicateNickname(nickname);
   }

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from './dto/users.dto';
+import { CreateUserDto, Nickname } from './dto/users.dto';
 import { BlockedUser } from './entities/blockedUser.entity';
 import { Follow } from './entities/follow.entity';
 import { User } from './entities/users.entity';
@@ -15,8 +15,24 @@ export class UsersService {
     private readonly blockedUserRepo: Repository<BlockedUser>,
   ) {}
 
-  async getUsers(): Promise<User[]> {
-    return await this.userRepo.find();
+  async getUsers(): Promise<Nickname[]> {
+    const users = await this.userRepo.find();
+
+    return users.map((user) => {
+      return { nickname: user.nickname };
+    });
+  }
+
+  async getFriends(userId: number): Promise<Nickname[]> {
+    const friends = await this.followRepo
+      .createQueryBuilder('follow')
+      .leftJoinAndSelect('follow.follow', 'followee')
+      .where('follow.followerId = :userId', { userId })
+      .getMany();
+
+    return friends.map((friend) => {
+      return { nickname: friend.follow.nickname };
+    });
   }
 
   async getUserByEmail(email: string): Promise<User> {
