@@ -19,7 +19,7 @@ export class AuthController {
   }
 
   @ApiOperation({
-    summary: '✅ 유저의 회원가입 여부 확인',
+    summary: 'kankim✅ 유저의 회원가입 여부 확인',
   })
   @Post('isSignedUp')
   async isSignedUp(@Query('code') code: string): Promise<IsSignedUpDto> {
@@ -28,13 +28,13 @@ export class AuthController {
     return isSignedUpDto;
   }
 
-  @ApiOperation({ summary: '✅ 회원가입' })
+  @ApiOperation({ summary: 'kankim✅ 회원가입' })
   @Post('signUp')
   async signUp(@Body() createUserDto: CreateUserDto): Promise<string> {
     return await this.authService.signUp(createUserDto);
   }
 
-  @ApiOperation({ summary: '✅ 닉네임 중복 확인' })
+  @ApiOperation({ summary: 'kankim✅ 닉네임 중복 확인' })
   @Post('isDuplicateNickname')
   async isDuplicateNickname(@Query() nickname: string): Promise<boolean> {
     return await this.authService.isDuplicateNickname(nickname);
