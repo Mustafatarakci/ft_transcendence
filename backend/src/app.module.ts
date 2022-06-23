@@ -21,7 +21,6 @@ import { AllExceptionsFilter } from './all-exceptions.filter';
 import { TransformInterceptor } from './response.interceptor';
 import { UsersService } from './users/users.service';
 import { ChatModule } from './chat/chat.module';
-import { GamesModule } from './gameRecord/gameRecord.module';
 
 @Module({
   imports: [
@@ -52,7 +51,6 @@ import { GamesModule } from './gameRecord/gameRecord.module';
     }),
     AuthModule,
     ChatModule,
-    GamesModule,
   ],
   controllers: [AppController],
   providers: [

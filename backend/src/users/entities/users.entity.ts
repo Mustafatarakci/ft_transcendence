@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ChatContents } from 'src/chat/entities/chatContents.entity';
 import { ChatParticipant } from 'src/chat/entities/chatParticipant.entity';
-import { GameRecord } from 'src/gameRecord/entities/gameRecord.entity';
+import { GameRecord } from 'src/users/entities/gameRecord.entity';
 import {
   BaseEntity,
   Column,

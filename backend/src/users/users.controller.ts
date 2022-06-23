@@ -79,4 +79,12 @@ export class UsersController {
   ): Promise<Nickname[]> {
     return await this.usersService.getFriends(userId);
   }
+
+  @ApiOperation({ summary: 'kankim 전적 조회' })
+  @Get(':id/gameRecord')
+  async getGameRecord(@Param('id', ParseIntPipe) userId: number) {
+    // ): Promise<GameRecordDto[]> {
+    // this.usersService.getGameRecord();
+    return [];
+  }
 }

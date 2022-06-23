@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto, Nickname } from './dto/users.dto';
 import { BlockedUser } from './entities/blockedUser.entity';
 import { Follow } from './entities/follow.entity';
+import { GameRecord } from './entities/gameRecord.entity';
 import { User } from './entities/users.entity';
 
 @Injectable()
@@ -13,6 +14,8 @@ export class UsersService {
     @InjectRepository(Follow) private readonly followRepo: Repository<Follow>,
     @InjectRepository(BlockedUser)
     private readonly blockedUserRepo: Repository<BlockedUser>,
+    @InjectRepository(GameRecord)
+    private readonly gameRecordRepo: Repository<GameRecord>,
   ) {}
 
   async getUsers(): Promise<Nickname[]> {
