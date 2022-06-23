@@ -72,7 +72,7 @@ export class UsersController {
 
   @Get(':imgpath')
   seeUploadedFile(@Param('imgpath') image, @Res() res) {
-    return res.sendFile(image, { root: '../files' });
+    return res.sendFile(image, { root: '/app/files' });
   }
 
   @Get('/email')

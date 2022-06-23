@@ -27,7 +27,7 @@ import { MulterModule } from '@nestjs/platform-express';
 @Module({
   imports: [
     MulterModule.register({
-      dest: './files',
+      dest: './src/files',
     }),
     TypeOrmModule.forRoot(TypeORMConfig),
     UsersModule,
