@@ -13,11 +13,11 @@ export class Follow extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ description: '팔로우 하는 유저의 id' })
+  @ApiProperty({ description: '[FK] 팔로우 하는 유저의 id' })
   @Column()
   followerId: number;
 
-  @ApiProperty({ description: '팔로우 당하는 유저의 id' })
+  @ApiProperty({ description: '[FK] 팔로우 당하는 유저의 id' })
   @Column()
   followId: number;
 

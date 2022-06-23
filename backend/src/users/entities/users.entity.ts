@@ -18,15 +18,15 @@ export class User extends BaseEntity {
   id: number;
 
   @ApiProperty({ description: '닉네임' })
-  @Column({ unique: true })
-  nickname: string;
+  @Column({ unique: true, nullable: true, default: null })
+  nickname: string | null;
 
   @ApiProperty({ description: '아바타' })
-  @Column({ nullable: true })
-  avatar: string;
+  @Column({ nullable: true, default: null })
+  avatar: string | null;
 
   @ApiProperty({ description: '이메일' })
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @ApiProperty({ description: '2차 인증 여부' })
@@ -35,7 +35,7 @@ export class User extends BaseEntity {
 
   @ApiProperty({ description: '이메일로 보낸 코드와 비교할 2차 인증 코드' })
   @Column({ nullable: true, default: null })
-  secondAuthCode: number;
+  secondAuthCode: number | null;
 
   @ApiProperty({ description: '승리 횟수' })
   @Column({ default: 0 })
