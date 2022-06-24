@@ -21,7 +21,6 @@ import { AllExceptionsFilter } from './all-exceptions.filter';
 import { TransformInterceptor } from './response.interceptor';
 import { UsersService } from './users/users.service';
 import { ChatModule } from './chat/chat.module';
-import { GamesModule } from './gameRecord/gameRecord.module';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({

@@ -53,6 +53,7 @@ export class AuthService {
     const isSignedUpDto = new IsSignedUpDto();
 
     isSignedUpDto.nickname = user.nickname;
+    isSignedUpDto.email = user.email;
     isSignedUpDto.avatar = user.avatar;
     isSignedUpDto.isSecondAuthOn = user.isSecondAuthOn;
     isSignedUpDto.jwt = this.jwtService.sign({
@@ -69,9 +70,9 @@ export class AuthService {
     const user = await this.usersService.getUserByEmail(userEmail);
 
     const isSignedUpDto = new IsSignedUpDto();
-    isSignedUpDto.user.avatar = user.avatar;
-    isSignedUpDto.user.email = user.email;
-    isSignedUpDto.isSecondAuth = false;
+    isSignedUpDto.avatar = user.avatar;
+    isSignedUpDto.email = user.email;
+    isSignedUpDto.isSecondAuthOn = false;
     isSignedUpDto.jwt = null;
 
     if (!user) {
