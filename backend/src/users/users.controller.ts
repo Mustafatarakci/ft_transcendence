@@ -28,7 +28,8 @@ export class UsersController {
     private readonly emailService: EmailService,
   ) {}
 
-  @Post('/file')
+  // @Post('/file')
+  @Post('/:id/uploadImage')
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
@@ -38,12 +39,13 @@ export class UsersController {
       fileFilter: imageFileFilter,
     }),
   )
-
-  async uploadedFile(@UploadedFile() file) {
+  async uploadedFile(@UploadedFile() file, @Param('id') id : number) {
     const response = {
       originalname: file.originalname,
       filename: file.filename,
+      UpdateImg: await this.usersService.findByNicknameAndUpdateImg(id, file.filename)
     };
+    
     return response;
   }
 
@@ -57,7 +59,7 @@ export class UsersController {
       fileFilter: imageFileFilter,
     }),
   )
-
+  
   async uploadMultipleFiles(@UploadedFiles() files) {
     const response = [];
     files.forEach(file => {
@@ -69,6 +71,19 @@ export class UsersController {
     });
     return response;
   }
+
+  @ApiOperation({ summary: 'todo: 이미지 업로드' })
+  @UseInterceptors(
+    FilesInterceptor('image', 20, {
+      storage: diskStorage({
+        destination: './files',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  
+
 
   @Get(':imgpath')
   seeUploadedFile(@Param('imgpath') image, @Res() res) {

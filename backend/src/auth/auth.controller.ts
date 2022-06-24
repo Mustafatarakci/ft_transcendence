@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query, Redirect } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto, SignInResultDto } from 'src/users/dto/users.dto';
+import { CreateUserDto, SignInResultDto, UserDataDto } from 'src/users/dto/users.dto';
 import { AuthService } from './auth.service';
 
 @ApiTags('auth')
@@ -39,11 +39,5 @@ export class AuthController {
   @Get('isDuplicateNickname')
   async isDuplicateNickname(@Query() nickname: string): Promise<boolean> {
     return await this.authService.isDuplicateNickname(nickname);
-  }
-
-  @ApiOperation({ summary: 'todo: 이미지 업로드' })
-  @Post('uploadImage')
-  async uploadImage() {
-    return 'todo: 이미지 업로드';
   }
 }
