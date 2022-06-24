@@ -3,11 +3,8 @@ import {
   Get,
   Body,
   Post,
-  Query,
   Param,
   ParseIntPipe,
-  UseGuards,
-  Req,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -17,9 +14,7 @@ import { GameRecordDto } from './dto/gameRecord.dto';
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(
-    private readonly usersService: UsersService,
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @ApiOperation({ summary: 'kankim✅ 모든 유저 닉네임 가져오기' })
   @Get('')

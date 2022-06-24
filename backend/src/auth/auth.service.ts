@@ -130,7 +130,7 @@ export class AuthService {
   }
 
   async activateSecondAuth(user: User) {
-    user.secondAuthCode =  Math.floor(Math.random() * 1000000);
+    user.secondAuthCode = Math.floor(Math.random() * 1000000);
     await user.save();
   }
 
@@ -141,7 +141,10 @@ export class AuthService {
       return false;
     }
     await this.activateSecondAuth(user);
-    await this.emailService.sendEmail(user.secondAuthEmail, user.secondAuthCode);
+    await this.emailService.sendEmail(
+      user.secondAuthEmail,
+      user.secondAuthCode,
+    );
     return true;
   }
 
@@ -154,5 +157,4 @@ export class AuthService {
       return false;
     }
   }
-
 }

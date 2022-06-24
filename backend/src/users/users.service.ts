@@ -57,7 +57,7 @@ export class UsersService {
 
   async getUserProfile(id: number): Promise<UserProfileDto> {
     const user = await this.getUserById(id);
-    var userProfile: UserProfileDto;
+    let userProfile: UserProfileDto;
 
     userProfile.id = user.id;
     userProfile.nickname = user.nickname;

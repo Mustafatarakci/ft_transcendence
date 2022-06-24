@@ -1,13 +1,9 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/users/entities/users.entity';
 
 @Injectable()
 export class EmailService {
-  constructor(
-    private readonly mailerService: MailerService
-  ) {}
+  constructor(private readonly mailerService: MailerService) {}
 
   async _send(
     tos: string[],
@@ -30,5 +26,4 @@ export class EmailService {
       emailpassword: emailAuthCode,
     });
   }
-
 }

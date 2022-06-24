@@ -1,6 +1,20 @@
-import { Body, Controller, Get, Post, Query, Param, Req, Redirect, ParseIntPipe, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Param,
+  Redirect,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { EmailDto, UpdateUserDto, UserProfileDto } from '../users/dto/users.dto';
+import {
+  EmailDto,
+  UpdateUserDto,
+  UserProfileDto,
+} from '../users/dto/users.dto';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { IsSignedUpDto } from './dto/auth.dto';
@@ -12,7 +26,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
-    ) {}
+  ) {}
 
   @ApiOperation({ summary: '[test for backend] 42 oauth page 로 redirection' })
   @Get('oauthPage')
@@ -49,7 +63,7 @@ export class AuthController {
   @Post('/enableSecondAuth/:id')
   async enableSecondAuth(
     @Param('id', ParseIntPipe) id: number,
-    @Body() emailDto: EmailDto
+    @Body() emailDto: EmailDto,
   ): Promise<void> {
     this.authService.enableSecondAuth(id, emailDto.email);
   }
@@ -65,10 +79,7 @@ export class AuthController {
   @ApiOperation({ summary: '✅ 2차 인증 이메일 발송' })
   @Get('/shootSecondAuth/:id')
   @UseGuards(AuthGuard())
-  async shootSecAuth(
-    @Param('id', ParseIntPipe) id: number,
-    @Req() req
-  ): Promise<boolean> {
+  async shootSecAuth(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
     return this.authService.shootSecondAuth(id);
   }
 
