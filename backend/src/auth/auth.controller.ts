@@ -1,13 +1,18 @@
-import { Body, Controller, Get, Post, Query, Redirect } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Param, Req, Redirect, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UpdateUserDto, UserProfileDto } from 'src/users/dto/users.dto';
+import { EmailDto, UpdateUserDto, UserProfileDto } from '../users/dto/users.dto';
 import { AuthService } from './auth.service';
+import { UsersService } from '../users/users.service';
 import { IsSignedUpDto } from './dto/auth.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+    ) {}
 
   @ApiOperation({ summary: '[test for backend] 42 oauth page 로 redirection' })
   @Get('oauthPage')
@@ -38,6 +43,42 @@ export class AuthController {
   @Post('isDuplicateNickname')
   async isDuplicateNickname(@Query() nickname: string): Promise<boolean> {
     return await this.authService.isDuplicateNickname(nickname);
+  }
+
+  @ApiOperation({ summary: '✅ 2차 인증 설정' })
+  @Post('/enableSecondAuth/:id')
+  async enableSecondAuth(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() emailDto: EmailDto
+  ): Promise<void> {
+    this.authService.enableSecondAuth(id, emailDto.email);
+  }
+
+  @ApiOperation({ summary: '✅ 2차 인증 해제' })
+  @Post('/disableSecondAuth/:id')
+  async disableSecondAuth(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<void> {
+    this.authService.disableSecondAuth(id);
+  }
+
+  @ApiOperation({ summary: '✅ 2차 인증 이메일 발송' })
+  @Get('/shootSecondAuth/:id')
+  @UseGuards(AuthGuard())
+  async shootSecAuth(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req
+  ): Promise<boolean> {
+    return this.authService.shootSecondAuth(id);
+  }
+
+  @ApiOperation({ summary: '✅ 2차 인증 번호 검증' })
+  @Post('/verifySecondAuth/:id')
+  async verifySecondAuth(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('code') code: number,
+  ): Promise<boolean> {
+    return this.authService.verifySecondAuth(id, code);
   }
 
   @ApiOperation({ summary: 'todo: 이미지 업로드' })

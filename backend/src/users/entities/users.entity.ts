@@ -35,6 +35,10 @@ export class User extends BaseEntity {
   @Column({ default: false })
   isSecondAuthOn: boolean;
 
+  @ApiProperty({ description: '2차 인증 이메일' })
+  @Column({ default: null })
+  secondAuthEmail: string | null;
+
   @ApiProperty({ description: '이메일로 보낸 코드와 비교할 2차 인증 코드' })
   @Column({ nullable: true, default: null })
   secondAuthCode: number | null;
