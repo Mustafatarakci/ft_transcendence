@@ -51,6 +51,7 @@ export class ChattingRoom extends BaseEntity {
     chattingRoomsDto.password = this.password;
     chattingRoomsDto.ownerId = this.ownerId;
     chattingRoomsDto.numberOfParticipants = this.chatParticipant.length;
+    chattingRoomsDto.isDm = this.isDm;
 
     return chattingRoomsDto;
   }

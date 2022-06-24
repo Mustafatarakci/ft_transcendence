@@ -46,7 +46,7 @@ export class UsersController {
     this.usersService.toggleSecondAuth(emailDto.email);
   }
 
-  @ApiOperation({ summary: '✅ 모든 유저 목록 가져오기' })
+  @ApiOperation({ summary: 'kankim✅ 모든 유저 목록 가져오기' })
   @Get('')
   async getUsers(): Promise<Nickname[]> {
     const nicknames = await this.usersService.getUsers();
@@ -54,7 +54,7 @@ export class UsersController {
     return nicknames;
   }
 
-  @ApiOperation({ summary: '✅ 특정 유저의 정보 조회' })
+  @ApiOperation({ summary: 'kankim✅ 특정 유저의 정보 조회' })
   @Get(':id')
   async getUser(
     @Param('id', ParseIntPipe) id: number,
@@ -64,7 +64,7 @@ export class UsersController {
     return user;
   }
 
-  @ApiOperation({ summary: '✅ 친구 추가' })
+  @ApiOperation({ summary: 'kankim✅ 친구 추가' })
   @Post(':id/friends')
   async addFriend(
     @Param('id', ParseIntPipe) myId: number,
@@ -73,7 +73,7 @@ export class UsersController {
     await this.usersService.addFriend(myId, targetId);
   }
 
-  @ApiOperation({ summary: '✅ 친구 목록 조회' })
+  @ApiOperation({ summary: 'kankim✅ 친구 목록 조회' })
   @Get(':id/friends')
   async getFriends(
     @Param('id', ParseIntPipe) userId: number,

@@ -68,6 +68,12 @@ export class AuthService {
 
     const user = await this.usersService.getUserByEmail(userEmail);
 
+    const isSignedUpDto = new IsSignedUpDto();
+    isSignedUpDto.user.avatar = user.avatar;
+    isSignedUpDto.user.email = user.email;
+    isSignedUpDto.isSecondAuth = false;
+    isSignedUpDto.jwt = null;
+
     if (!user) {
       const createdUser = await this.usersService.createUser({
         email: userEmail,

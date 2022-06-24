@@ -30,6 +30,9 @@ export class ChattingRoomsDto {
 
   @ApiProperty({ description: '채팅방 참여인원' })
   numberOfParticipants: number;
+
+  @ApiProperty({ description: 'dm방 여부' })
+  isDm: boolean;
 }
 
 export class CreateChattingRoomDto {
