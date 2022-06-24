@@ -11,6 +11,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { EmailService } from 'src/emails/email.service';
 import { EmailDto, Nickname, UserProfileDto } from './dto/users.dto';
+import { GameRecordDto } from './dto/gameRecord.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -78,5 +79,15 @@ export class UsersController {
     @Param('id', ParseIntPipe) userId: number,
   ): Promise<Nickname[]> {
     return await this.usersService.getFriends(userId);
+  }
+
+  @ApiOperation({ summary: 'kankim✅ 전적 조회' })
+  @Get(':id/gameRecords')
+  async getGameRecords(
+    @Param('id', ParseIntPipe) userId: number,
+  ): Promise<GameRecordDto[]> {
+    const gameRecords = this.usersService.getGameRecords(userId);
+
+    return gameRecords;
   }
 }

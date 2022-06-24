@@ -1,9 +1,16 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateUserDto, Nickname } from './dto/users.dto';
+import { GameRecordDto } from './dto/gameRecord.dto';
+import {
+  UpdateUserDto,
+  EmailDto,
+  Nickname,
+  UserProfileDto,
+} from './dto/users.dto';
 import { BlockedUser } from './entities/blockedUser.entity';
 import { Follow } from './entities/follow.entity';
+import { GameRecord } from './entities/gameRecord.entity';
 import { User } from './entities/users.entity';
 
 @Injectable()
@@ -13,6 +20,8 @@ export class UsersService {
     @InjectRepository(Follow) private readonly followRepo: Repository<Follow>,
     @InjectRepository(BlockedUser)
     private readonly blockedUserRepo: Repository<BlockedUser>,
+    @InjectRepository(GameRecord)
+    private readonly gameRecordRepo: Repository<GameRecord>,
   ) {}
 
   async getUsers(): Promise<Nickname[]> {
@@ -51,17 +60,27 @@ export class UsersService {
   //   return ret;
   // }
 
-  async createUser(createUserDto: CreateUserDto): Promise<User> {
-    if (await this.isDuplicateNickname(createUserDto.nickname)) {
-      throw new BadRequestException('이미 존재하는 닉네임 입니다.');
-    }
-
+  async createUser(emailDto: EmailDto): Promise<User> {
     const user = new User();
-    user.nickname = createUserDto.nickname;
-    user.avatar = createUserDto.avatar;
-    user.email = createUserDto.email;
+    user.email = emailDto.email;
 
     return await this.userRepo.save(user);
+  }
+
+  async updateUser(updateUserDto: UpdateUserDto): Promise<UserProfileDto> {
+    const user = await this.userRepo.findOne({
+      where: { id: updateUserDto.userId },
+    });
+
+    if (!user) {
+      throw new BadRequestException('유저를 찾을 수 없습니다.');
+    }
+
+    user.nickname = updateUserDto.nickname || user.nickname;
+    user.avatar = updateUserDto.avatar || user.avatar;
+    const updatedUser = await this.userRepo.save(user);
+
+    return updatedUser.toUserProfileDto();
   }
 
   async isDuplicateNickname(nickname: string): Promise<boolean> {
@@ -100,5 +119,17 @@ export class UsersService {
     follow.follow = followUser;
 
     await this.followRepo.save(follow);
+  }
+
+  async getGameRecords(userId: number): Promise<GameRecordDto[]> {
+    const gameRecords = await this.gameRecordRepo
+      .createQueryBuilder('gameRecord')
+      .leftJoinAndSelect('gameRecord.playerOne', 'playerOne')
+      .leftJoinAndSelect('gameRecord.playerTwo', 'playerTwo')
+      .where('gameRecord.playerOneId = :userId', { userId })
+      .orWhere('gameRecord.playerTwoId = :userId', { userId })
+      .getMany();
+
+    return gameRecords.map((gameRecord) => gameRecord.toGameRecordDto(userId));
   }
 }

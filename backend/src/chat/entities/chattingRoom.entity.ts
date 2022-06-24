@@ -21,7 +21,7 @@ export class ChattingRoom extends BaseEntity {
 
   @ApiProperty({ description: '채팅방 비밀번호' })
   @Column({ nullable: true })
-  password: string;
+  password: string | null;
 
   @ApiProperty({ description: '채팅방 소유자 userId' })
   @Column()

@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsSignedUpDto } from 'src/auth/dto/auth.dto';
 import { ChatContents } from 'src/chat/entities/chatContents.entity';
 import { ChatParticipant } from 'src/chat/entities/chatParticipant.entity';
-import { GameRecord } from 'src/gameRecord/entities/gameRecord.entity';
+import { GameRecord } from 'src/users/entities/gameRecord.entity';
 import {
   BaseEntity,
   Column,
@@ -9,6 +10,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { UserProfileDto } from '../dto/users.dto';
 import { BlockedUser } from './blockedUser.entity';
 import { Follow } from './follow.entity';
 
@@ -18,15 +20,15 @@ export class User extends BaseEntity {
   id: number;
 
   @ApiProperty({ description: '닉네임' })
-  @Column({ unique: true })
-  nickname: string;
+  @Column({ unique: true, nullable: true, default: null })
+  nickname: string | null;
 
   @ApiProperty({ description: '아바타' })
-  @Column({ nullable: true })
-  avatar: string;
+  @Column({ nullable: true, default: null })
+  avatar: string | null;
 
   @ApiProperty({ description: '이메일' })
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @ApiProperty({ description: '2차 인증 여부' })
@@ -35,7 +37,7 @@ export class User extends BaseEntity {
 
   @ApiProperty({ description: '이메일로 보낸 코드와 비교할 2차 인증 코드' })
   @Column({ nullable: true, default: null })
-  secondAuthCode: number;
+  secondAuthCode: number | null;
 
   @ApiProperty({ description: '승리 횟수' })
   @Column({ default: 0 })
@@ -78,4 +80,18 @@ export class User extends BaseEntity {
   chatParticipant: ChatParticipant[];
 
   // 친구, 레더레벨, 업적, 모든 경기 기록
+
+  toUserProfileDto() {
+    const userProfileDto = new UserProfileDto();
+    userProfileDto.id = this.id;
+    userProfileDto.nickname = this.nickname;
+    userProfileDto.avatar = this.avatar;
+    userProfileDto.email = this.email;
+    userProfileDto.winCount = this.winCount;
+    userProfileDto.loseCount = this.loseCount;
+    userProfileDto.ladderWinCount = this.ladderWinCount;
+    userProfileDto.ladderLoseCount = this.ladderLoseCount;
+
+    return userProfileDto;
+  }
 }

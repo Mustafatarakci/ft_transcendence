@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query, Redirect } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto } from 'src/users/dto/users.dto';
+import { UpdateUserDto, UserProfileDto } from 'src/users/dto/users.dto';
 import { AuthService } from './auth.service';
 import { IsSignedUpDto } from './dto/auth.dto';
 
@@ -30,8 +30,8 @@ export class AuthController {
 
   @ApiOperation({ summary: 'kankim✅ 회원가입' })
   @Post('signUp')
-  async signUp(@Body() createUserDto: CreateUserDto): Promise<string> {
-    return await this.authService.signUp(createUserDto);
+  async signUp(@Body() updateUserdto: UpdateUserDto): Promise<UserProfileDto> {
+    return await this.authService.signUp(updateUserdto);
   }
 
   @ApiOperation({ summary: 'kankim✅ 닉네임 중복 확인' })
