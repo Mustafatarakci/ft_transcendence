@@ -56,7 +56,6 @@ import { MulterModule } from '@nestjs/platform-express';
     }),
     AuthModule,
     ChatModule,
-    GamesModule,
   ],
   controllers: [AppController],
   providers: [
