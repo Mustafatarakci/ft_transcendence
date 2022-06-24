@@ -34,16 +34,16 @@ const Modal: React.FC<ModalProps> = ({ width, height, title, children }) => {
   return (
     <ModalBackground onClick={onClickBackground} ref={backGroundRef}>
       <ModalBox width={width} height={height}>
-        <ModalHeader>
-          {title && (
-            <>
+        {title && (
+          <>
+            <ModalHeader>
               <ModalTitle>{title}</ModalTitle>
               <ModalCloseBtn onClick={() => setModal(null)}>
                 <CloseIcon src={CloseImg} alt="close" />
               </ModalCloseBtn>
-            </>
-          )}
-        </ModalHeader>
+            </ModalHeader>
+          </>
+        )}
         {children}
       </ModalBox>
     </ModalBackground>
