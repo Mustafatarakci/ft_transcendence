@@ -21,9 +21,13 @@ import { AllExceptionsFilter } from './all-exceptions.filter';
 import { TransformInterceptor } from './response.interceptor';
 import { UsersService } from './users/users.service';
 import { ChatModule } from './chat/chat.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
+    MulterModule.register({
+      dest: './src/files',
+    }),
     TypeOrmModule.forRoot(TypeORMConfig),
     UsersModule,
     AuthModule,

@@ -5,16 +5,44 @@ import {
   Post,
   Param,
   ParseIntPipe,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { Nickname, UserProfileDto } from './dto/users.dto';
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from '../files/file-uploading.utils';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { GameRecordDto } from './dto/gameRecord.dto';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @ApiOperation({ summary: 'seungyel✅ 이미지 업로드' })
+  @Post('/:id/uploadImage')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './files',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  async uploadedFile(@UploadedFile() file, @Param('id') id: number) {
+    const response = {
+      originalname: file.originalname,
+      filename: file.filename,
+      UpdateImg: await this.usersService.findByNicknameAndUpdateImg(
+        id,
+        file.filename,
+      ),
+    };
+    return response;
+  }
 
   @ApiOperation({ summary: 'kankim✅ 모든 유저 닉네임 가져오기' })
   @Get('')

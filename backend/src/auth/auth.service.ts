@@ -55,6 +55,7 @@ export class AuthService {
     const isSignedUpDto = new IsSignedUpDto();
 
     isSignedUpDto.nickname = user.nickname;
+    isSignedUpDto.email = user.email;
     isSignedUpDto.avatar = user.avatar;
     isSignedUpDto.isSecondAuthOn = user.isSecondAuthOn;
     isSignedUpDto.jwt = this.jwtService.sign({
