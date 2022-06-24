@@ -18,10 +18,11 @@ import { SHOW_MANAGER_PROFILE } from '../../../utils/interface';
 import { HANDLE_SECOND_AUTH } from '../../../utils/interface';
 
 import { EDIT_NICKNAME } from '../../../utils/interface';
-
+import { EDIT_CHAT_ROOM } from '../../../utils/interface';
+import { LOADING_LADDER_GAME } from '../../../utils/interface';
+import { FIGHT_REQ_MODAL, FIGHT_RES_MODAL } from '../../../utils/interface';
 // CHECK_SCORE;
-// LOADING_LADDER_GAME;
-// EDIT_CHAT_ROOM;
+
 // CHECK_LOGOUT;
 
 const ModalTester: React.FC = () => {
@@ -68,6 +69,13 @@ const ModalTester: React.FC = () => {
           />
           <Button
             color="gradient"
+            text="LoadingLadderGame"
+            width={200}
+            height={30}
+            onClick={() => setModal(LOADING_LADDER_GAME)}
+          />
+          <Button
+            color="gradient"
             text="ShowOwnerProfile"
             width={200}
             height={30}
@@ -93,6 +101,27 @@ const ModalTester: React.FC = () => {
             width={200}
             height={30}
             onClick={() => setModal(EDIT_NICKNAME)}
+          />
+          <Button
+            color="gradient"
+            text="SettingRoom"
+            width={200}
+            height={30}
+            onClick={() => setModal(EDIT_CHAT_ROOM)} //
+          />
+          <Button
+            color="gradient"
+            text="FightResModal"
+            width={200}
+            height={30}
+            onClick={() => setModal(FIGHT_RES_MODAL)} //
+          />
+          <Button
+            color="gradient"
+            text="FightReqModal"
+            width={200}
+            height={30}
+            onClick={() => setModal(FIGHT_REQ_MODAL)} //
           />
         </OtherBtnBlock>
       </MainBlock>

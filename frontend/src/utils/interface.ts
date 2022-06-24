@@ -44,6 +44,8 @@ export const EDIT_CHAT_ROOM = 'EDIT_CHAT_ROOM' as const;
 export const SHOW_OWNER_PROFILE = 'SHOW_OWNER_PROFILE' as const;
 export const SHOW_MANAGER_PROFILE = 'SHOW_MANAGER_PROFILE' as const;
 export const CHECK_LOGOUT = 'CHECK_LOGOUT' as const;
+export const FIGHT_RES_MODAL = 'FIGHT_RES_MODAL' as const;
+export const FIGHT_REQ_MODAL = 'FIGHT_REQ_MODAL' as const;
 
 export type ModalType =
   | 'SHOW_PROFILE' // 프로필 정보 보기
@@ -58,4 +60,6 @@ export type ModalType =
   | 'EDIT_CHAT_ROOM' // 채팅방 수정
   | 'SHOW_OWNER_PROFILE' // 채팅방 소유자 프로필
   | 'SHOW_MANAGER_PROFILE' // 채팅방 관리자 프로필
-  | 'CHECK_LOGOUT'; // 로그아웃 확인
+  | 'CHECK_LOGOUT' // 로그아웃 확인
+  | 'FIGHT_RES_MODAL' // 1:1 대전 응답 모달
+  | 'FIGHT_REQ_MODAL'; // 1:1 대전 요청 모달
