@@ -1,16 +1,23 @@
 import {
   Controller,
+  Res,
   Get,
   Body,
   Post,
   Query,
   Param,
   ParseIntPipe,
+  UploadedFile,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { EmailService } from 'src/emails/email.service';
 import { EmailDto, Nickname, UserProfileDto } from './dto/users.dto';
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from '../files/file-uploading.utils';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { GameRecordDto } from './dto/gameRecord.dto';
 
 @ApiTags('users')
@@ -21,6 +28,27 @@ export class UsersController {
     private readonly emailService: EmailService,
   ) {}
 
+  @ApiOperation({ summary: 'seungyel✅ 이미지 업로드' })
+  @Post('/:id/uploadImage')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './files',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  async uploadedFile(@UploadedFile() file, @Param('id') id : number) {
+    const response = {
+      originalname: file.originalname,
+      filename: file.filename,
+      UpdateImg: await this.usersService.findByNicknameAndUpdateImg(id, file.filename)
+    };
+    return response;
+  }
+
+  @ApiOperation({ summary: 'seungyel✅ 2차 인증코드 이메일 발송' })
   @Get('/email')
   async secondAuth(@Query('email') email: string): Promise<boolean> {
     const user = await this.usersService.getUserByEmail(email);
@@ -32,6 +60,7 @@ export class UsersController {
     return true;
   }
 
+  // @ApiOperation({ summary: 'seungyel✅ 이메일 2차 인증코드 확인' })
   @Post('/emailVerify')
   async checkVerity(
     @Query('email') email: string,
@@ -41,6 +70,7 @@ export class UsersController {
     return user.secondAuthCode === code;
   }
 
+  // @ApiOperation({ summary: 'seungyel✅ 이메일 2차 인증 여부 설정' })
   @Post('/emailAuthSetup')
   async codeSetup(@Body() emailDto: EmailDto): Promise<void> {
     this.usersService.toggleSecondAuth(emailDto.email);

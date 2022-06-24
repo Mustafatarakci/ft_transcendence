@@ -55,6 +55,14 @@ export class UsersService {
     return user;
   }
 
+  async findByNicknameAndUpdateImg(id: number, fileName: string) : Promise<string> {
+    const user = await this.userRepo.findOne({ where: { id }});
+    user.avatar = `http://localhost:5500/users/${fileName}`;
+    await user.save();
+  
+    return user.avatar;
+  }
+
   // async getUserBySecondAuthCode(secondAuthCode: number): Promise<User> {
   //   const ret = await this.userRepo.findOne({ where: { secondAuthCode } });
   //   return ret;

@@ -39,10 +39,4 @@ export class AuthController {
   async isDuplicateNickname(@Query() nickname: string): Promise<boolean> {
     return await this.authService.isDuplicateNickname(nickname);
   }
-
-  @ApiOperation({ summary: 'todo: 이미지 업로드' })
-  @Post('uploadImage')
-  async uploadImage() {
-    return 'todo: 이미지 업로드';
-  }
 }
