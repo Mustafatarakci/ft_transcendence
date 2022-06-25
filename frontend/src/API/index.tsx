@@ -9,20 +9,19 @@ export const instance = axios.create({
 /* NOTE: Default 양식
 
 =========
-import axios from 'axios';
-import instance from '.';
+import {instance} from './index';
 
-const authPath = path => {
+const authPath = (path: string) => {
   return `/auth${path}`;
 };
 
 const authAPI = {
-  isSignedUp: async (body) => {
+  isSignedUp: async (body: {code: string}) => {
 		try {
 			const url = authPath(`/isSignedUp`);
-			response = await instance.post(url, body);
+			const response = await instance.post(url, body);
 			return response;
-		} catch (e: Error) {
+		} catch (e: any) {
 			console.log(e.message);
 		}
   },
