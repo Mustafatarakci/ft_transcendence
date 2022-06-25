@@ -16,6 +16,7 @@ import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from '../files/file-uploading.utils';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { GameRecordDto } from './dto/gameRecord.dto';
+import { FollowIdDto } from './dto/follow.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -66,10 +67,10 @@ export class UsersController {
   @ApiOperation({ summary: 'kankim✅ 친구 추가' })
   @Post(':id/friends')
   async addFriend(
-    @Param('id', ParseIntPipe) myId: number,
-    @Body('targetId', ParseIntPipe) targetId: number,
+    @Param('id', ParseIntPipe) followerId: number,
+    @Body() followIdDto: FollowIdDto,
   ): Promise<void> {
-    await this.usersService.addFriend(myId, targetId);
+    await this.usersService.addFriend(followerId, followIdDto.followId);
   }
 
   @ApiOperation({ summary: 'kankim✅ 친구 목록( 닉네임 ) 조회' })
