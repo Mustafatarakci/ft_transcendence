@@ -10,7 +10,7 @@ dayjs.extend(timezone);
 dayjs.tz.setDefault('Asia/Seoul');
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   const config = new DocumentBuilder()
     .setTitle('42-Tomodachi')
