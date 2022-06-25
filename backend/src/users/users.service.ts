@@ -70,6 +70,7 @@ export class UsersService {
 
     return userProfile;
   }
+
   async findByNicknameAndUpdateImg(
     id: number,
     fileName: string,
@@ -106,6 +107,7 @@ export class UsersService {
 
   async isDuplicateNickname(nickname: string): Promise<boolean> {
     const found = await this.userRepo.findOne({ where: { nickname } });
+    console.log(found);
     if (found) {
       return true;
     }
@@ -135,5 +137,21 @@ export class UsersService {
       .getMany();
 
     return gameRecords.map((gameRecord) => gameRecord.toGameRecordDto(userId));
+  }
+
+  async updateNickname(
+    userId: number,
+    nicknameForUpdate: string,
+  ): Promise<UserProfileDto> {
+    if (await this.isDuplicateNickname(nicknameForUpdate)) {
+      throw new BadRequestException('이미 존재하는 닉네임 입니다.');
+    }
+
+    const user = await this.getUserById(userId);
+
+    user.nickname = nicknameForUpdate;
+    const updatedUser = await this.userRepo.save(user);
+
+    return updatedUser.toUserProfileDto();
   }
 }
