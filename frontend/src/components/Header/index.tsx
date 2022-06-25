@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import LogoImg from '../../assets/logo-white.png';
-import { MenuType, GAME, CHAT, LOGOUT, CHECK_LOGOUT } from '../../utils/interface';
+import { MenuType, GAME, CHAT, CHECK_LOGOUT } from '../../utils/interface';
 import { AllContext } from '../../store';
 
 interface HeaderProps {
-  onClickMenu: (menuType: MenuType) => void;
+  onClickMenu?: (menuType: MenuType) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ onClickMenu }) => {
@@ -13,14 +13,22 @@ const Header: React.FC<HeaderProps> = ({ onClickMenu }) => {
 
   return (
     <HeaderContainer>
-      <LogoWrap onClick={() => onClickMenu(GAME)}>
-        <Logo src={LogoImg} alt="Home" />
-      </LogoWrap>
-      <Menus>
-        <Menu onClick={() => onClickMenu(GAME)}>GAME</Menu>
-        <Menu onClick={() => onClickMenu(CHAT)}>CHAT</Menu>
-        <Menu onClick={() => setModal(CHECK_LOGOUT)}>LOGOUT</Menu>
-      </Menus>
+      {onClickMenu ? (
+        <>
+          <LogoWrap onClick={() => onClickMenu(GAME)}>
+            <Logo src={LogoImg} alt="Home" />
+          </LogoWrap>
+          <Menus>
+            <Menu onClick={() => onClickMenu(GAME)}>GAME</Menu>
+            <Menu onClick={() => onClickMenu(CHAT)}>CHAT</Menu>
+            <Menu onClick={() => setModal(CHECK_LOGOUT)}>LOGOUT</Menu>
+          </Menus>
+        </>
+      ) : (
+        <LogoWrap>
+          <Logo src={LogoImg} alt="Home" />
+        </LogoWrap>
+      )}
     </HeaderContainer>
   );
 };

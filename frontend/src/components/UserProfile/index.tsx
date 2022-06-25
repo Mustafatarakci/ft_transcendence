@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Button from '../common/Button';
 import axios from 'axios';
+import ProfileImage from '../common/ProfileImage';
 
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState({
@@ -39,7 +40,7 @@ const ProfilePage: React.FC = () => {
       <MainText>내 프로필</MainText>
       <ProfileBlock>
         <PictureBlock>
-          <ProfilePicture src={user.picture} alt="UserProfileImage" />
+          <ProfileImage src={user.picture} size={100} />
         </PictureBlock>
         <UserInfo>
           <UserName>{user.user_nick}</UserName>
@@ -54,7 +55,7 @@ const ProfilePage: React.FC = () => {
           {user.gen_win}승 {user.gen_lose}패/{user.lad_win}승 {user.lad_lose}패
         </Record>
         <RecordBtn>
-          <Button color="white" text="전적 기록" width={97} height={30} />
+          <Button color="white2" text="전적 기록" width={97} height={30} />
         </RecordBtn>
       </RecordBlock>
 
@@ -68,12 +69,11 @@ const ProfilePage: React.FC = () => {
 
 // Main Block
 const MainBlock = styled.div`
-  border: 2px solid ${props => props.theme.colors.main};
+  background-color: white;
   border-radius: 20px;
   width: 300px;
-  height: 338px;
-  padding-left: 25px;
-  padding-right: 25px;
+  height: 340px;
+  padding: 20px 25px;
   font-style: normal;
   font-weight: 400;
 `;
@@ -82,7 +82,6 @@ const MainBlock = styled.div`
 const MainText = styled.h3`
   font-size: 20px;
   line-height: 29px;
-  margin-top: 20px;
 
   color: ${props => props.theme.colors.main};
 `;
@@ -95,20 +94,14 @@ const ProfileBlock = styled.div`
 `;
 const UserInfo = styled.div``;
 
-const PictureBlock = styled.div``;
-
-const ProfilePicture = styled.img`
-  width: 101px;
-  height: 101px;
-  border-radius: 50px;
-  background: #c4c4c4;
+const PictureBlock = styled.div`
   margin-top: 20px;
   margin-left: 15px;
 `;
 
 const UserName = styled.span`
   display: block;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 23px;
 
   margin-top: 45px;

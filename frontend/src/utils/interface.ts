@@ -18,6 +18,34 @@ export interface IRoomList {
   isGameStart?: boolean;
 }
 
+export interface IMessage {
+  id: number;
+  isBroadcast: boolean;
+  from?: {
+    id: number;
+    nickname: string;
+    profileImage: string;
+  };
+  message: string;
+  fromUser: boolean;
+  createdAt: string | number;
+}
+
+export type ButtonColorType = 'white' | 'white2' | 'main' | 'gradient';
+
+export interface IUserList {
+  id: number;
+  username: string;
+  isfriend: boolean;
+  status: 'on' | 'off' | 'play';
+}
+
+export type ActiveMenuType = 'ALL' | 'FRIEND';
+
+export const ON = 'on' as const;
+export const OFF = 'off' as const;
+export const PLAY = 'play' as const;
+
 export const LOGIN = 'LOGIN' as const;
 export const LOGOUT = 'LOGOUT' as const;
 export const SET_NICKNAME = 'SET_NICKNAME' as const;

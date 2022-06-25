@@ -76,7 +76,6 @@ const GameStat = styled.span<{ isGameStart: boolean }>`
   display: inline-block;
   width: 40px;
   color: ${({ isGameStart, theme }) => (isGameStart ? theme.colors.main : theme.colors.deepGrey)};
-  font-weight: bold;
   text-align: right;
   margin-left: 20px;
   user-select: none;

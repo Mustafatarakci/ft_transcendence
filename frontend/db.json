@@ -6,6 +6,13 @@
       "author": "typicode"
     }
   ],
+  "auth": [
+    {
+      "id": 1,
+      "user": "junselee",
+      "authCode": "1208"
+    }
+  ],
   "comments": [
     {
       "id": 1,
@@ -13,22 +20,43 @@
       "postId": 1
     }
   ],
-  "profile": {
-    "name": "typicode"
-  },
+  "profile": [
+    {
+      "id": 1,
+      "user": "mosong",
+      "nickName": "mike2ox"
+    },
+    {
+      "id": 2,
+      "user": "junselee",
+      "nickName": "owl"
+    },
+    {
+      "id": 3,
+      "user": "sgang",
+      "nickName": "leader"
+    },
+    {
+      "id": 4,
+      "user": "dhyeon",
+      "nickName": "master"
+    }
+  ],
   "user": {
     "id": 1,
-    "nickname": "aaa",
+    "nickname": "",
     "username": "bbb",
     "email": "noenna@naver.com",
     "avatar": "",
-    "secondAuth": false,
+    "secondAuth": true,
     "isSigned": true
   },
   "user_info": {
     "id": 0,
     "user": "sgang",
     "user_nick": "SGANG",
+    "isFriend": true,
+    "isBlock": false,
     "user_lv": 5,
     "gen_win": 10,
     "gen_lose": 1,
@@ -98,6 +126,182 @@
       "isPublic": false,
       "playerCount": 1,
       "isLadder": false
+    }
+  ],
+  "messages": [
+    {
+      "id": 0,
+      "isBroadcast": true,
+      "message": "sgang님이 입장하셨습니다.",
+      "fromUser": false,
+
+      "createdAt": "2022-06-18T14:11:30.000Z"
+    },
+    {
+      "id": 1,
+      "isBroadcast": false,
+      "from": {
+        "id": 1,
+        "nickname": "sgang",
+        "profileImage": "https://interbalance.org/wp-content/uploads/2021/08/ray-zhuang-Px2Y-sio6-c-unsplash-scaled.jpg"
+      },
+      "message": "안녕하세요 하하하하",
+      "fromUser": false,
+      "createdAt": "2022-06-18T14:11:00.000Z"
+    },
+    {
+      "id": 2,
+      "isBroadcast": false,
+      "from": {
+        "id": 1,
+        "nickname": "sgang",
+        "profileImage": "https://interbalance.org/wp-content/uploads/2021/08/ray-zhuang-Px2Y-sio6-c-unsplash-scaled.jpg"
+      },
+      "message": "ㅎㅇㅎㅇ",
+      "fromUser": false,
+      "createdAt": "2022-06-18T14:12:00.000Z"
+    },
+    {
+      "id": 3,
+      "isBroadcast": true,
+      "message": "dhyeon님이 입장하셨습니다.",
+      "fromUser": false,
+
+      "createdAt": "2022-06-18T14:11:30.000Z"
+    },
+    {
+      "id": 4,
+      "isBroadcast": false,
+      "from": {
+        "id": 2,
+        "nickname": "dhyeon",
+        "profileImage": "https://src.hidoc.co.kr/image/lib/2022/5/4/1651651323632_0.jpg"
+      },
+      "message": "하이 헬로 안녕",
+      "fromUser": true,
+      "createdAt": "2022-06-18T14:12:00.000Z"
+    }
+  ],
+  "userlist": [
+    {
+      "id": 1,
+      "username": "junselee",
+      "isfriend": true,
+      "status": "on"
+    },
+    {
+      "id": 2,
+      "username": "sgang",
+      "isfriend": true,
+      "status": "play"
+    },
+    {
+      "id": 3,
+      "username": "dhyeon",
+      "isfriend": false,
+      "status": "on"
+    },
+    {
+      "id": 4,
+      "username": "ulee",
+      "isfriend": true,
+      "status": "play"
+    },
+    {
+      "id": 5,
+      "username": "seungyel",
+      "isfriend": true,
+      "status": "off"
+    },
+    {
+      "id": 6,
+      "username": "jihokim",
+      "isfriend": false,
+      "status": "on"
+    },
+    {
+      "id": 7,
+      "username": "kyukim",
+      "isfriend": false,
+      "status": "off"
+    },
+    {
+      "id": 8,
+      "username": "hyechoi",
+      "isfriend": true,
+      "status": "off"
+    },
+    {
+      "id": 9,
+      "username": "inshin",
+      "isfriend": false,
+      "status": "play"
+    },
+    {
+      "id": 10,
+      "username": "yuchoi",
+      "isfriend": false,
+      "status": "on"
+    },
+    {
+      "id": 11,
+      "username": "amigo",
+      "isfriend": false,
+      "status": "on"
+    },
+    {
+      "id": 12,
+      "username": "friend",
+      "isfriend": true,
+      "status": "on"
+    },
+    {
+      "id": 13,
+      "username": "domodacci",
+      "isfriend": true,
+      "status": "play"
+    },
+    {
+      "id": 14,
+      "username": "mate",
+      "isfriend": false,
+      "status": "off"
+    },
+    {
+      "id": 15,
+      "username": "rosa",
+      "isfriend": true,
+      "status": "off"
+    },
+    {
+      "id": 16,
+      "username": "dacci",
+      "isfriend": true,
+      "status": "off"
+    },
+    {
+      "id": 17,
+      "username": "temate",
+      "isfriend": false,
+      "status": "off"
+    },
+    {
+      "id": 18,
+      "username": "noah",
+      "isfriend": true,
+      "status": "off"
+    },
+    {
+      "id": 19,
+      "username": "jun",
+      "isfriend": true,
+      "status": "play"
+    },
+    {
+      "id": 20,
+      "username": "polarbear",
+      "isfriend": false,
+      "status": "on"
     }
   ]
 }

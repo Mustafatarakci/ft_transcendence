@@ -22,17 +22,24 @@ const Modal: React.FC<ModalProps> = ({ width, height, title, children }) => {
       setModal(null);
     }
   };
-  // TODO : escape, backspace 관련 event
-  // const onKeyGoBack = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   const key = e.key || e.keyCode;
 
-  //   if (key == 'Escape' || key === 27 || key == 'Backspace' || key == 8) {
-  //     setModal(null);
-  //   }
-  // };
+  const handleEscape = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Escape') {
+      setModal(null);
+    }
+  };
+
+  useEffect(() => {
+    backGroundRef.current?.focus();
+  }, []);
 
   return (
-    <ModalBackground onClick={onClickBackground} ref={backGroundRef}>
+    <ModalBackground
+      onClick={onClickBackground}
+      ref={backGroundRef}
+      tabIndex={0}
+      onKeyDown={handleEscape}
+    >
       <ModalBox width={width} height={height}>
         {title && (
           <>
