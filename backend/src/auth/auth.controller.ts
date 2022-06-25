@@ -91,10 +91,4 @@ export class AuthController {
   ): Promise<boolean> {
     return this.authService.verifySecondAuth(id, code);
   }
-
-  @ApiOperation({ summary: 'todo: 이미지 업로드' })
-  @Post('uploadImage')
-  async uploadImage() {
-    return 'todo: 이미지 업로드';
-  }
 }

@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ChatService } from './chat.service';
@@ -18,16 +19,18 @@ import {
 } from './dto/chat.dto';
 import { ChatContents } from './entities/chatContents.entity';
 import { ChatParticipant } from './entities/chatParticipant.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('chat')
 @Controller('chats')
+@UseGuards(AuthGuard()) // 이렇게도 가능?
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
   // todo: 로그인한 유저의 권한 확인해야함, @UseGuard 사용하고 @req() 로 받아서 req.user 이렇게 사용하면 될까?
 
   @ApiOperation({ summary: 'kankim✅ 채팅방 목록 가져오기' })
-  @Get('')
+  @Get('/list')
   async getChattingRooms(): Promise<ChattingRoomsDto[]> {
     const chattingRooms = this.chatService.getChattingRooms();
 
@@ -35,7 +38,7 @@ export class ChatController {
   }
 
   @ApiOperation({ summary: 'kankim✅ 참여중인 채팅방 목록 가져오기' })
-  @Get(':userId')
+  @Get('/list/:userId')
   async getParticipatingChattingRooms(
     @Param('userId') userId: number,
   ): Promise<ChattingRoomsDto[]> {
@@ -46,7 +49,7 @@ export class ChatController {
   }
 
   @ApiOperation({ summary: 'kankim✅ 채팅방 만들기' })
-  @Post('')
+  @Post('/create')
   async createChattingRoom(
     @Body() createChattingRoomDto: CreateChattingRoomDto,
   ): Promise<ChattingRoomDataDto> {
