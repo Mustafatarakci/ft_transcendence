@@ -90,7 +90,7 @@ export class UsersController {
     return gameRecords;
   }
 
-  @ApiOperation({ summary: 'kankim 닉네임 변경' })
+  @ApiOperation({ summary: 'kankim✅ 닉네임 변경' })
   @Put(':id/nickname')
   async updateNickname(
     @Param('id', ParseIntPipe) userId: number,
