@@ -1,7 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsString, IsNumber } from 'class-validator';
 
 export class IsSignedUpDto {
+  @ApiProperty({ description: 'id( DB키 )' })
+  @IsNumber()
+  id: number;
+
   @ApiProperty({ description: '닉네임' })
   @IsString()
   nickname: string;
