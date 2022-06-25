@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNumber, IsString } from 'class-validator';
+import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UpdateUserDto {
   @ApiProperty({ description: '유저 id' })
@@ -8,9 +8,10 @@ export class UpdateUserDto {
 
   @ApiProperty({ description: '아바타' })
   @IsString()
-  avatar: string;
+  @IsOptional()
+  avatar: string | null;
 
-  @ApiProperty({ description: '이메일' })
+  @ApiProperty({ description: '닉네임' })
   @IsString()
   nickname: string;
 }

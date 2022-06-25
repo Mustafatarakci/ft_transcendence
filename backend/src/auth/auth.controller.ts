@@ -48,14 +48,12 @@ export class AuthController {
   })
   @Post('isSignedUp')
   async isSignedUp(@Body('code') code: string): Promise<IsSignedUpDto> {
-    const isSignedUpDto = await this.authService.isSignedUp(code);
-
-    return isSignedUpDto;
+    return await this.authService.isSignedUp(code);
   }
 
   @ApiOperation({ summary: 'kankim✅ 회원가입' })
   @Post('signUp')
-  async signUp(@Body() updateUserdto: UpdateUserDto): Promise<UserProfileDto> {
+  async signUp(@Body() updateUserdto: UpdateUserDto): Promise<IsSignedUpDto> {
     return await this.authService.signUp(updateUserdto);
   }
 
