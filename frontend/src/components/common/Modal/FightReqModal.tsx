@@ -37,17 +37,17 @@ const FightMsg = styled.h3`
 
 const ModalWrap = styled.div`
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
 
 const BtnBlock = styled.div`
-  margin-top: 15px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   & button {
-    font-size: 18px;
+    font-size: 14px;
     border-radius: 5px;
     margin: 0;
     &:last-of-type {

@@ -33,14 +33,14 @@ const FightMsg = styled.h3`
 
 const ModalWrap = styled.div`
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
 const CancelBtnWrap = styled.div`
-  margin-top: 15px;
+  margin-top: 20px;
   & button {
-    font-size: 18px;
+    font-size: 14px;
     border-radius: 5px;
   }
 `;
