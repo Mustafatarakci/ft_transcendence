@@ -1,0 +1,81 @@
+<html>
+
+<head>
+  <style>
+    body {
+      display: flex;
+    }
+
+    p {
+      margin: 2px 2px 2px 2px;
+    }
+    
+    #chatSpace {
+      width: 700px;
+      height: 500px;
+      border: 2px solid black;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    #chatInput {
+      width: 600px;
+      height: 30px;
+      margin-right: 5px;
+    }
+
+    #chatButton {
+      width: 80px;
+      height: 30px;
+    }
+
+    #userSpace {
+      width: 200px;
+      height: 555px;
+      border: 2px solid black;
+    }
+
+    #inputSpace {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 700px;
+      height: 40px;
+      border: 2px solid black;
+    }
+  </style>
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"
+    integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <!--  -->
+  <div id="left">
+    <div id="chatSpace">
+      채팅
+      <div id="chatList">
+        
+      </div>
+    </div>
+    <div id="inputSpace">
+      <input id="chatInput" type="text" />
+      <button id="chatButton" onclick="sendChat()">채팅 입력</button>
+    </div>
+  </div>
+  
+  <!-- -->
+  <div id="right">
+    <div id="userSpace">
+      유저 목록
+      <div id="userList">
+
+      </div>
+    </div>
+  </div>
+
+
+</body>
+<script src="event-listener.js"></script>
+</html>
