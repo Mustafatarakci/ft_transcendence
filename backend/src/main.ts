@@ -10,7 +10,7 @@ dayjs.extend(timezone);
 dayjs.tz.setDefault('Asia/Seoul');
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
     .setTitle('42-Tomodachi')
@@ -20,6 +20,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  app.enableCors();
   await app.listen(5500);
 }
 bootstrap();
