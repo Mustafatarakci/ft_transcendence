@@ -8,6 +8,7 @@ import {
   EmailDto,
   SimpleUserDto,
   UserProfileDto,
+  WinLoseCountDto,
 } from './dto/users.dto';
 import { BlockedUser } from './entities/blockedUser.entity';
 import { Follow } from './entities/follow.entity';
@@ -138,5 +139,11 @@ export class UsersService {
     const updatedUser = await this.userRepo.save(user);
 
     return updatedUser.toUserProfileDto();
+  }
+
+  async getWinLoseCount(userId: number): Promise<WinLoseCountDto> {
+    const user = await this.getUserById(userId);
+
+    return user.toWinLoseCount();
   }
 }

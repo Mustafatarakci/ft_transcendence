@@ -55,3 +55,20 @@ export class UserProfileDto {
   @ApiProperty({ description: '래임게임 패배 카운트' })
   ladderLoseCount: number;
 }
+
+export class WinLoseCountDto {
+  @ApiProperty({ description: '유저 id' })
+  id: number;
+
+  @ApiProperty({ description: '일반게임 승리 카운트' })
+  winCount: number;
+
+  @ApiProperty({ description: '일반게임 패배 카운트' })
+  loseCount: number;
+
+  @ApiProperty({ description: '래더게임 승리 카운트' })
+  ladderWinCount: number;
+
+  @ApiProperty({ description: '래임게임 패배 카운트' })
+  ladderLoseCount: number;
+}

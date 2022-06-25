@@ -11,7 +11,11 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { SimpleUserDto, UserProfileDto } from './dto/users.dto';
+import {
+  SimpleUserDto,
+  UserProfileDto,
+  WinLoseCountDto,
+} from './dto/users.dto';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from '../files/file-uploading.utils';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -100,5 +104,13 @@ export class UsersController {
     const user = this.usersService.updateNickname(userId, body);
 
     return user;
+  }
+
+  @ApiOperation({ summary: 'kankim✅ 유저의 승,패 카운트 조회' })
+  @Get(':id/winLoseCount')
+  async getWinLoseCount(
+    @Param('id', ParseIntPipe) userId: number,
+  ): Promise<WinLoseCountDto> {
+    return await this.usersService.getWinLoseCount(userId);
   }
 }

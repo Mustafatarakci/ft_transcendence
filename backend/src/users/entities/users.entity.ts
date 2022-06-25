@@ -10,7 +10,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserProfileDto } from '../dto/users.dto';
+import { UserProfileDto, WinLoseCountDto } from '../dto/users.dto';
 import { BlockedUser } from './blockedUser.entity';
 import { Follow } from './follow.entity';
 
@@ -97,5 +97,16 @@ export class User extends BaseEntity {
     userProfileDto.ladderLoseCount = this.ladderLoseCount;
 
     return userProfileDto;
+  }
+
+  toWinLoseCount(): WinLoseCountDto {
+    const winLoseCountDto = new WinLoseCountDto();
+    winLoseCountDto.id = this.id;
+    winLoseCountDto.winCount = this.winCount;
+    winLoseCountDto.loseCount = this.loseCount;
+    winLoseCountDto.ladderLoseCount = this.ladderLoseCount;
+    winLoseCountDto.ladderWinCount = this.ladderWinCount;
+
+    return winLoseCountDto;
   }
 }
