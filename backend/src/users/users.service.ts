@@ -55,18 +55,31 @@ export class UsersService {
     return user;
   }
 
-  async findByNicknameAndUpdateImg(id: number, fileName: string) : Promise<string> {
-    const user = await this.userRepo.findOne({ where: { id }});
+  async getUserProfile(id: number): Promise<UserProfileDto> {
+    const user = await this.getUserById(id);
+    let userProfile: UserProfileDto;
+
+    userProfile.id = user.id;
+    userProfile.nickname = user.nickname;
+    userProfile.avatar = user.avatar;
+    userProfile.email = user.email;
+    userProfile.ladderWinCount = user.ladderWinCount;
+    userProfile.ladderLoseCount = user.ladderLoseCount;
+    userProfile.winCount = user.winCount;
+    userProfile.loseCount = user.loseCount;
+
+    return userProfile;
+  }
+  async findByNicknameAndUpdateImg(
+    id: number,
+    fileName: string,
+  ): Promise<string> {
+    const user = await this.userRepo.findOne({ where: { id } });
     user.avatar = `http://localhost:5500/users/${fileName}`;
     await user.save();
-  
+
     return user.avatar;
   }
-
-  // async getUserBySecondAuthCode(secondAuthCode: number): Promise<User> {
-  //   const ret = await this.userRepo.findOne({ where: { secondAuthCode } });
-  //   return ret;
-  // }
 
   async createUser(emailDto: EmailDto): Promise<User> {
     const user = new User();
@@ -97,23 +110,6 @@ export class UsersService {
       return true;
     }
     return false;
-  }
-
-  async toggleSecondAuth(email: string): Promise<void> {
-    const user = await this.getUserByEmail(email);
-
-    if (user === undefined) {
-      throw new BadRequestException('존재하지 않는 유저입니다.');
-    }
-
-    if (!user.isSecondAuthOn) {
-      console.log('이메일 2차 인증 설정');
-      user.isSecondAuthOn = true;
-    } else {
-      console.log('이메일 2차 인증 설정 해제');
-      user.isSecondAuthOn = false;
-    }
-    user.save();
   }
 
   async addFriend(myId: number, targetId: number): Promise<void> {

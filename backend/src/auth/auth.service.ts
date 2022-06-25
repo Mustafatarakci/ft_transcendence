@@ -3,13 +3,15 @@ import { JwtService } from '@nestjs/jwt';
 import axios from 'axios';
 import { UpdateUserDto, UserProfileDto } from 'src/users/dto/users.dto';
 import { User } from 'src/users/entities/users.entity';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
+import { EmailService } from '../emails/email.service';
 import { IsSignedUpDto } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
+    private readonly emailService: EmailService,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -103,5 +105,57 @@ export class AuthService {
     }
 
     return await this.usersService.isDuplicateNickname(nickname);
+  }
+
+  async enableSecondAuth(id: number, email: string): Promise<void> {
+    const user = await this.usersService.getUserById(id);
+
+    if (user === undefined) {
+      throw new BadRequestException('존재하지 않는 유저입니다.');
+    }
+
+    user.secondAuthEmail = email;
+    user.isSecondAuthOn = true;
+    await user.save();
+  }
+
+  async disableSecondAuth(id: number): Promise<void> {
+    const user = await this.usersService.getUserById(id);
+
+    if (user === undefined) {
+      throw new BadRequestException('존재하지 않는 유저입니다.');
+    }
+
+    user.isSecondAuthOn = false;
+    await user.save();
+  }
+
+  async activateSecondAuth(user: User) {
+    user.secondAuthCode = Math.floor(Math.random() * 1000000);
+    await user.save();
+  }
+
+  async shootSecondAuth(id: number): Promise<boolean> {
+    const user = await this.usersService.getUserById(id);
+
+    if (user === null || user.isSecondAuthOn === false) {
+      return false;
+    }
+    await this.activateSecondAuth(user);
+    await this.emailService.sendEmail(
+      user.secondAuthEmail,
+      user.secondAuthCode,
+    );
+    return true;
+  }
+
+  async verifySecondAuth(id: number, code: number): Promise<boolean> {
+    const user = await this.usersService.getUserById(id);
+
+    if (user.secondAuthCode === code) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
