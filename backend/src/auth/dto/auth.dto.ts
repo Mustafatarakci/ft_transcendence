@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, IsNumber } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsOptional,
+  IsString,
+  IsNumber,
+} from 'class-validator';
 
 export class IsSignedUpDto {
   @ApiProperty({ description: 'id( DB키 )' })
@@ -8,7 +14,8 @@ export class IsSignedUpDto {
 
   @ApiProperty({ description: '닉네임' })
   @IsString()
-  nickname: string;
+  @IsOptional()
+  nickname: string | null;
 
   @ApiProperty({ description: '이메일' })
   @IsEmail()
@@ -16,11 +23,14 @@ export class IsSignedUpDto {
 
   @ApiProperty({ description: '유저 데이터' })
   @IsString()
-  avatar: string;
+  @IsOptional()
+  avatar: string | null;
 
   @ApiProperty({ description: '2차 인증 여부 ' })
+  @IsBoolean()
   isSecondAuthOn: boolean;
 
   @ApiProperty({ description: 'jwt' })
-  jwt: string | null;
+  @IsString()
+  jwt: string;
 }
