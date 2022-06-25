@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
   ChatRoomDataDto,
   ChatRoomDto,
+  ChatRoomIdDto,
   CreateChatRoomDto,
 } from './dto/chat.dto';
 import { ChatContents } from './entities/chatContents.entity';
@@ -95,5 +96,57 @@ export class ChatService {
     chattingRoomDataDto.ownerId = createdChattingRoom.ownerId;
 
     return chattingRoomDataDto;
+  }
+
+  // 채팅방이 존재할 경우 채팅방 엔티티를 리턴하고 존재하지 않을 경우 null을 리턴함
+  async isExistChatRoom(roomId: number): Promise<ChatRoom | null> {
+    return await this.chatRoomRepo.findOneBy({ id: roomId });
+  }
+
+  async isCorrectPasswordOfChatRoom(
+    roomId: number,
+    roomPassword: string,
+  ): Promise<boolean> {
+    const room = await this.isExistChatRoom(roomId);
+
+    if (!room) {
+      throw new BadRequestException('존재하지 않는 채팅방 입니다.');
+    }
+
+    if (room.password === roomPassword) {
+      return true;
+    }
+    return false;
+  }
+
+  // 채팅방 참여자일 경우 chatParticipant 엔티티 리턴, 참여자가 아닐 경우 null 리턴
+  async isExistMember(roomId: number, userId: number) {
+    return await this.chatParticipantRepo.findOneBy({
+      chattingRoomId: roomId,
+      userId,
+    });
+  }
+
+  async enterChattingRoom(
+    roomId: number,
+    userId: number,
+    roomPassword: string | null,
+  ): Promise<ChatRoomIdDto> {
+    if (
+      roomPassword &&
+      !this.isCorrectPasswordOfChatRoom(roomId, roomPassword)
+    ) {
+      throw new BadRequestException('채팅방의 비밀번호가 일치하지 않습니다.');
+    }
+
+    if (!this.isExistMember(roomId, userId)) {
+      const chatParticipant = new ChatParticipant();
+      chatParticipant.chattingRoomId = roomId;
+      chatParticipant.userId = userId;
+
+      await this.chatParticipantRepo.save(chatParticipant);
+    }
+
+    return { chatRoomId: roomId };
   }
 }
