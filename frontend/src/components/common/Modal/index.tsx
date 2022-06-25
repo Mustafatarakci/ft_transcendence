@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import CloseImg from '../../../assets/close.png';
 import { AllContext } from '../../../store';
+import { keyboardKey } from '@testing-library/user-event';
 
 interface ModalProps {
   width: number;
@@ -21,6 +22,7 @@ const Modal: React.FC<ModalProps> = ({ width, height, title, children }) => {
       setModal(null);
     }
   };
+
   const handleEscape = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Escape') {
       setModal(null);
@@ -39,16 +41,16 @@ const Modal: React.FC<ModalProps> = ({ width, height, title, children }) => {
       onKeyDown={handleEscape}
     >
       <ModalBox width={width} height={height}>
-        <ModalHeader>
-          {title && (
-            <>
+        {title && (
+          <>
+            <ModalHeader>
               <ModalTitle>{title}</ModalTitle>
               <ModalCloseBtn onClick={() => setModal(null)}>
                 <CloseIcon src={CloseImg} alt="close" />
               </ModalCloseBtn>
-            </>
-          )}
-        </ModalHeader>
+            </ModalHeader>
+          </>
+        )}
         {children}
       </ModalBox>
     </ModalBackground>

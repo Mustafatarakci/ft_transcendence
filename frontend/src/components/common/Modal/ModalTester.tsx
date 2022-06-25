@@ -6,23 +6,23 @@ import ModalSet from './ModalSet';
 import { AllContext } from '../../../store';
 import { SHOW_PROFILE } from '../../../utils/interface';
 
-// import { SHOW_PROFILE } from '../../../utils/interface'
-// import { SHOW_PROFILE } from '../../../utils/interface'
-// import { SHOW_PROFILE } from '../../../utils/interface'
-// import { SHOW_PROFILE } from '../../../utils/interface'
-// import { SHOW_PROFILE } from '../../../utils/interface'
+import { MAKE_GAME_ROOM } from '../../../utils/interface';
+import { MAKE_CHAT_ROOM } from '../../../utils/interface';
 
-// HANDLE_SECOND_AUTH;
-// EDIT_NICKNAME;
-// MAKE_GAME_ROOM;
-// MAKE_CHAT_ROOM;
-// ENTER_GAME_ROOM;
-// ENTER_CHAT_ROOM;
+import { ENTER_GAME_ROOM } from '../../../utils/interface';
+import { ENTER_CHAT_ROOM } from '../../../utils/interface';
+
+import { SHOW_OWNER_PROFILE } from '../../../utils/interface';
+import { SHOW_MANAGER_PROFILE } from '../../../utils/interface';
+
+import { HANDLE_SECOND_AUTH } from '../../../utils/interface';
+
+import { EDIT_NICKNAME } from '../../../utils/interface';
+import { EDIT_CHAT_ROOM } from '../../../utils/interface';
+import { LOADING_LADDER_GAME } from '../../../utils/interface';
+import { FIGHT_REQ_MODAL, FIGHT_RES_MODAL } from '../../../utils/interface';
 // CHECK_SCORE;
-// LOADING_LADDER_GAME;
-// EDIT_CHAT_ROOM;
-// SHOW_OWNER_PROFILE;
-// SHOW_MANAGER_PROFILE;
+
 // CHECK_LOGOUT;
 
 const ModalTester: React.FC = () => {
@@ -35,23 +35,93 @@ const ModalTester: React.FC = () => {
           <Button
             color="gradient"
             text="View Profile"
-            width={120}
+            width={200}
             height={30}
             onClick={() => setModal(SHOW_PROFILE)}
           />
           <Button
             color="gradient"
-            text="Ladder"
-            width={120}
+            text="MakeGameRoom"
+            width={200}
             height={30}
-            onClick={() => setModal(SHOW_PROFILE)}
+            onClick={() => setModal(MAKE_GAME_ROOM)}
           />
           <Button
             color="gradient"
-            text="Ladder"
-            width={120}
+            text="MakeChatRoom"
+            width={200}
             height={30}
-            onClick={() => setModal(SHOW_PROFILE)}
+            onClick={() => setModal(MAKE_CHAT_ROOM)}
+          />
+          <Button
+            color="gradient"
+            text="EnterGameRoom"
+            width={200}
+            height={30}
+            onClick={() => setModal(ENTER_GAME_ROOM)}
+          />
+          <Button
+            color="gradient"
+            text="EnterChatRoom"
+            width={200}
+            height={30}
+            onClick={() => setModal(ENTER_CHAT_ROOM)}
+          />
+          <Button
+            color="gradient"
+            text="LoadingLadderGame"
+            width={200}
+            height={30}
+            onClick={() => setModal(LOADING_LADDER_GAME)}
+          />
+          <Button
+            color="gradient"
+            text="ShowOwnerProfile"
+            width={200}
+            height={30}
+            onClick={() => setModal(SHOW_OWNER_PROFILE)}
+          />
+          <Button
+            color="gradient"
+            text="ShowManagerProfile"
+            width={200}
+            height={30}
+            onClick={() => setModal(SHOW_MANAGER_PROFILE)}
+          />
+          <Button
+            color="gradient"
+            text="HandleSecondAuth"
+            width={200}
+            height={30}
+            onClick={() => setModal(HANDLE_SECOND_AUTH)}
+          />
+          <Button
+            color="gradient"
+            text="EditNickName"
+            width={200}
+            height={30}
+            onClick={() => setModal(EDIT_NICKNAME)}
+          />
+          <Button
+            color="gradient"
+            text="SettingRoom"
+            width={200}
+            height={30}
+            onClick={() => setModal(EDIT_CHAT_ROOM)} //
+          />
+          <Button
+            color="gradient"
+            text="FightResModal"
+            width={200}
+            height={30}
+            onClick={() => setModal(FIGHT_RES_MODAL)} //
+          />
+          <Button
+            color="gradient"
+            text="FightReqModal"
+            width={200}
+            height={30}
+            onClick={() => setModal(FIGHT_REQ_MODAL)} //
           />
         </OtherBtnBlock>
       </MainBlock>
@@ -72,14 +142,14 @@ const MainBlock = styled.div`
 `;
 //OtherBtnSection
 const OtherBtnBlock = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 10px 20px;
+
+  margin-top: 30px;
   & button {
     border-radius: 5px;
-    margin: 0;
-    &:last-of-type {
-      margin-left: 10px;
-    }
   }
 `;
 //============================================

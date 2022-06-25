@@ -3,9 +3,8 @@ import styled from '@emotion/styled';
 import Button from '../Button';
 import axios from 'axios';
 import Modal from '.';
-import ProfileImage from '../ProfileImage';
 
-const ShowProfile: React.FC = () => {
+const ShowOwnerProfile: React.FC = () => {
   const [user, setUser] = useState({
     id: '',
     user: '',
@@ -16,8 +15,6 @@ const ShowProfile: React.FC = () => {
     lad_win: '',
     lad_lose: '',
     picture: '',
-    isFriend: false,
-    isBlock: false,
   });
 
   useEffect(() => {
@@ -32,32 +29,17 @@ const ShowProfile: React.FC = () => {
         lad_win: res.data.lad_win,
         lad_lose: res.data.lad_lose,
         picture: res.data.picture,
-        isFriend: res.data.isFriend,
-        isBlock: res.data.isBlock,
       }),
     );
   }, []);
 
-  const onClickFriend = () => {
-    setUser({
-      ...user,
-      isFriend: !user.isFriend,
-    });
-  };
-
-  const onClickBlock = () => {
-    setUser({
-      ...user,
-      isFriend: false,
-      isBlock: !user.isBlock,
-    });
-  };
-
   return (
-    <Modal width={505} height={514} title={'프로필 보기'}>
+    <Modal width={500} height={600} title={'프로필 보기'}>
       <MainBlock>
         <ProfileBlock>
-          <ProfileImage src={user.picture} size={100} />
+          <PictureBlock>
+            <ProfilePicture src={user.picture} alt="UserProfileImage" />
+          </PictureBlock>
           <UserInfo>
             <UserName>{user.user_nick}</UserName>
             <UserLevel>lv.{user.user_lv}</UserLevel>
@@ -76,23 +58,13 @@ const ShowProfile: React.FC = () => {
         </RecordBlock>
 
         <OtherBtnBlock>
-          <Button
-            color="gradient"
-            text={user.isFriend ? '친구 해제' : '친구 추가'}
-            width={200}
-            height={40}
-            onClick={onClickFriend}
-            // disabled={user.isBlock ? true : false}
-          />
+          <Button color="gradient" text="친구 추가" width={200} height={40} />
           <Button color="gradient" text="게임 신청" width={200} height={40} />
           <Button color="gradient" text="DM 보내기" width={200} height={40} />
-          <Button
-            color="white"
-            text={user.isBlock ? '차단해제' : '차단하기'}
-            width={200}
-            height={40}
-            onClick={onClickBlock}
-          />
+          <Button color="white" text="차단하기" width={200} height={40} />
+          <Button color="white" text="밴" width={200} height={40} />
+          <Button color="white" text="뮤트" width={200} height={40} />
+          <Button color="gradient" text="관리자 권한 주기" width={420} height={40} />
         </OtherBtnBlock>
       </MainBlock>
     </Modal>
@@ -114,10 +86,18 @@ const ProfileBlock = styled.div`
 `;
 const UserInfo = styled.div``;
 
+const PictureBlock = styled.div``;
+
+const ProfilePicture = styled.img`
+  width: 101px;
+  height: 101px;
+  border-radius: 50px;
+  background: #c4c4c4;
+`;
+
 const UserName = styled.span`
   display: block;
   font-size: 20px;
-  line-height: 23px;
 
   margin-top: 25px;
   margin-left: 25px;
@@ -126,7 +106,6 @@ const UserName = styled.span`
 const UserLevel = styled.span`
   display: block;
   font-size: 14px;
-  line-height: 16px;
 
   margin-top: 5px;
   margin-left: 25px;
@@ -142,6 +121,7 @@ const RecordBlock = styled.div`
 const RecordText = styled.span`
   display: inline-block;
   font-size: 20px;
+  line-height: 23px;
 
   margin-top: 71px;
 `;
@@ -161,18 +141,23 @@ const RecordBtn = styled.div`
   }
 `;
 
+//============================================
+
 //OtherBtnSection
 const OtherBtnBlock = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 2fr;
   gap: 10px 20px;
 
   margin-top: 11px;
   & button {
     border-radius: 5px;
+    &:last-of-type {
+      grid-column: auto / span 2;
+    }
   }
 `;
 //============================================
 
-export default ShowProfile;
+export default ShowOwnerProfile;

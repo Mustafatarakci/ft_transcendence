@@ -9,10 +9,18 @@ const LadderModal: React.FC = () => {
 
   return (
     <Modal width={400} height={200}>
-      <LadderMsg>래더 게임 매칭중 입니다</LadderMsg>
-      <CancelBtnWrap>
-        <Button width={110} height={30} color="white" text="취소" onClick={() => setModal(null)} />
-      </CancelBtnWrap>
+      <ModalWrap>
+        <LadderMsg>래더 게임 매칭중 입니다</LadderMsg>
+        <CancelBtnWrap>
+          <Button
+            width={110}
+            height={30}
+            color="white"
+            text="취소"
+            onClick={() => setModal(null)}
+          />
+        </CancelBtnWrap>
+      </ModalWrap>
     </Modal>
   );
 };
@@ -23,8 +31,19 @@ const LadderMsg = styled.h3`
   text-align: center;
 `;
 
+const ModalWrap = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 const CancelBtnWrap = styled.div`
-  margin: 30px 0;
+  margin-top: 30px;
+  & button {
+    font-size: 18px;
+    border-radius: 5px;
+  }
 `;
 
 export default LadderModal;
