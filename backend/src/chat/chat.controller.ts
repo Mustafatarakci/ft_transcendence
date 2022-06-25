@@ -48,7 +48,7 @@ export class ChatController {
   }
 
   @ApiOperation({ summary: 'kankim✅ 채팅방 만들기' })
-  @Post('/create')
+  @Post('')
   async createChattingRoom(
     @Body() createChattingRoomDto: CreateChatRoomDto,
   ): Promise<ChatRoomDataDto> {

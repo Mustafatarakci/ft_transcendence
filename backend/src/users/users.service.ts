@@ -5,7 +5,7 @@ import { GameRecordDto } from './dto/gameRecord.dto';
 import {
   UpdateUserDto,
   EmailDto,
-  Nickname,
+  SimpleUserDto,
   UserProfileDto,
 } from './dto/users.dto';
 import { BlockedUser } from './entities/blockedUser.entity';
@@ -24,15 +24,15 @@ export class UsersService {
     private readonly gameRecordRepo: Repository<GameRecord>,
   ) {}
 
-  async getUsers(): Promise<Nickname[]> {
+  async getUsers(): Promise<SimpleUserDto[]> {
     const users = await this.userRepo.find();
 
     return users.map((user) => {
-      return { nickname: user.nickname };
+      return { id: user.id, nickname: user.nickname };
     });
   }
 
-  async getFriends(userId: number): Promise<Nickname[]> {
+  async getFriends(userId: number): Promise<SimpleUserDto[]> {
     const friends = await this.followRepo
       .createQueryBuilder('follow')
       .leftJoinAndSelect('follow.follow', 'followee')
@@ -40,7 +40,7 @@ export class UsersService {
       .getMany();
 
     return friends.map((friend) => {
-      return { nickname: friend.follow.nickname };
+      return { id: friend.follow.id, nickname: friend.follow.nickname };
     });
   }
 
