@@ -15,6 +15,15 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  async issueJwt(id: number): Promise<string> {
+    const user = await this.usersService.getUserById(id);
+
+    return this.jwtService.sign({
+      id: user.id,
+      email: user.email,
+    });
+  }
+
   async getAccessToken(code: string): Promise<string> {
     const axiosResult = await axios({
       method: 'post',

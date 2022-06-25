@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class ChattingRoomDataDto {
+export class ChatRoomDataDto {
   @ApiProperty({ description: '채팅방 id' })
   id: number;
 
@@ -15,7 +15,7 @@ export class ChattingRoomDataDto {
   ownerId: number;
 }
 
-export class ChattingRoomsDto {
+export class ChatRoomDto {
   @ApiProperty({ description: '채팅방 id' })
   id: number;
 
@@ -35,7 +35,7 @@ export class ChattingRoomsDto {
   isDm: boolean;
 }
 
-export class CreateChattingRoomDto {
+export class CreateChatRoomDto {
   @ApiProperty({ description: '채팅방 제목' })
   @IsString()
   title: string;
@@ -52,4 +52,26 @@ export class CreateChattingRoomDto {
   @ApiProperty({ description: 'dm방인지 여부' })
   @IsBoolean()
   isDm: boolean;
+}
+
+export class ChatRoomParticipantsDto {
+  @ApiProperty({ description: '유저id( DB key )' })
+  @IsNumber()
+  userId: number;
+
+  @ApiProperty({ description: '유저 닉네임' })
+  @IsString()
+  nickname: string;
+
+  // @ApiProperty({ description: '온라인인지 여부' })
+  // @IsBoolean()
+  // isOnline: boolean;
+
+  // @ApiProperty({ description: '게임중인지 여부' })
+  // @IsBoolean()
+  // isGaming: boolean;
+
+  @ApiProperty({ description: '친구인지 여부' })
+  @IsBoolean()
+  isFriend: boolean;
 }
