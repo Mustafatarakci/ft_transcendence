@@ -36,7 +36,7 @@ export class User extends BaseEntity {
   isSecondAuthOn: boolean;
 
   @ApiProperty({ description: '2차 인증 이메일' })
-  @Column({ default: null })
+  @Column({ nullable: true, default: null })
   secondAuthEmail: string | null;
 
   @ApiProperty({ description: '이메일로 보낸 코드와 비교할 2차 인증 코드' })
@@ -58,6 +58,11 @@ export class User extends BaseEntity {
   @ApiProperty({ description: '래더 패배 횟수' })
   @Column({ default: 0 })
   ladderLoseCount: number;
+
+  // todo: 실시간으로 유저의 상태를 나타내지 않기로 함. 유저목록 갱신할 때 마다 api 호출 해야 하는데 그때 사용할 컬럼
+  @ApiProperty({ description: '유저 상태 inactive | active | inGame' })
+  @Column({ default: 'inactive' })
+  userStatus: 'inactive' | 'active' | 'inGame';
 
   @OneToMany(() => Follow, (follow) => follow.follower)
   follower: Follow[];
