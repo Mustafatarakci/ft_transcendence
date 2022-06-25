@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   UploadedFile,
   UseInterceptors,
+  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -87,5 +88,16 @@ export class UsersController {
     const gameRecords = this.usersService.getGameRecords(userId);
 
     return gameRecords;
+  }
+
+  @ApiOperation({ summary: 'kankim✅ 닉네임 변경' })
+  @Put(':id/nickname')
+  async updateNickname(
+    @Param('id', ParseIntPipe) userId: number,
+    @Body() body: Nickname,
+  ): Promise<UserProfileDto> {
+    const user = this.usersService.updateNickname(userId, body.nickname);
+
+    return user;
   }
 }
