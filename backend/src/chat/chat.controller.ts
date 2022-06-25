@@ -8,37 +8,39 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ChatService } from './chat.service';
 import {
-  ChattingRoomDataDto,
-  ChattingRoomsDto,
-  CreateChattingRoomDto,
+  ChatRoomParticipantsDto,
+  ChatRoomDataDto,
+  ChatRoomDto,
+  CreateChatRoomDto,
 } from './dto/chat.dto';
 import { ChatContents } from './entities/chatContents.entity';
 import { ChatParticipant } from './entities/chatParticipant.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('chat')
 @Controller('chats')
+@UseGuards(AuthGuard())
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
-  // todo: 로그인한 유저의 권한 확인해야함, @UseGuard 사용하고 @req() 로 받아서 req.user 이렇게 사용하면 될까?
-
   @ApiOperation({ summary: 'kankim✅ 채팅방 목록 가져오기' })
   @Get('')
-  async getChattingRooms(): Promise<ChattingRoomsDto[]> {
-    const chattingRooms = this.chatService.getChattingRooms();
+  async getChattingRooms(): Promise<ChatRoomDto[]> {
+    const chattingRooms = this.chatService.getChatRooms();
 
     return chattingRooms;
   }
 
   @ApiOperation({ summary: 'kankim✅ 참여중인 채팅방 목록 가져오기' })
-  @Get(':userId')
+  @Get('/users/:userId')
   async getParticipatingChattingRooms(
     @Param('userId') userId: number,
-  ): Promise<ChattingRoomsDto[]> {
+  ): Promise<ChatRoomDto[]> {
     const chattingRooms =
       this.chatService.getParticipatingChattingRooms(userId);
 
@@ -48,8 +50,8 @@ export class ChatController {
   @ApiOperation({ summary: 'kankim✅ 채팅방 만들기' })
   @Post('')
   async createChattingRoom(
-    @Body() createChattingRoomDto: CreateChattingRoomDto,
-  ): Promise<ChattingRoomDataDto> {
+    @Body() createChattingRoomDto: CreateChatRoomDto,
+  ): Promise<ChatRoomDataDto> {
     const chattingRoom = await this.chatService.createChattingRoom(
       createChattingRoomDto,
     );
@@ -57,14 +59,13 @@ export class ChatController {
     return chattingRoom;
   }
 
-  // // 채팅방 유저 목록 가져오기
-  // @ApiOperation({ summary: '채팅방 유저 목록 가져오기' })
-  // @Get(':roomId/participants')
-  // async getChatParticipants(
-  //   @Param('roomId', ParseIntPipe) roomId: number,
-  // ): Promise<ChatParticipant[]> {
-  //   return [];
-  // }
+  @ApiOperation({ summary: '채팅방 참여자 목록 가져오기' })
+  @Get('/:roomId/participants')
+  async getChatParticipants(
+    @Param('roomId', ParseIntPipe) roomId: number,
+  ): Promise<ChatParticipant[]> {
+    return this.chatService.getRoomParticipants(roomId);
+  }
 
   // // 채팅 내용 가져오기
   // @ApiOperation({ summary: '채팅 내용 가져오기' })

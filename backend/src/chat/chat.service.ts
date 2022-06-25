@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
-  ChattingRoomDataDto,
-  ChattingRoomsDto,
-  CreateChattingRoomDto,
+  ChatRoomDataDto,
+  ChatRoomDto,
+  CreateChatRoomDto,
 } from './dto/chat.dto';
 import { ChatContents } from './entities/chatContents.entity';
 import { ChatParticipant } from './entities/chatParticipant.entity';
-import { ChattingRoom } from './entities/chattingRoom.entity';
+import { ChatRoom as ChatRoom } from './entities/chattingRoom.entity';
 
 @Injectable()
 export class ChatService {
@@ -17,34 +17,44 @@ export class ChatService {
     private readonly chatContentsRepo: Repository<ChatContents>,
     @InjectRepository(ChatParticipant)
     private readonly chatParticipantRepo: Repository<ChatParticipant>,
-    @InjectRepository(ChattingRoom)
-    private readonly chattingRoomRepo: Repository<ChattingRoom>,
+    @InjectRepository(ChatRoom)
+    private readonly chatRoomRepo: Repository<ChatRoom>,
   ) {}
 
-  async getChattingRooms(): Promise<ChattingRoomsDto[]> {
-    let chattingRooms = await this.chattingRoomRepo
+  async getChatRoomById(id: number): Promise<ChatRoom> {
+    const chatRoom = await this.chatRoomRepo.findOneOrFail({ where: { id } });
+
+    return chatRoom;
+  }
+
+  async getChatRooms(): Promise<ChatRoomDto[]> {
+    let chatRooms = await this.chatRoomRepo
       .createQueryBuilder('chattingRoom')
       .leftJoinAndSelect('chattingRoom.chatParticipant', 'chatParticipant')
       .getMany();
 
-    chattingRooms = chattingRooms.filter((chattingRoom) => !chattingRoom.isDm);
+    chatRooms = chatRooms.filter((chattingRoom) => !chattingRoom.isDm);
 
-    return chattingRooms.map((chattingRoom) => {
-      return chattingRoom.toChattingRoomsDto();
+    return chatRooms.map((chattingRoom) => {
+      return chattingRoom.toChatRoomDto();
     });
   }
 
-  async getParticipatingChattingRooms(
-    userId: number,
-  ): Promise<ChattingRoomsDto[]> {
-    const chattingRooms = await this.chattingRoomRepo
+  async getRoomParticipants(roomId: number): Promise<ChatParticipant[]> {
+    const chatRoom = await this.getChatRoomById(roomId);
+
+    return chatRoom.chatParticipant;
+  }
+
+  async getParticipatingChattingRooms(userId: number): Promise<ChatRoomDto[]> {
+    const chattingRooms = await this.chatRoomRepo
       .createQueryBuilder('chattingRoom')
       .leftJoinAndSelect('chattingRoom.chatParticipant', 'chatParticipant')
       .where('chatParticipant.userId = :userId', { userId })
       .getMany();
 
     return chattingRooms.map((chattingRoom) => {
-      return chattingRoom.toChattingRoomsDto();
+      return chattingRoom.toChatRoomDto();
     });
   }
 
@@ -62,15 +72,15 @@ export class ChatService {
   }
 
   async createChattingRoom(
-    createChattingRoomDto: CreateChattingRoomDto,
-  ): Promise<ChattingRoomDataDto> {
-    const chattingRoom = new ChattingRoom();
+    createChattingRoomDto: CreateChatRoomDto,
+  ): Promise<ChatRoomDataDto> {
+    const chattingRoom = new ChatRoom();
     chattingRoom.title = createChattingRoomDto.title;
     chattingRoom.password = createChattingRoomDto.password;
     chattingRoom.ownerId = createChattingRoomDto.ownerId;
     chattingRoom.isDm = createChattingRoomDto.isDm;
 
-    const createdChattingRoom = await this.chattingRoomRepo.save(chattingRoom);
+    const createdChattingRoom = await this.chatRoomRepo.save(chattingRoom);
 
     await this.addUserToChattingRoom(
       createdChattingRoom.id,
@@ -78,7 +88,7 @@ export class ChatService {
       'owner',
     );
 
-    const chattingRoomDataDto = new ChattingRoomDataDto();
+    const chattingRoomDataDto = new ChatRoomDataDto();
     chattingRoomDataDto.id = createdChattingRoom.id;
     chattingRoomDataDto.title = createdChattingRoom.title;
     chattingRoomDataDto.password = createdChattingRoom.password;

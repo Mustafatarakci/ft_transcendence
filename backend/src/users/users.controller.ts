@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { Nickname, UserProfileDto } from './dto/users.dto';
+import { SimpleUserDto, UserProfileDto } from './dto/users.dto';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from '../files/file-uploading.utils';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -47,10 +47,10 @@ export class UsersController {
 
   @ApiOperation({ summary: 'kankim✅ 모든 유저 닉네임 가져오기' })
   @Get('')
-  async getUsers(): Promise<Nickname[]> {
-    const nicknames = await this.usersService.getUsers();
+  async getUsers(): Promise<SimpleUserDto[]> {
+    const userInfo = await this.usersService.getUsers();
 
-    return nicknames;
+    return userInfo;
   }
 
   @ApiOperation({ summary: 'kankim✅ 특정 유저의 프로필 조회' })
@@ -76,7 +76,7 @@ export class UsersController {
   @Get(':id/friends')
   async getFriends(
     @Param('id', ParseIntPipe) userId: number,
-  ): Promise<Nickname[]> {
+  ): Promise<SimpleUserDto[]> {
     return await this.usersService.getFriends(userId);
   }
 
@@ -94,9 +94,9 @@ export class UsersController {
   @Put(':id/nickname')
   async updateNickname(
     @Param('id', ParseIntPipe) userId: number,
-    @Body() body: Nickname,
+    @Body('nickname') body: string,
   ): Promise<UserProfileDto> {
-    const user = this.usersService.updateNickname(userId, body.nickname);
+    const user = this.usersService.updateNickname(userId, body);
 
     return user;
   }

@@ -8,7 +8,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ChattingRoom } from './chattingRoom.entity';
+import { ChatRoom } from './chattingRoom.entity';
 
 @Entity()
 export class ChatContents extends BaseEntity {
@@ -31,8 +31,8 @@ export class ChatContents extends BaseEntity {
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdTime: Date;
 
-  @ManyToOne(() => ChattingRoom, (chattingRoom) => chattingRoom.chatContents)
-  chattingRoom: ChattingRoom;
+  @ManyToOne(() => ChatRoom, (chattingRoom) => chattingRoom.chatContents)
+  chattingRoom: ChatRoom;
 
   @ManyToOne(() => User, (user) => user.sender)
   user: User;

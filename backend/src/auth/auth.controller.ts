@@ -37,11 +37,17 @@ export class AuthController {
     return 'getOauthPage';
   }
 
+  // @ApiOperation({ summary: '[test for backend] issue a fresh JWT' })
+  // @Get('issueJwt/:id')
+  // async getJwt(@Param('id', ParseIntPipe) id: number): Promise<string> {
+  //   return this.authService.issueJwt(id);
+  // }
+
   @ApiOperation({
     summary: 'kankim✅ 유저의 회원가입 여부 확인',
   })
   @Post('isSignedUp')
-  async isSignedUp(@Query('code') code: string): Promise<IsSignedUpDto> {
+  async isSignedUp(@Body('code') code: string): Promise<IsSignedUpDto> {
     const isSignedUpDto = await this.authService.isSignedUp(code);
 
     return isSignedUpDto;
@@ -90,11 +96,5 @@ export class AuthController {
     @Body('code') code: number,
   ): Promise<boolean> {
     return this.authService.verifySecondAuth(id, code);
-  }
-
-  @ApiOperation({ summary: 'todo: 이미지 업로드' })
-  @Post('uploadImage')
-  async uploadImage() {
-    return 'todo: 이미지 업로드';
   }
 }

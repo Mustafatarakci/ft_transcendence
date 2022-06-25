@@ -7,7 +7,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ChattingRoom } from './chattingRoom.entity';
+import { ChatRoom } from './chattingRoom.entity';
 
 @Entity()
 export class ChatParticipant extends BaseEntity {
@@ -34,8 +34,8 @@ export class ChatParticipant extends BaseEntity {
   @Column({ default: false })
   isMuted: boolean;
 
-  @ManyToOne(() => ChattingRoom, (chattingRoom) => chattingRoom.chatParticipant)
-  chattingRoom: ChattingRoom;
+  @ManyToOne(() => ChatRoom, (chattingRoom) => chattingRoom.chatParticipant)
+  chattingRoom: ChatRoom;
 
   @ManyToOne(() => User, (user) => user.chatParticipant)
   user: User;
