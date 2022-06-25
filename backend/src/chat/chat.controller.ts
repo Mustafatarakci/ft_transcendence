@@ -29,7 +29,7 @@ export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
   @ApiOperation({ summary: 'kankim✅ 채팅방 목록 가져오기' })
-  @Get('/list')
+  @Get('')
   async getChattingRooms(): Promise<ChatRoomDto[]> {
     const chattingRooms = this.chatService.getChatRooms();
 
@@ -37,7 +37,7 @@ export class ChatController {
   }
 
   @ApiOperation({ summary: 'kankim✅ 참여중인 채팅방 목록 가져오기' })
-  @Get('/list/:userId')
+  @Get('/users/:userId')
   async getParticipatingChattingRooms(
     @Param('userId') userId: number,
   ): Promise<ChatRoomDto[]> {
@@ -60,7 +60,7 @@ export class ChatController {
   }
 
   @ApiOperation({ summary: '채팅방 참여자 목록 가져오기' })
-  @Get('/room/:roomId/participants')
+  @Get('/:roomId/participants')
   async getChatParticipants(
     @Param('roomId', ParseIntPipe) roomId: number,
   ): Promise<ChatParticipant[]> {

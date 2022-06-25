@@ -94,9 +94,9 @@ export class UsersController {
   @Put(':id/nickname')
   async updateNickname(
     @Param('id', ParseIntPipe) userId: number,
-    @Body() body: Nickname,
+    @Body('nickname') body: string,
   ): Promise<UserProfileDto> {
-    const user = this.usersService.updateNickname(userId, body.nickname);
+    const user = this.usersService.updateNickname(userId, body);
 
     return user;
   }

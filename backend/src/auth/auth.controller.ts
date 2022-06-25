@@ -47,7 +47,7 @@ export class AuthController {
     summary: 'kankim✅ 유저의 회원가입 여부 확인',
   })
   @Post('isSignedUp')
-  async isSignedUp(@Query('code') code: string): Promise<IsSignedUpDto> {
+  async isSignedUp(@Body('code') code: string): Promise<IsSignedUpDto> {
     const isSignedUpDto = await this.authService.isSignedUp(code);
 
     return isSignedUpDto;
