@@ -31,7 +31,9 @@ export class ChatContents extends BaseEntity {
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdTime: Date;
 
-  @ManyToOne(() => ChatRoom, (chattingRoom) => chattingRoom.chatContents)
+  @ManyToOne(() => ChatRoom, (chattingRoom) => chattingRoom.chatContents, {
+    cascade: ['remove'],
+  })
   chattingRoom: ChatRoom;
 
   @ManyToOne(() => User, (user) => user.sender)
