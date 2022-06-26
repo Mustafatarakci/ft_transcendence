@@ -52,11 +52,13 @@ export class ChatController {
   }
 
   @ApiOperation({ summary: 'kankim✅ 채팅방 만들기' })
-  @Post('')
+  @Post(':userId')
   async createChattingRoom(
+    @Param('userId') userId: number,
     @Body() createChattingRoomDto: CreateChatRoomDto,
   ): Promise<ChatRoomDataDto> {
     const chattingRoom = await this.chatService.createChattingRoom(
+      userId,
       createChattingRoomDto,
     );
 

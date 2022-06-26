@@ -35,7 +35,7 @@ export class ChatParticipant extends BaseEntity {
   isMuted: boolean;
 
   @ManyToOne(() => ChatRoom, (chattingRoom) => chattingRoom.chatParticipant, {
-    cascade: ['remove'],
+    onDelete: 'CASCADE',
   })
   chattingRoom: ChatRoom;
 

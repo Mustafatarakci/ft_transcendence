@@ -43,10 +43,6 @@ export class CreateChatRoomDto {
   @IsOptional()
   password: string | null;
 
-  @ApiProperty({ description: '채팅방 소유자 userId' })
-  @IsNumber()
-  ownerId: number;
-
   @ApiProperty({ description: 'dm방인지 여부' })
   @IsBoolean()
   isDm: boolean;

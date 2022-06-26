@@ -36,7 +36,7 @@ export class ChatContents extends BaseEntity {
   createdTime: Date;
 
   @ManyToOne(() => ChatRoom, (chattingRoom) => chattingRoom.chatContents, {
-    cascade: ['remove'],
+    onDelete: 'CASCADE',
   })
   chattingRoom: ChatRoom;
 

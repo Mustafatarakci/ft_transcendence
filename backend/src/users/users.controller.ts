@@ -28,7 +28,7 @@ import { FollowIdDto } from './dto/follow.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @ApiOperation({ summary: 'seungyel✅ 이미지 업로드' })
+  @ApiOperation({ summary: 'seungyel 이미지 업로드' })
   @Post('/:id/uploadImage')
   @UseInterceptors(
     FileInterceptor('image', {
@@ -51,7 +51,7 @@ export class UsersController {
     return response;
   }
 
-  @ApiOperation({ summary: 'kankim✅ 모든 유저 닉네임 가져오기' })
+  @ApiOperation({ summary: 'kankim✅ 모든 유저의 id, 닉네임 가져오기' })
   @Get('')
   async getUsers(): Promise<SimpleUserDto[]> {
     const userInfo = await this.usersService.getUsers();
@@ -62,9 +62,9 @@ export class UsersController {
   @ApiOperation({ summary: 'kankim✅ 특정 유저의 프로필 조회' })
   @Get(':id')
   async getUserProfile(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) userId: number,
   ): Promise<UserProfileDto> {
-    const userProfile = await this.usersService.getUserProfile(id);
+    const userProfile = await this.usersService.getUserProfile(userId);
 
     return userProfile;
   }
@@ -78,7 +78,7 @@ export class UsersController {
     await this.usersService.addFriend(followerId, followIdDto.followId);
   }
 
-  @ApiOperation({ summary: 'kankim✅ 친구 목록( 닉네임 ) 조회' })
+  @ApiOperation({ summary: 'kankim✅ 친구 목록( id, 닉네임 ) 조회' })
   @Get(':id/friends')
   async getFriends(
     @Param('id', ParseIntPipe) userId: number,

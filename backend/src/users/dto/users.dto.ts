@@ -70,6 +70,9 @@ export class UserProfileDto {
 
   @ApiProperty({ description: '래임게임 패배 카운트' })
   ladderLoseCount: number;
+
+  @ApiProperty({ description: '유저 래더 레벨' })
+  ladderLevel: number;
 }
 
 export class WinLoseCountDto {
@@ -87,4 +90,7 @@ export class WinLoseCountDto {
 
   @ApiProperty({ description: '래임게임 패배 카운트' })
   ladderLoseCount: number;
+
+  @ApiProperty({ description: '유저 래더 레벨' })
+  ladderLevel: number;
 }

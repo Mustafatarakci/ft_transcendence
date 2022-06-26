@@ -74,12 +74,13 @@ export class ChatService {
   }
 
   async createChattingRoom(
+    userId: number,
     createChattingRoomDto: CreateChatRoomDto,
   ): Promise<ChatRoomDataDto> {
     const chattingRoom = new ChatRoom();
     chattingRoom.title = createChattingRoomDto.title;
     chattingRoom.password = createChattingRoomDto.password;
-    chattingRoom.ownerId = createChattingRoomDto.ownerId;
+    chattingRoom.ownerId = userId;
     chattingRoom.isDm = createChattingRoomDto.isDm;
 
     const createdChattingRoom = await this.chatRoomRepo.save(chattingRoom);
