@@ -20,14 +20,14 @@ export class User extends BaseEntity {
   id: number;
 
   @ApiProperty({ description: '닉네임' })
-  @Column({ unique: true, nullable: true, default: null })
+  @Column({ nullable: true, default: null })
   nickname: string | null;
 
   @ApiProperty({ description: '아바타' })
   @Column({ nullable: true, default: null })
   avatar: string | null;
 
-  @ApiProperty({ description: '이메일' })
+  @ApiProperty({ description: '42 이메일' })
   @Column({ unique: true })
   email: string;
 

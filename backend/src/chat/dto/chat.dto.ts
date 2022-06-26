@@ -20,6 +20,9 @@ export class ChatRoomDto {
   @ApiProperty({ description: '채팅방 제목' })
   title: string;
 
+  @ApiProperty({ description: '공개방 여부, (공개방: true, 비공개: false)' })
+  isPublic: boolean;
+
   @ApiProperty({ description: '채팅방 소유자' })
   ownerId: number;
 

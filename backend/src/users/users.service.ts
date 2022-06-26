@@ -93,7 +93,7 @@ export class UsersService {
 
   async isDuplicateNickname(nickname: string): Promise<boolean> {
     const found = await this.userRepo.findOne({ where: { nickname } });
-    console.log(found);
+
     if (found) {
       return true;
     }
