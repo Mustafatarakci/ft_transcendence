@@ -98,7 +98,6 @@ export class AuthService {
     ) {
       throw new BadRequestException('중복된 닉네임 입니다.');
     }
-
     return await this.usersService.updateUser(updateUserDto);
   }
 

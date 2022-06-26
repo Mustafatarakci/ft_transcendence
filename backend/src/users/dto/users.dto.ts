@@ -10,7 +10,7 @@ export class UpdateUserDto {
   @IsString()
   avatar: string;
 
-  @ApiProperty({ description: '이메일' })
+  @ApiProperty({ description: '닉네임' })
   @IsString()
   nickname: string;
 }

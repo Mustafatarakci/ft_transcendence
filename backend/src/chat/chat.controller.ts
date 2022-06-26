@@ -26,7 +26,7 @@ import { AuthGuard } from '@nestjs/passport';
 @Controller('chats')
 @UseGuards(AuthGuard())
 export class ChatController {
-  constructor(private readonly chatService: ChatService) {}
+  constructor(private readonly chatService: ChatService) { }
 
   @ApiOperation({ summary: 'kankim✅ 채팅방 목록 가져오기' })
   @Get('')
@@ -59,13 +59,12 @@ export class ChatController {
     return chattingRoom;
   }
 
-  @ApiOperation({ summary: '채팅방 참여자 목록 가져오기' })
+  @ApiOperation({ summary: 'seungyel✅ 채팅방 참여자 목록 가져오기' })
   @Get('/:roomId/participants')
   async getChatParticipants(
     @Param('roomId', ParseIntPipe) roomId: number,
   ): Promise<ChatParticipant[]> {
-    return this.chatService.getRoomParticipants(roomId);
-  }
+    return this.chatService.getRoomParticipants(roomId);}
 
   // // 채팅 내용 가져오기
   // @ApiOperation({ summary: '채팅 내용 가져오기' })
@@ -125,15 +124,17 @@ export class ChatController {
   //   const a = 'revokeManager';
   // }
 
-  // // 강퇴
-  // @ApiOperation({ summary: '강퇴 시키기' })
-  // @Patch(':roomId/ban')
-  // async banParticipant(
-  //   @Param('roomId', ParseIntPipe) roomId: number,
-  //   @Query('targetUserId', ParseIntPipe) targetUserId: number,
-  // ): Promise<void> {
-  //   const a = 'banParticipant';
-  // }
+  // 강퇴
+  @ApiOperation({ summary: 'seungyel: 강퇴 시키기' })
+  @Patch(':roomId/ban')
+  async banParticipant(
+    @Param('roomId', ParseIntPipe) roomId: number,
+    @Query('targetUserId', ParseIntPipe) targetUserId: number,
+  ): Promise<void> {
+    const a = 'banParticipant';
+    
+    
+  }
 
   // // 음소거
   // @ApiOperation({ summary: '음소거 시키기' })
