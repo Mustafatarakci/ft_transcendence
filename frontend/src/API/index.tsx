@@ -1,9 +1,11 @@
 import axios from 'axios';
+import { authAPI } from './auth';
 
-const baseURL = process.env.BACK_URL;
+// const url = 'http://ec2-15-164-215-143.ap-northeast-2.compute.amazonaws.com:5500';
+const url = process.env.REACT_APP_BACK_API;
 
 export const instance = axios.create({
-  baseURL,
+  baseURL: url,
 });
 
 /* NOTE: Default 양식
@@ -29,4 +31,4 @@ const authAPI = {
 
 */
 
-export {};
+export { authAPI };
