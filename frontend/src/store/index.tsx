@@ -23,6 +23,10 @@ export const AllContext = createContext<stateType>({
     userStatus: LOGOUT,
     setUserStatus: () => null,
   },
+  jwtData: {
+    jwt: '',
+    setJwt: () => null,
+  },
 });
 
 type stateType = {
@@ -38,6 +42,10 @@ type stateType = {
     userStatus: UserStatusType;
     setUserStatus: (type: UserStatusType) => void;
   };
+  jwtData: {
+    jwt: string;
+    setJwt: (type: 'SET_JWT' | 'REMOVE_JWT', jwt?: string) => void;
+  };
 };
 
 interface AllContextApiProps {
@@ -48,6 +56,24 @@ const AllContextApi = ({ children }: AllContextApiProps) => {
   const [modal, setModal] = useState<ModalType | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
   const [userStatus, setUserStatus] = useState<UserStatusType>(LOGOUT);
+  const [jwt, setJwt] = useState<string>('');
+
+  const handleJwt = (type: 'SET_JWT' | 'REMOVE_JWT', jwt?: string) => {
+    switch (type) {
+      case 'SET_JWT':
+        if (jwt) {
+          setJwt(jwt);
+          window.localStorage.setItem('jwt', jwt);
+        }
+        return;
+      case 'REMOVE_JWT':
+        setJwt('');
+        window.localStorage.removeItem('jwt');
+        return;
+      default:
+        return;
+    }
+  };
 
   const handleModal = (type: ModalType | null) => {
     setModal(type);
@@ -60,7 +86,7 @@ const AllContextApi = ({ children }: AllContextApiProps) => {
           setUser(user);
           if (!user.nickname) {
             setUserStatus(SET_NICKNAME);
-          } else if (user.secondAuth) {
+          } else if (user.isSecondAuthOn) {
             setUserStatus(SECOND_AUTH);
           } else {
             setUserStatus(LOGIN);
@@ -91,6 +117,10 @@ const AllContextApi = ({ children }: AllContextApiProps) => {
     userStatus: {
       userStatus,
       setUserStatus: handleUserStatus,
+    },
+    jwtData: {
+      jwt,
+      setJwt: handleJwt,
     },
   };
   return <AllContext.Provider value={data}>{children}</AllContext.Provider>;

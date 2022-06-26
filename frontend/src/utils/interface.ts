@@ -1,12 +1,10 @@
 export interface IUser {
-  id: number;
+  id?: number;
   nickname: string;
-  username: string;
   email: string;
   avatar: string;
-  secondAuth: boolean;
-  accessToken?: string;
-  isSigned: boolean;
+  isSecondAuthOn: boolean;
+  jwt: string;
 }
 
 export interface IRoomList {

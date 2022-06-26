@@ -1,40 +1,50 @@
-import axios from 'axios';
 import React, { useEffect, useContext } from 'react';
 import { AllContext } from '../store';
-import { LOGIN, LOGOUT, SET_NICKNAME, SECOND_AUTH } from '../utils/interface';
-import { useNavigate } from 'react-router-dom';
+import { LOGIN, SET_NICKNAME, SECOND_AUTH } from '../utils/interface';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { authAPI } from '../API';
 
 const OauthPage: React.FC = () => {
-  const { userStatus, setUserStatus } = useContext(AllContext).userStatus;
+  const { setUserStatus } = useContext(AllContext).userStatus;
   const { setUser } = useContext(AllContext).userData;
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const code = params.get('code');
 
   useEffect(() => {
-    // test 용 api
-    if (userStatus !== LOGOUT) {
-      return navigate('/');
-    }
     const getUser = async () => {
-      const { data } = await axios('http://localhost:4000/user');
-      setUser(LOGIN, {
-        id: data.id,
-        nickname: data.nickname,
-        username: data.username,
-        email: data.email,
-        avatar: data.avatar,
-        secondAuth: data.secondAuth,
-        isSigned: data.isSigned,
-      });
-      if (!data.isSigned) {
-        setUserStatus(SET_NICKNAME);
-      } else if (data.secondAuth) {
-        setUserStatus(SECOND_AUTH);
-      } else {
-        setUserStatus(LOGIN);
+      if (code) {
+        const res = await authAPI.isSignedUp({ code });
+        if (res) {
+          setUser(LOGIN, {
+            id: res.id,
+            nickname: res.nickname,
+            email: res.email,
+            avatar: res.avatar,
+            isSecondAuthOn: res.isSecondAuthOn,
+            jwt: res.jwt,
+          });
+          // NOTE: 임시로 LocalStorage에 jwt 저장
+          window.localStorage.setItem('jwt', res.jwt);
+          if (!res.nickname) {
+            setUserStatus(SET_NICKNAME);
+          } else if (res.isSecondAuthOn) {
+            setUserStatus(SECOND_AUTH);
+          } else {
+            setUserStatus(LOGIN);
+          }
+          navigate('/');
+        }
       }
     };
-    getUser();
-  }, [userStatus]);
+    // NOTE: 한번에 두번 요청되는것을 막기 위해 설정
+    const timer = setTimeout(() => {
+      getUser();
+      clearTimeout(timer);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return <></>;
 };
