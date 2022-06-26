@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -19,6 +20,7 @@ import {
   CreateChatRoomDto,
   RoomPasswordDto,
   ChatRoomIdDto,
+  UpdateChatRoomDto,
 } from './dto/chat.dto';
 import { ChatContents } from './entities/chatContents.entity';
 import { ChatParticipant } from './entities/chatParticipant.entity';
@@ -80,6 +82,20 @@ export class ChatController {
       roomId,
       userId,
       roomPasswordDto.password,
+    );
+  }
+
+  @ApiOperation({ summary: 'kankim✅ 채팅방 설정' })
+  @Put(':roomId/users/:ownerId')
+  async updateRoom(
+    @Param('roomId', ParseIntPipe) roomId: number,
+    @Param('ownerId', ParseIntPipe) ownerId: number,
+    @Body() updateChatRoomDto: UpdateChatRoomDto,
+  ): Promise<ChatRoomDataDto> {
+    return await this.chatService.updateRoom(
+      roomId,
+      ownerId,
+      updateChatRoomDto,
     );
   }
 

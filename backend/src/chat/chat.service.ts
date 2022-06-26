@@ -6,6 +6,7 @@ import {
   ChatRoomDto,
   ChatRoomIdDto,
   CreateChatRoomDto,
+  UpdateChatRoomDto,
 } from './dto/chat.dto';
 import { ChatContents } from './entities/chatContents.entity';
 import { ChatParticipant } from './entities/chatParticipant.entity';
@@ -92,7 +93,6 @@ export class ChatService {
     const chattingRoomDataDto = new ChatRoomDataDto();
     chattingRoomDataDto.id = createdChattingRoom.id;
     chattingRoomDataDto.title = createdChattingRoom.title;
-    chattingRoomDataDto.password = createdChattingRoom.password;
     chattingRoomDataDto.ownerId = createdChattingRoom.ownerId;
 
     return chattingRoomDataDto;
@@ -148,5 +148,28 @@ export class ChatService {
     }
 
     return { chatRoomId: roomId };
+  }
+
+  async updateRoom(
+    roomId: number,
+    ownerId: number,
+    updateChatRoomDto: UpdateChatRoomDto,
+  ): Promise<ChatRoomDataDto> {
+    const room = await this.chatRoomRepo.findOneBy({ id: roomId });
+    if (!room) {
+      throw new BadRequestException('채팅방이 존재하지 않습니다.');
+    }
+    if (room.ownerId !== ownerId) {
+      throw new BadRequestException(
+        '채팅방의 소유자만 방 설정을 변경할 수 있습니다.',
+      );
+    }
+
+    room.title = updateChatRoomDto.title;
+    room.password = updateChatRoomDto.password;
+
+    const updatedRoom = await this.chatRoomRepo.save(room);
+
+    return updatedRoom.toChatRoomDataDto();
   }
 }

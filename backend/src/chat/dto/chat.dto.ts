@@ -9,9 +9,6 @@ export class ChatRoomDataDto {
   @ApiProperty({ description: '채팅방 제목' })
   title: string;
 
-  @ApiProperty({ description: '채팅방 비밀번호' })
-  password: string | null;
-
   @ApiProperty({ description: '채팅방 소유자' })
   ownerId: number;
 }
@@ -22,9 +19,6 @@ export class ChatRoomDto {
 
   @ApiProperty({ description: '채팅방 제목' })
   title: string;
-
-  @ApiProperty({ description: '채팅방 비밀번호' })
-  password: string | null;
 
   @ApiProperty({ description: '채팅방 소유자' })
   ownerId: number;
@@ -89,4 +83,15 @@ export class ChatRoomIdDto {
   @IsNumber()
   @IsOptional()
   chatRoomId: number;
+}
+
+export class UpdateChatRoomDto {
+  @ApiProperty({ description: '채팅방 제목' })
+  @IsString()
+  title: string;
+
+  @ApiProperty({ description: '채팅방 비밀번호' })
+  @IsString()
+  @IsOptional()
+  password: string | null;
 }
