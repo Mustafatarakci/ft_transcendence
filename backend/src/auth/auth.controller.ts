@@ -59,7 +59,9 @@ export class AuthController {
 
   @ApiOperation({ summary: 'kankim✅ 닉네임 중복 확인' })
   @Post('isDuplicateNickname')
-  async isDuplicateNickname(@Query() nickname: string): Promise<boolean> {
+  async isDuplicateNickname(
+    @Body('nickname') nickname: string,
+  ): Promise<boolean> {
     return await this.authService.isDuplicateNickname(nickname);
   }
 
