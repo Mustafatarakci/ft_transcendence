@@ -3,6 +3,7 @@ import React, { useState, useRef, useContext } from 'react';
 import Button from '../components/common/Button';
 import styled from '@emotion/styled';
 import { AllContext } from '../store';
+import { authAPI } from '../API';
 import { LOGIN } from '../utils/interface';
 
 // TODO : 최초 42api 토큰 요청시 성공하면 인트라 사진도 갖고오도록 할 예정?
@@ -49,23 +50,21 @@ const NicknamePage: React.FC = () => {
       if (e.nativeEvent.isComposing === false) onCheck();
     }
   };
-  const checkNickName = (resNickName: string) => {
-    if (nickName === resNickName) {
+
+  const onCheck = async () => {
+    if (!regex.test(nickName)) {
+      setCheckNickMsg(`2자 ~ 8자의 한글, 영어, 숫자로 작성해주세요`);
+      setIsEnabled(false);
+      return;
+    }
+    const res = await authAPI.checkNickname(nickName);
+    if (res === null) {
+      setCheckNickMsg(`다시 시도해주세요.`);
+      setIsEnabled(false);
+    } else if (res) {
       setCheckNickMsg(`중복된 닉네임입니다.`);
       setIsEnabled(false);
-      return false;
-    }
-    return true;
-  };
-
-  // TODO: 전체 닉네임들을 다 탐색해야함(front or back)
-  const onCheck = () => {
-    // console.log('한글 중복 check용 log');
-    //  const result = await axios.get(`http://localhost:4000/profile/`);
-    // const userList = result.data;
-
-    const resNickName = 'mike2ox';
-    if (checkNickName(resNickName)) {
+    } else {
       setCheckNickMsg(`사용 가능한 닉네임입니다.`);
       setIsEnabled(true);
     }
