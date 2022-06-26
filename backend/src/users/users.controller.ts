@@ -12,6 +12,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import {
+  NicknameDto,
   SimpleUserDto,
   UserProfileDto,
   WinLoseCountDto,
@@ -99,9 +100,9 @@ export class UsersController {
   @Put(':id/nickname')
   async updateNickname(
     @Param('id', ParseIntPipe) userId: number,
-    @Body('nickname') body: string,
+    @Body() nicknameDto: NicknameDto,
   ): Promise<UserProfileDto> {
-    const user = this.usersService.updateNickname(userId, body);
+    const user = this.usersService.updateNickname(userId, nicknameDto.nickname);
 
     return user;
   }

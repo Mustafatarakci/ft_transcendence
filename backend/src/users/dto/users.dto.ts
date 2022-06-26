@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+  minLength,
+} from 'class-validator';
 
 export class UpdateUserDto {
   @ApiProperty({ description: '유저 id' })
@@ -27,6 +35,14 @@ export class SimpleUserDto {
   id: number;
 
   @ApiProperty({ description: '닉네임' })
+  nickname: string;
+}
+
+export class NicknameDto {
+  @ApiProperty({ description: '닉네임' })
+  @IsString()
+  @MinLength(2, { message: '닉네임은 최소 2글자로 입력해 주세요.' })
+  @MaxLength(8, { message: '닉네임은 최대 8글자로 입력해 주세요.' })
   nickname: string;
 }
 
