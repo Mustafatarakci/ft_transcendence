@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString, IsDateString } from 'class-validator';
 import { PrimaryColumnCannotBeNullableError } from 'typeorm';
 
 export class ChatRoomDataDto {
@@ -94,4 +94,27 @@ export class UpdateChatRoomDto {
   @IsString()
   @IsOptional()
   password: string | null;
+}
+export class ChatContentDto {
+  @ApiProperty({ description: '채팅 내용' })
+  @IsString()
+  message: string;
+
+  @ApiProperty({ description: '공지 메시지인지 여부' })
+  @IsBoolean()
+  isBroadcast: boolean;
+
+  from?: {
+    nickname: string;
+    profileImage: string;
+  };
+
+  @ApiProperty({ description: '자신이 보낸 메세지인지 여부' })
+  @IsBoolean()
+  fromUser: boolean;
+
+
+  @ApiProperty({ description: '자신이 보낸 메세지인지 여부' })
+  @IsDateString()
+  createdAt: string;
 }

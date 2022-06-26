@@ -1,7 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ChatGateway } from './chat.gateway';
 import {
+  ChatContentDto,
   ChatRoomDataDto,
   ChatRoomDto,
   ChatRoomIdDto,
@@ -21,7 +23,8 @@ export class ChatService {
     private readonly chatParticipantRepo: Repository<ChatParticipant>,
     @InjectRepository(ChatRoom)
     private readonly chatRoomRepo: Repository<ChatRoom>,
-  ) {}
+    private readonly ChatGateway: ChatGateway
+  ) { }
 
   async getChatRoomById(id: number): Promise<ChatRoom> {
     const chatRoom = await this.chatRoomRepo.findOneOrFail({ where: { id } });
@@ -97,7 +100,6 @@ export class ChatService {
 
     return chattingRoomDataDto;
   }
-
   // 채팅방이 존재할 경우 채팅방 엔티티를 리턴하고 존재하지 않을 경우 null을 리턴함
   async isExistChatRoom(roomId: number): Promise<ChatRoom | null> {
     return await this.chatRoomRepo.findOneBy({ id: roomId });
@@ -171,5 +173,22 @@ export class ChatService {
     const updatedRoom = await this.chatRoomRepo.save(room);
 
     return updatedRoom.toChatRoomDataDto();
+  }
+
+  async submitChatContent(
+    roomId: number,
+    // ChatContentDto: ChatContentDto,
+  ): Promise<void> {
+    //채팅 DB에 저장
+    // const message = ChatContentDto.message;
+    // const chatContents = new ChatContents();
+
+    // chatContents.chattingRoomId = roomId;
+    // chatContents.userId = ;
+    // chatContents.content = message;
+
+    // this.chatContentsRepo.save();
+    //전체에 emit
+    this.ChatGateway.server.emit("addChat", { content: "hello", isNotice: 0 });
   }
 }
