@@ -66,6 +66,7 @@ export class AuthService {
   userToIsSignedUpDto(user: User): IsSignedUpDto {
     const isSignedUpDto = new IsSignedUpDto();
 
+    isSignedUpDto.id = user.id;
     isSignedUpDto.nickname = user.nickname;
     isSignedUpDto.email = user.email;
     isSignedUpDto.avatar = user.avatar;
