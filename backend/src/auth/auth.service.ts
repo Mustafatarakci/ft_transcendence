@@ -6,6 +6,8 @@ import { User } from 'src/users/entities/users.entity';
 import { UsersService } from '../users/users.service';
 import { EmailService } from '../emails/email.service';
 import { IsSignedUpDto } from './dto/auth.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +15,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly emailService: EmailService,
     private readonly jwtService: JwtService,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {}
 
   // async issueJwt(id: number): Promise<string> {
@@ -71,6 +74,7 @@ export class AuthService {
       id: user.id,
       email: user.email,
     });
+
     return isSignedUpDto;
   }
 
@@ -91,7 +95,23 @@ export class AuthService {
     return this.userToIsSignedUpDto(user);
   }
 
-  async signUp(updateUserDto: UpdateUserDto): Promise<UserProfileDto> {
+  async updateUser(updateUserDto: UpdateUserDto): Promise<IsSignedUpDto> {
+    const user = await this.userRepo.findOne({
+      where: { id: updateUserDto.userId },
+    });
+
+    if (!user) {
+      throw new BadRequestException('유저를 찾을 수 없습니다.');
+    }
+
+    user.nickname = updateUserDto.nickname || user.nickname;
+    user.avatar = updateUserDto.avatar || user.avatar;
+    const updatedUser = await this.userRepo.save(user);
+
+    return this.userToIsSignedUpDto(updatedUser);
+  }
+
+  async signUp(updateUserDto: UpdateUserDto): Promise<IsSignedUpDto> {
     if (
       updateUserDto.nickname &&
       (await this.isDuplicateNickname(updateUserDto.nickname))
@@ -99,7 +119,7 @@ export class AuthService {
       throw new BadRequestException('중복된 닉네임 입니다.');
     }
 
-    return await this.usersService.updateUser(updateUserDto);
+    return await this.updateUser(updateUserDto);
   }
 
   async isDuplicateNickname(nickname: string): Promise<boolean> {

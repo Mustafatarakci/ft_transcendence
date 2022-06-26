@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { IsSignedUpDto } from 'src/auth/dto/auth.dto';
 import { Repository } from 'typeorm';
 import { GameRecordDto } from './dto/gameRecord.dto';
 import {
@@ -7,6 +8,7 @@ import {
   EmailDto,
   SimpleUserDto,
   UserProfileDto,
+  WinLoseCountDto,
 } from './dto/users.dto';
 import { BlockedUser } from './entities/blockedUser.entity';
 import { Follow } from './entities/follow.entity';
@@ -89,22 +91,6 @@ export class UsersService {
     return await this.userRepo.save(user);
   }
 
-  async updateUser(updateUserDto: UpdateUserDto): Promise<UserProfileDto> {
-    const user = await this.userRepo.findOne({
-      where: { id: updateUserDto.userId },
-    });
-
-    if (!user) {
-      throw new BadRequestException('유저를 찾을 수 없습니다.');
-    }
-
-    user.nickname = updateUserDto.nickname || user.nickname;
-    user.avatar = updateUserDto.avatar || user.avatar;
-    const updatedUser = await this.userRepo.save(user);
-
-    return updatedUser.toUserProfileDto();
-  }
-
   async isDuplicateNickname(nickname: string): Promise<boolean> {
     const found = await this.userRepo.findOne({ where: { nickname } });
     console.log(found);
@@ -153,5 +139,11 @@ export class UsersService {
     const updatedUser = await this.userRepo.save(user);
 
     return updatedUser.toUserProfileDto();
+  }
+
+  async getWinLoseCount(userId: number): Promise<WinLoseCountDto> {
+    const user = await this.getUserById(userId);
+
+    return user.toWinLoseCount();
   }
 }

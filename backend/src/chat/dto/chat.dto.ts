@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
+import { PrimaryColumnCannotBeNullableError } from 'typeorm';
 
 export class ChatRoomDataDto {
   @ApiProperty({ description: '채팅방 id' })
@@ -7,9 +8,6 @@ export class ChatRoomDataDto {
 
   @ApiProperty({ description: '채팅방 제목' })
   title: string;
-
-  @ApiProperty({ description: '채팅방 비밀번호' })
-  password: string | null;
 
   @ApiProperty({ description: '채팅방 소유자' })
   ownerId: number;
@@ -21,9 +19,6 @@ export class ChatRoomDto {
 
   @ApiProperty({ description: '채팅방 제목' })
   title: string;
-
-  @ApiProperty({ description: '채팅방 비밀번호' })
-  password: string | null;
 
   @ApiProperty({ description: '채팅방 소유자' })
   ownerId: number;
@@ -74,4 +69,29 @@ export class ChatRoomParticipantsDto {
   @ApiProperty({ description: '친구인지 여부' })
   @IsBoolean()
   isFriend: boolean;
+}
+
+export class RoomPasswordDto {
+  @ApiProperty({ description: '채팅방 비밀번호' })
+  @IsString()
+  @IsOptional()
+  password: string | null;
+}
+
+export class ChatRoomIdDto {
+  @ApiProperty({ description: '채팅방 id' })
+  @IsNumber()
+  @IsOptional()
+  chatRoomId: number;
+}
+
+export class UpdateChatRoomDto {
+  @ApiProperty({ description: '채팅방 제목' })
+  @IsString()
+  title: string;
+
+  @ApiProperty({ description: '채팅방 비밀번호' })
+  @IsString()
+  @IsOptional()
+  password: string | null;
 }

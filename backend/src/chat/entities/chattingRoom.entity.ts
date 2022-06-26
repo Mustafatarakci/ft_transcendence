@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ChatRoomDto as ChatRoomDto } from '../dto/chat.dto';
+import { ChatRoomDataDto, ChatRoomDto as ChatRoomDto } from '../dto/chat.dto';
 import { ChatContents } from './chatContents.entity';
 import { ChatParticipant } from './chatParticipant.entity';
 
@@ -48,11 +48,19 @@ export class ChatRoom extends BaseEntity {
     const chattingRoomsDto = new ChatRoomDto();
     chattingRoomsDto.id = this.id;
     chattingRoomsDto.title = this.title;
-    chattingRoomsDto.password = this.password;
     chattingRoomsDto.ownerId = this.ownerId;
     chattingRoomsDto.numberOfParticipants = this.chatParticipant.length;
     chattingRoomsDto.isDm = this.isDm;
 
     return chattingRoomsDto;
+  }
+
+  toChatRoomDataDto(): ChatRoomDataDto {
+    const chatRoomDataDto = new ChatRoomDataDto();
+    chatRoomDataDto.id = this.id;
+    chatRoomDataDto.title = this.title;
+    chatRoomDataDto.ownerId = this.ownerId;
+
+    return chatRoomDataDto;
   }
 }

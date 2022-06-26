@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -17,6 +18,9 @@ import {
   ChatRoomDataDto,
   ChatRoomDto,
   CreateChatRoomDto,
+  RoomPasswordDto,
+  ChatRoomIdDto,
+  UpdateChatRoomDto,
 } from './dto/chat.dto';
 import { ChatContents } from './entities/chatContents.entity';
 import { ChatParticipant } from './entities/chatParticipant.entity';
@@ -24,7 +28,7 @@ import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('chat')
 @Controller('chats')
-@UseGuards(AuthGuard())
+// @UseGuards(AuthGuard()) // todo: 모든 api 구현 후 조건별로 api 적용할 것
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
@@ -66,6 +70,43 @@ export class ChatController {
   ): Promise<ChatParticipant[]> {
     return this.chatService.getRoomParticipants(roomId);
   }
+
+  @ApiOperation({ summary: 'kankim✅ 채팅방 입장하기' })
+  @Post(':roomId/users/:userId')
+  async enterChattingRoom(
+    @Param('roomId', ParseIntPipe) roomId: number,
+    @Param('userId', ParseIntPipe) userId: number,
+    @Body() roomPasswordDto: RoomPasswordDto,
+  ): Promise<ChatRoomIdDto> {
+    return await this.chatService.enterChattingRoom(
+      roomId,
+      userId,
+      roomPasswordDto.password,
+    );
+  }
+
+  @ApiOperation({ summary: 'kankim✅ 채팅방 설정' })
+  @Put(':roomId/users/:ownerId')
+  async updateRoom(
+    @Param('roomId', ParseIntPipe) roomId: number,
+    @Param('ownerId', ParseIntPipe) ownerId: number,
+    @Body() updateChatRoomDto: UpdateChatRoomDto,
+  ): Promise<ChatRoomDataDto> {
+    return await this.chatService.updateRoom(
+      roomId,
+      ownerId,
+      updateChatRoomDto,
+    );
+  }
+
+  // // 채팅방 유저 목록 가져오기
+  // @ApiOperation({ summary: '채팅방 유저 목록 가져오기' })
+  // @Get(':roomId/participants')
+  // async getChatParticipants(
+  //   @Param('roomId', ParseIntPipe) roomId: number,
+  // ): Promise<ChatParticipant[]> {
+  //   return [];
+  // }
 
   // // 채팅 내용 가져오기
   // @ApiOperation({ summary: '채팅 내용 가져오기' })
